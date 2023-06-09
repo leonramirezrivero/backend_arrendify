@@ -1,0 +1,389 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Registro Inmueble {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div>
+            <div class="dropdown">
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split " id="dropdownMenuReference" data-bs-toggle="dropdown" aria-expanded="false" data-bs-reference="parent">
+                    <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    Registar Nuevo Inmueble
+                </button>
+                <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                    <a href="/tabla-inmuebles.html" class="dropdown-item d-flex align-items-center" href="#">
+                        <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12v-2h3v2H6z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z" clip-rule="evenodd"></path></svg>
+                        Modulo Vista General de Inmueble
+                    </a>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-xl">
+        <div class="card card-body border-0 shadow mb-4">
+            <form action="{% url 'createin' %}" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                    <div class="row">
+                        <h2 class="h5 mb-2">Ingresa Datos Generales Del Inmueble</h2>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="alias_inmueble">Alias del Inmueble </label>
+                                    <input class="form-control" id="alias_inmueble" name="alias_inmueble" type="text" placeholder="Ingresa Alias del Inmueble" req>
+                                </div>            
+                                <div class="col-md-6 mb-3"><!---->
+                                    <label for="estatus_inmueble">Estatus del Inmueble </label>
+                                    <select class="form-select" id="estatus_inmueble" name="estatus_inmueble" aria-label="Default select example" req>
+                                        <option hidden>Estatus</option>
+                                        <option value="Renta">Ocupado</option>
+                                        <option value="Disponible">Disponible</option>
+                                        <option value="Reparación">Reparación</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="clave_catastral">Clave Catastral</label>
+                                    <input class="form-control" id="clave_catastral" name="clave_catastral" type="text" placeholder="Ingresa Clave Catastral" req>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="estatus_gravamem">Estatus del Gravamen</label>
+                                    <select class="form-select" id="estatus_gravamen" name="estatus_gravamen" aria-label="Default select example" title="Impuesto aplicado a un inmueble o propiedad que indica que se encuentra comprometido" data-bs-toggle="tooltip" data-bs-placement="bottom" req>
+                                        <option value="Ninguno">Ninguno</option>
+                                        <option value="Usufructo">Usufructo</option>
+                                        <option value="Hipoteca">Hipoteca</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="tipo_inmueble">Tipo de Inmueble</label>
+                                    <select class="form-select" id="tipo_inmueble" name="tipo_inmueble" aria-label="Default select example" req>
+                                        <option hidden>Tipo de Inmueble</option>
+                                        <option value="Casa">Casa</option>
+                                        <option value="Departamento">Departamento</option>
+                                        <option value="Local">Local</option>
+                                        <option value="Oficina">Oficina</option>
+                                        <option value="Bodega">Bodega</option>
+                                        <option value="Condominios">Condominios</option>
+                                        <option value="Duplex">Duplex</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="uso_inmueble">Uso del Inmueble</label>
+                                    <select class="form-select" id="uso_inmueble" name="uso_inmueble" aria-label="Default select example" req>
+                                        <option hidden>Uso del Inmueble</option>
+                                        <option value="Residencial">Residencial</option>
+                                        <option value="Comercial">Comercial</option>
+                                        <option value="Terreno baldio">Terreno Baldio</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <label for="renta">Renta</label>
+                                    <span class="input-group-text">$</span>
+                                    <input
+                                      type="text"
+                                      input class="form-control" 
+                                      id="renta" 
+                                      name="renta" 
+                                      type="number"
+                                      class="form-control"
+                                      aria-label="Amount (to the nearest dollar)"
+                                    />
+                                    <span class="input-group-text">.00</span>
+                                  </div>
+                                <div class="col-md-6 mb-3">
+                                    
+                                    <input class="form-control" id="renta" name="renta" type="number" placeholder="Ingresa la Renta" min="0" req>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="venta">Venta</label>
+                                    <input class="form-control" id="venta" name="venta" min="0" type="number" placeholder="Ingresa la el valor de venta" req>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label for="valor_inmueble">Valor del Inmueble</label>
+                                    <input class="form-control" id="valor_inmueble" name="valor_inmueble" min="0" type="number" placeholder="Ingresa Valor del Inmueble" req>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label for="cuota_mantenimiento">Cuota de Mantenimiento</label>
+                                    <input class="form-control" id="cuota_mantenimiento" name="cuota_mantenimiento" type="number" placeholder="Cuota de Mantenimiento" min="0" req>
+                                </div>
+                                <div class="col-md-6 mb-3 " >                                    
+                                    <label class="form-check-label" for="op_compra">En Renta con opción a Venta</label>
+                                    <input class="form-check-input" type="checkbox" id="op_compra" name="op_compra" value="No">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h2 class="h5 mb-2">Ubicación</h2>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="municipio_alcaldia">Municipio/Alcaldía</label>
+                            <input class="form-control" id="municipio_alcaldia" name="municipio_alcaldia" type="text" placeholder="Municipio ó Alcaldía" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="colonia">Colonia</label>
+                            <input class="form-control" id="colonia" name="colonia" type="text" placeholder="Colonia" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="postal_code">Código Postal</label>
+                            <input class="form-control" id="postal_code" name="postal_code"  type="number" placeholder="Código Postal" min="0" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="estado">Estado</label>
+                            <input class="form-control" id="estado" name="estado"  type="text" placeholder="Estado" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="numeroExterior">Número Exterior</label>
+                            <input class="form-control" id="numeroExterior" name="numeroExterior"  type="text" placeholder="Número Exterior" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="numeroInterior">Número Interior/Depto (Opcional)</label>
+                            <input class="form-control" id="numeroInterior" name="numeroInterior"  type="text" placeholder="Número Interior/Depto" >
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="calle">Calle</label>
+                            <input class="form-control" id="calle" name="calle" type="text" placeholder="Calle" req>
+                        </div>
+                        <h3 class="h6 mb-2">¿Entre qué calles esta?</h3>
+                        <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-2">
+                                <label for="calle1">Calle 1</label>
+                                <input class="form-control" id="calle1" name="calle1" type="text" placeholder="Calle 1" req>
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <label for="calle2">Calle 2</label>
+                                <input class="form-control" id="calle2" name="calle2" type="text" placeholder="Calle 2" >
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="referencias" class="h6 mb-2">Referencias</label>
+                            <textarea class="form-control" placeholder="Referencias" id="referencias" name="referencias" rows="5"></textarea>
+                        </div>
+                        <h2 class="h5 mb-2">Características del Inmueble</h2>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="n_baños">Baños Completos</label>
+                            <input class="form-control" id="n_baños" name="n_baños" type="number" placeholder="Baños Completos" min="0" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="n_medios_baños">Medios Baños</label>
+                            <input class="form-control" id="n_medios_baños" name="n_medios_baños" type="number" placeholder="Medios Baños" min="0" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="n_recamaras">Recamaras</label>
+                            <input class="form-control" id="n_recamaras" name="n_recamaras" type="number" placeholder="Recamaras" min="0" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="n_pisos">Pisos</label>
+                            <input class="form-control" id="n_pisos" name="n_pisos" type="number" placeholder="Pisos" min="0" req>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label for="año_contruccion">Cajones de Estacionamiento</label>
+                            <input class="form-control" id="estacionamiento_cajones" name="estacionamiento_cajones" type="number" placeholder="¿Cuantos cajones hay?" min="0" maxlength="4" req>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="terrenoContruido">Construidos m2</label>
+                            <input class="form-control" id="terrenoContruido" name="terrenoContruido" type="number" placeholder="Construidos m2" min="0" req>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label for="terrenoTotal">Terreno m2</label>
+                            <input class="form-control" id="terrenoTotal" name="terrenoTotal" type="number" placeholder="Terreno m2" min="0" req>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label for="año_contruccion">Año de Construcción</label>
+                            <input class="form-control" id="año_contruccion" name="año_contruccion" type="number" placeholder="Año de Construcción" min="0" maxlength="4" req>
+                        </div>
+                       
+                       <div class="col-md-6 mb-2 ">
+                            <div class="row">
+                                <h2 class="h5 mb-2">Amenidades</h2>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="garaje" name="garaje">
+                                    <label class="form-check-label" for="garaje">Garage</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="terraza" name="terraza">
+                                    <label class="form-check-label" for="terraza">Terraza</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="alberca" name="alberca">
+                                    <label class="form-check-label" for="alberca">Alberca</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="cocina" name="cocina">
+                                    <label class="form-check-label" for="cocina">Cocina</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="amueblado" name="amueblado">
+                                    <label class="form-check-label" for="amueblado">Amueblado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="cuarto_lavado" name="cuarto_lavado">
+                                    <label class="form-check-label" for="cuarto_lavado">Cuarto de Lavado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="mascotas" name="mascotas">
+                                    <label class="form-check-label" for="mascotas">Mascotas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="gym" name="gym">
+                                    <label class="form-check-label" for="gym">Gym</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="bar" name="bar">
+                                    <label class="form-check-label" for="bar">Bar</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="restaurante_bar" name="restaurante_bar">
+                                    <label class="form-check-label" for="restaurante_bar">Restaurante Bar</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_cine" name="sala_cine">
+                                    <label class="form-check-label" for="sala_cine">Sala de Cine</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="salon_estudio" name="salon_estudio">
+                                    <label class="form-check-label" for="salon_estudio">Cuarto de Estudios</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="area_comun" name="area_comun">
+                                    <label class="form-check-label" for="area_comun">Área comun</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_juegos" name="sala_juegos">
+                                    <label class="form-check-label" for="sala_juegos">Sala de Juegos</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="salon_eventos" name="salon_eventos">
+                                    <label class="form-check-label" for="salon_eventos">Salón de Eventos</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="espacio_deportivo" name="espacio_deportivo">
+                                    <label class="form-check-label" for="espacio_deportivo">Canchas Deportivas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="busniess_center" name="busniess_center">
+                                    <label class="form-check-label" for="busniess_center">Business Center</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="roof_garden" name="roof_garden">
+                                    <label class="form-check-label" for="roof_garden">Roof Garden</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <input class="form-check-input" type="checkbox" id="otroA" name="otroA" title="Especifique en la descripción" data-bs-toggle="tooltip" data-bs-placement="right" >
+                                    <label class="form-check-label" for="otroA" >Otro</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2 ">
+                            <div class="row">
+                                <h2 class="h5 mb-2">Servicios</h2>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="internet" name="internet">
+                                    <label class="form-check-label" for="internet">Internet/Wifi</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="electricidad" name="electricidad">
+                                    <label class="form-check-label" for="electricidad">Energía Eléctrica</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="agua_potable" name="agua_potable">
+                                    <label class="form-check-label" for="agua_potable">Agua Potable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="televisionCable" name="televisionCable">
+                                    <label class="form-check-label" for="televisionCable">Tele por Cable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="gas" name="gas">
+                                    <label class="form-check-label" for="gas">Gas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="lineaTelefonica" name="lineaTelefonica">
+                                    <label class="form-check-label" for="lineaTelefonica">Línea Telefónica</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="drenaje" name="drenaje">
+                                    <label class="form-check-label" for="drenaje">Drenaje</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="seguridad" name="seguridad">
+                                    <label class="form-check-label" for="seguridad">Seguridad</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="camarasSeguridad" name="camarasSeguridad">
+                                    <label class="form-check-label" for="camarasSeguridad">Circuito Cerrado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="area_juegos" name="area_juegos">
+                                    <label class="form-check-label" for="a_juegos">Área de juegos</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <input class="form-check-input" type="checkbox" id="otroS" name="otroS" title="Especifique en la descripción" data-bs-toggle="tooltip" data-bs-placement="right" >
+                                    <label class="form-check-label" for="otroS" >Otro</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="descripcion" class="h5 mb-2">Descripción</label>
+                            <textarea class="form-control" placeholder="Descripción" id="descripcion" name="descripcion" rows="4   "></textarea>
+                        </div>
+
+                        {% if messages %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+                        <div class="col-md-6 mb-4">
+                            <label for="fotosInmueble" class="h5 mb-2">Fotos </label>
+
+                            <input class="form-control" type="file" id="imagenes" name="imagenes" multiple title="Maximo 5 Imagenes" data-bs-toggle="tooltip" data-bs-placement="bottom" />
+                            
+                        </div>
+                    </div>
+                    <div class="mb-4" align="center">
+                        <input class="form-check-input" type="checkbox" id="terminos_condiciones" name="terminos_condiciones">
+                        <label class="form-check-label" for="terminos_condiciones" req>
+                            <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer"> He leído y acepto los términos y condiciones de uso</a>
+                        </label>
+                        <div class="mt-3">
+                            <input class="btn btn-success btn-block" id="confirmarBTN" type="submit" value="Guardar"/>
+                        </div>
+                    </div>
+                
+            </form>                                                                        
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    // cambiando el valor del checkbox al hacer click
+        checko = document.getElementById("op_compra");
+        checko.addEventListener('click',function(){ 
+            if (checko.checked){
+            checko.value = "Si";
+            console.log(checko.value);
+        }
+        else{
+            checko.value = "No";
+            console.log(checko.value);
+        }})
+</script>
+
+{% endblock javascripts %}

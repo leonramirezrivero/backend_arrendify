@@ -1,0 +1,33 @@
+var tabla = `<table class="table table-hover">
+                            <caption>Lista del mobiliario existente</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Mueble</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `
+                var contador = 1;
+                mobiliario.forEach(function(item) {
+                    for (var key in item) {
+                        var value = item[key];
+
+                        if (key.includes('cantidad_') && value !== 0) {
+                            tabla += `
+                                <td>${value}</td></tr>`;
+                                contador++;
+                        } else if (!key.includes('id') && !key.includes('inmuebles') && !key.includes('user') && value !== 'Vacio') {
+                            tabla += `
+                                    <tr>
+                                        <th scope="row">${contador}</th>
+                                        <td>${key}</td>
+                                        <td>${value}</td>`;
+                        }
+                    }
+            });
+
+            tabla += `</tbody></table>`;
+            $('#table_mobiliaria').html(tabla);

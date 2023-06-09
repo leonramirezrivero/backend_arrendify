@@ -1,0 +1,717 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Registro Persona Fisica {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/ms_arr.css" rel="stylesheet"/>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div>
+            <div class="dropdown d-none">
+                <button class="btn btn-secondary d-inline-flex align-items-center me-2 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    Registar Nuevo Usuario
+                </button>
+                <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                    <a href="/registro-p-fisica.html" class="dropdown-item d-flex align-items-center" href="#">
+                        <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
+                        Persona Fisica
+                    </a>
+                    <a href="/registro-p-moral.html" class="dropdown-item d-flex align-items-center" href="#">
+                        <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path></svg>
+                        Persona Moral
+                    </a>           
+                </div>
+            </div>
+        </div>
+</div>
+<div class="row">
+    <h2 class="h5 mb-2 ms-2">INMUEBLE<span style="color:red; margin-left:770px; font-size:17px">*</span><span style="font-size:12px"> Campo requerido <span></h2>
+
+
+        
+        <div class="nav-wrapper position-relative ms-3">
+            <ul class="nav nav-pills nav-pill-circle flex-column flex-md-row">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-label="first navigation tab" data-bs-toggle="modal" data-bs-target="#reg_inmueble"href="#">
+                        <span class="nav-link-icon d-block">
+                            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-label="second navigation tab" data-bs-toggle="tab" href="#">
+                        <span class="nav-link-icon d-block">
+                            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-label="third navigation tab" data-bs-toggle="tab" href="#">
+                        <span class="nav-link-icon d-block">
+                            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-label="fourth navigation tab" data-bs-toggle="tab" href="#">
+                        <span class="nav-link-icon d-block">
+                            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path></svg>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+                <div class="mt-3">
+                    <input class="btn btn-success btn-block" id="confirmarBTN" data-bs-toggle="modal" data-bs-target="#reg_inmueble" value="Ver Modal">
+                </div>
+            </form>                                                                        
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+<div id="Modal Registro Inmueble">
+    <p id="carga_plantar" style="display:none;">
+        <p id="carga_pfom" style="display:none;">
+            <p id="carga_aa" style="display:none;">
+    <div class="modal fade" id="reg_inmueble" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" style="height:15px" id="exampleModalLabel">Registro Inmueble</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+    <div class="container">
+        <div class="card">
+            {% comment %} action="{% url 'createf' %}" {% endcomment %}
+            <form id="Formu" class="form" action="{% url 'createin' %}" enctype="multipart/form-data"  method="post"> 
+                {% csrf_token %}
+                <div class="left-side">
+                    <div class="left-heading">
+                        <h3>Introduce la información Solicitada</h3>
+                    </div>
+                    <div class="steps-content" style="margin-bottom:-50px;">
+                        <h3>Paso <span class="step-number">1</span></h3>
+                    
+                    </div>
+                    <ul class="progress-bar" style="background:none;">
+                        <li id="li1" class="active">Inicio</li>
+                        <li id="li2">Paso 2</li>
+                        <li id="li3">Paso 3</li>
+                        <li id="li4">Paso 4</li>
+                        <li id="li5">Paso 5</li>
+                        <li id="li6">Paso 6</li>
+                        <li id="li7">Paso 7</li>
+                    </ul>
+                </div>
+                <div class="right-side">
+                    <div id="step1" class="main active">
+                        <small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-buildings" viewBox="0 0 16 16">
+                            <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022ZM6 8.694 1 10.36V15h5V8.694ZM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15Z"/>
+                            <path d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z"/>
+                          </svg></small>
+                          <div class="text">
+                            <h2 id="dio">Datos Generales Del Inmueble</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                        </div>                       
+                        <hr class="hr" />
+                        <div id="dgdi">
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text" name="alias_inmueble" id="alias_inmueble" oninput="prueba2(this)" equire>
+                                    <span>Alias del Inmueble</span>
+                                </div>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div" style="position: relative; bottom: 23px;">
+                                    <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">Estatus del Inmueble</label>
+                                   <select class="form-select" id="estatus_inmueble" name="estatus_inmueble" aria-label="Floating label select example">
+                                    <option hidden>Estatus</option>
+                                    <option value="Rentado">Ocupado</option>
+                                    <option value="Disponible">Disponible</option>
+                                    <option value="Reparación">Reparación</option>
+                                    </select>
+                                </div>
+                                <div class="input-div"> 
+                                    <input type="text" id="clave_catastral" name="clave_catastral" oninput="prueba2(this)" equire>
+                                    <span>Clave Catastral</span>
+                                </div>  
+                                <div class="input-div" style="position: relative; bottom: 23px;">
+                                    <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">Estatus Gravamen</label>
+                                   <select class="form-select" id="estatus_gravamen" name="estatus_gravamen" aria-label="Floating label select example">
+                                    <option value="Ninguno">Ninguno</option>
+                                    <option value="Usufructo">Usufructo</option>
+                                    <option value="Hipoteca">Hipoteca</option>
+                                    </select>
+                                </div>      
+                            </div>
+                        <div class="input-text">
+                            <div class="input-div" style="position: relative; bottom: 23px;">
+                                <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">Tipo de Inmueble</label>
+                               <select class="form-select" id="tipo_inmueble" name="tipo_inmueble" aria-label="Floating label select example">
+                                    <option hidden>Tipo de Inmueble</option>
+                                    <option value="Casa">Casa</option>
+                                    <option value="Departamento">Departamento</option>
+                                    <option value="Local">Local</option>
+                                    <option value="Oficina">Oficina</option>
+                                    <option value="Bodega">Bodega</option>
+                                    <option value="Condominios">Condominios</option>
+                                    <option value="Duplex">Duplex</option>
+                                </select>
+                            </div> 
+                            <div class="input-div" style="position: relative; bottom: 23px;">
+                                <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">Uso Del Inmueble</label>
+                                <select class="form-select" id="uso_inmueble" name="uso_inmueble" aria-label="Floating label select example">
+                                    <option hidden>Uso del Inmueble</option>
+                                    <option value="Residencial">Residencial</option>
+                                    <option value="Comercial">Comercial</option>
+                                    <option value="Terreno baldio">Terreno Baldio</option>
+                                </select>
+                            </div> 
+                      
+                         </div>
+                        
+                         
+                            <div class="buttons mt-3">
+                                <input class="btn btn-primary next_button" type="button" id="next1" onClick="recopilar()" value="Siguiente" >
+                            </div>
+                        </div>
+                       
+                    
+                    </div>
+                    
+                    <div id="step2" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+                            </svg>
+                        </small>
+                        
+                    <div id="renta" >
+                        <div class="text">
+                            <h2 id="tdde">Datos Financieros</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                            <hr class="hr" />
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="renta" name="renta" oninput="prueba2(this)"  equire>
+                                <span>Valor De La Renta</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="number" maxlength="13" id="venta" name="venta" oninput="prueba2(this)"  equire>
+                                <span>Valor De Venta</span>
+                            </div>
+                        </div>
+
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="valor_inmueble" name="valor_inmueble" oninput="prueba2(this)"  equire>
+                                <span>Valor Del Inmueble</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="number" maxlength="13" id="cuota_mantenimiento" name="cuota_mantenimiento" oninput="prueba2(this)"  equire>
+                                <span>Cuota De Mantenimiento</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 " >                                    
+                            <label class="form-check-label" for="op_compra">En Renta con opción a Venta</label>
+                            <input class="form-check-input" type="checkbox" id="op_compra" name="op_compra" value="{{verinmueble.op_compra}}" {% if verinmueble.op_compra == Null  %} value="No" {% endif %}  disabled >
+                        </div>
+                    </div>
+
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button"  value="Siguiente">
+                        </div>
+                    </div>
+                    
+                    <div id="step3" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-building-fill-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.493 4.493 0 0 0 12.5 8a4.493 4.493 0 0 0-3.59 1.787A.498.498 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.476 4.476 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1V1Zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                            </svg>
+                        </small>
+                        <div id="ubicacion">
+                            <div class="text">
+                                <h2>Ubicación</h2>
+                                <p>Por favor introduce tus datos Domiciliarios.</p>
+                                <hr class="hr" />
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text" id="calle" name="calle" oninput="prueba2(this)" equire>
+                                    <span>Calle</span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" type="number" id="numeroExterior" name="numeroExterior" oninput="prueba2(this)" equire>
+                                    <span>Número Ext. </span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" type="number" id="numeroInterior" name="numeroInterior" oninput="prueba2(this)" equire>
+                                    <span>Número Int. </span>
+                                </div>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input type="text"id="colonia" name="colonia" oninput="prueba2(this)" equire>
+                                    <span>Colonia</span>
+                                </div>
+                               
+                                <div class="input-div"> 
+                                    <input class="form-control" id="postal_code" name="postal_code" type="tel" maxlength="5" oninput="prueba2(this)" equire>
+                                    <span>Código Postal</span>
+                                </div>
+                                <div class="input-div"> 
+                                        <input type="text" id="municipio_alcaldia" name="municipio_alcaldia" oninput="prueba2(this)" equire>
+                                        <span>Municipio/Alcaldia</span>
+                                    </div>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                   <div class="input-div"> 
+                                    <input type="text" id="estado" name="estado" oninput="prueba2(this)" equire>
+                                    <span>Estado/Ciudad</span>
+                                </div>
+                                </div>
+                              
+                            </div>
+                            <div class="row">
+                                <h3 class="h6 mb-2">¿Entre qué calles esta?</h3>
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-md-12 mb-2">
+                                        <span>Calle 1</span>
+                                        <input id="calle1" name="calle1" type="text" req>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <span>Calle 1</span>
+                                        <input id="calle2" name="calle2" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <span>Referencias</span>
+                                    <textarea class="form-control" id="referencias" name="referencias" rows="5"></textarea>
+                                </div>
+                            </div>
+                            
+                           
+                            <div class="buttons button_space">
+                                <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                                <input class="btn btn-primary next_button" type="button" onClick="recopilar()" value="Siguiente">
+                            </div>
+                      
+                            
+                        </div>
+                     
+                    </div>
+                    
+                    {% comment %} referencias del Arrendatario {% endcomment %}
+                    <div id="step4" class="main">
+                        <small>
+                            <img src="/static/assets/img/icons/aa.png" style="width:25px; height:25px;" alt="icon">
+                        </small>
+
+                        <div id="caracteristicas">
+                            <div class="text">
+                                <h2>Características del Inmueble</h2>
+                                <p>Por favor introduce las caracteristicas del inmueble</p>
+                                <hr class="hr" />
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input class="form-control" id="n_baños" name="n_baños" type="number" maxlength="10" equire>
+                                    <span>Baños Completos</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="n_medios_baños" name="n_medios_baños" type="number" maxlength="10" equire>
+                                    <span>Medios Baños</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="n_recamaras" name="n_recamaras" type="number" maxlength="10" equire>
+                                    <span>Recamaras</span>
+                                </div>
+                            </div>
+                            <hr class="hr" />  
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input class="form-control" id="n_pisos" name="n_pisos" type="number" maxlength="10" equire>
+                                    <span>Pisos</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="estacionamiento_cajones" name="estacionamiento_cajones" type="number" maxlength="10" equire>
+                                    <span>Cajones De Estacionamiento</span>
+                                </div>
+                            </div>
+                            <hr class="hr" />  
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input class="form-control" id="terrenoContruido" name="terrenoContruido" type="number" maxlength="10" equire>
+                                    <span>m2 Construidos</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="terrenoTotal" name="terrenoTotal" type="number" maxlength="10" equire>
+                                    <span>Total m2 Terreno </span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="año_contruccion" name="año_contruccion" type="number" maxlength="10" equire>
+                                    <span>Año De Construcción</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="recopilar()" value="Siguiente">
+                        </div>
+                    </div>
+
+                    <div id="step5" class="main">
+                        <small>
+                            <img src="/static/assets/img/icons/ref.png" style="width:25px; height:25px;" alt="icon">
+                        </small>
+                        
+                        <div class="text">
+                            <h2>Amenidades</h2>
+                            <p>Por favor haz click para marcar las amenidades con las que cuenta el inmueble</p>
+                            <hr class="hr" /> 
+                        </div>
+                        <div class="input-text">
+                            <div class="row" id="amenidades">
+                                <h2 class="h5 mb-2">Amenidades</h2>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="garage"   name="garage" {% if verinmueble.a_garaje != Null  %} checked {% endif %}>
+                                    <label class="form-check-label" for="garaje">Garage</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="terraza"  name="terraza" {% if verinmueble.terraza != Null  %} checked {% endif %}>
+                                    <label class="form-check-label" for="terraza">Terraza</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="alberca"  name="alberca" {% if verinmueble.a_alberca != Null  %} checked {% endif %}>
+                                    <label class="form-check-label" for="alberca">Alberca</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="cocina"  name="cocina">
+                                    <label class="form-check-label" for="cocina">Cocina</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="amueblado"  name="amueblado">
+                                    <label class="form-check-label" for="amueblado">Amueblado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox  id="cuarto_lavado"  name="cuarto_lavado">
+                                    <label class="form-check-label" for="cuarto_lavado">Cuarto de Lavado</label>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox"  id="mascotas"name="mascotas">
+                                    <label class="form-check-label" for="mascotas">Mascotas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox"  id="gym"  name="gym">
+                                    <label class="form-check-label" for="gym">Gym</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="bar"  name="bar">
+                                    <label class="form-check-label" for="bar">Bar</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="restaurante_bar"  name="restaurante_bar">
+                                    <label class="form-check-label" for="restaurante_bar">Restaurante Bar</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_cine"  name="sala_cine">
+                                    <label class="form-check-label" for="sala_cine">Sala de Cine</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="salon_estudio"  name="salon_estudio">
+                                    <label class="form-check-label" for="salon_estudio">Cuarto de Estudios</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="area_comun"  name="area_comun">
+                                    <label class="form-check-label" for="area_comun">Área comun</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_juegos"  name="sala_juegos">
+                                    <label class="form-check-label" for="sala_juegos">Sala de Juegos</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="salon_eventos"  name="salon_eventos">
+                                    <label class="form-check-label" for="salon_eventos">Salón de Eventos</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="espacio_deportivo"  name="espacio_deportivo">
+                                    <label class="form-check-label" for="espacio_deportivo">Canchas Deportivas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="busniess_center"  name="busniess_center">
+                                    <label class="form-check-label" for="busniess_center">Business Center</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="roof_garden"  name="roof_garden">
+                                    <label class="form-check-label" for="roof_garden">Roof Garden</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <input class="form-check-input" type="checkbox" id="otroA" name="otroA"  title="Especifique en la descripción del siguiente paso" data-bs-toggle="tooltip" data-bs-placement="right" >
+                                    <label class="form-check-label" for="otroA" >Otro</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="recopilar()" value="Siguiente">
+                        </div>
+                    </div>
+
+                    <div id="step6" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                              </svg>
+                        </small>
+                        <div class="text">
+                            <h2>Servicios</h2>
+                            <p>Por favor haz click para marcar lod Servicios con los que cuenta el inmueble</p>
+                            <hr class="hr" /> 
+                        </div>
+
+                        <div class="input-text">
+                            <div class="row" id="servicis">
+                                <h2 class="h5 mb-2">Servicios</h2>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="internet"  name="internet">
+                                    <label class="form-check-label" for="internet">Internet/Wifi</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="electricidad"  name="electricidad">
+                                    <label class="form-check-label" for="electricidad">Energía Eléctrica</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="agua_potable"  name="agua_potable">
+                                    <label class="form-check-label" for="agua_potable">Agua Potable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="televisionCable"  name="televisionCable">
+                                    <label class="form-check-label" for="televisionCable">Tele por Cable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="gas"  name="gas">
+                                    <label class="form-check-label" for="gas">Gas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="lineaTelefonica"  name="lineaTelefonica">
+                                    <label class="form-check-label" for="lineaTelefonica">Línea Telefónica</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="drenaje"  name="drenaje">
+                                    <label class="form-check-label" for="drenaje">Drenaje</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="seguridad"  name="seguridad">
+                                    <label class="form-check-label" for="seguridad">Seguridad</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="camarasSeguridad"  name="camarasSeguridad">
+                                    <label class="form-check-label" for="camarasSeguridad">Circuito Cerrado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="area_juegos"  name="area_juegos">
+                                    <label class="form-check-label" for="a_juegos">Área de juegos</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <input class="form-check-input" type="checkbox" id="otroS" name="otroS"  title="Especifique en la descripción" data-bs-toggle="tooltip" data-bs-placement="right" >
+                                    <label class="form-check-label" for="otroS" >Otro</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-md-12 mb-4">
+                            <label for="descripcion" class="h5 mb-2">Descripción</label>
+                            <textarea class="form-control" placeholder="Descripción" id="descripcion" name="descripcion" rows="4   "></textarea>
+                        </div>
+
+
+                       
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="recopilar()" value="Siguiente">
+                        </div>
+                    </div>
+
+
+                    <div id="step7" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                              </svg>
+                        </small>
+                        <div class="text">
+                            <h2>Fotos</h2>
+                            <p>Por favor haz click para marcar lod Servicios con los que cuenta el inmueble</p>
+                            <hr class="hr" /> 
+                        </div>
+
+                        {% if messages %}
+                        <div class="alert alert-danger">
+                          <ul>
+                            {% for message in messages %}
+                              <li>{{ message }}</li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      {% endif %}
+                       
+                      <div class="col-md-6 mb-4">
+                        <label for="fotosInmueble" class="h5 mb-2">Fotos </label>
+
+                        <input class="form-control" type="file" id="imagenes" name="imagenes" multiple title="Maximo 5 Imagenes" data-bs-toggle="tooltip" data-bs-placement="bottom" />
+                        
+                    </div>
+                       
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="recopilar()" value="Siguiente">
+                            <button class="submit_button next_button">Finalizar</button>
+                        </div>
+                    </div>
+
+                  
+
+                    <div class="main">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        
+                        <div class="text congrats">
+                            <h2>¡Listo!</h2>
+                            <p>Gracias Sr./Sra. <span class="shown_name"></span>  {{ request.user.first_name }} su información se ha enviado con éxito para futuras referencias.</p> <strong>Pronto nos pondremos en contacto con usted. </strong>
+                        <img style="width:350px; height:250px;" src="https://thumbs.gfycat.com/CelebratedAngryDalmatian-max-1mb.gif"></img>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+</div>
+<!-- End of Modal -->
+    
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+
+{% block javascripts %}
+<script src="/static/assets/js/ms_arr.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script>
+const arr = {};
+document.getElementById("carga_plantar").onload = cajas();
+
+    $(function () {
+        $("form").keypress(function (e) {
+            var key;
+            if (window.event)
+                key = window.event.keyCode; //IE
+            else
+                key = e.which; //firefox     
+            return (key != 13);
+        });
+    });
+//document.getElementById("carga_plantar").onload=plantar();
+
+function recopilar()
+{
+// Obtener y Guardar el valor del input en localStorage
+console.log("estoy en guardar",JSON.stringify(arr))
+localStorage.setItem('datos', JSON.stringify(arr));
+}
+
+function prueba2(val){
+    console.log(val.name)
+    arr[""+val.name] = '' +val.value
+    console.log(arr)
+}
+// cambiando el valor del checkbox al hacer click
+checko = document.getElementById("op_compra");
+checko.addEventListener('click',function(){ 
+    if (checko.checked){
+    checko.value = "Si";
+    console.log(checko.value);
+}
+else{
+    checko.value = "No";
+    console.log(checko.value);
+}}) 
+
+function boxes(valor)
+{
+    let check={}
+    console.log(valor.name)
+    nombre=valor.id
+    setVal = document.getElementById(nombre)
+
+    console.log("yo soy id",nombre)
+    console.log("yo soy id valor",setVal)
+
+    if (setVal.checked){
+        setVal.value="Si"
+        console.log("set 1",setVal.value)
+        
+    }
+    else{
+        setVal.
+        console.log("set 2",setVal.value)
+    }   
+}
+function cajas(){
+    console.log("hola")
+    var des = document.getElementById("amenidades").getElementsByTagName('input');
+    console.log(des)
+
+          for (var node of des) {
+              node.setAttribute("value", "No");
+              console.log(node)
+              
+              console.log(node.value)
+          }
+    
+    var des = document.getElementById("servicis").getElementsByTagName('input');
+    console.log(des)
+    for (var node of des) {
+        node.setAttribute(value);
+        node.
+    }
+          
+}
+</script>
+
+   
+{% comment %} <script src="/static/assets/js/ocultadorespf.js"></script> {% endcomment %}
+{% comment %} <script src="/static/assets/js/validacionpf.js"></script> {% endcomment %}
+{% endblock javascripts %}
+

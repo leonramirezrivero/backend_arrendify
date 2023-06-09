@@ -1,0 +1,313 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Inquilinos - Documentos {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/ms.css" rel="stylesheet"/>
+{% endblock stylesheets %}
+
+{% block content %}
+<body onload="obtenerInquilino()">
+<div id="li2" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4" style="background-color:#edede9;">
+    <div class="d-block mb-4 mb-md-0" style="margin-left:10px">
+        <h1 class="h1">Inquilinos</h>
+        <p class="mb-0">Listado de inquilinos</p>
+    </div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="#" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2">
+            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            Nuevo Inquilino
+        </a>
+    </div>
+  </div>
+
+</div>
+<div class="table-settings mt-2 mb-4">
+  <div class="row justify-content-between align-items-center">
+      <div class="col-9 col-lg-8 d-md-flex">
+          <div class="input-group me-2 me-lg-3 fmxw-300">
+              <span class="input-group-text">
+                  <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                  </svg>
+              </span>
+              <input type="text" class="form-control" placeholder="Buscar por Nombre">
+            </div>
+            <select class="form-select fmxw-200 d-none d-md-inline" aria-label="Message select example 2">
+                <option selected>Todos</option>
+              <option value="1">Persona Moral</option>
+              <option value="2">Persona Física</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="card card-body shadow border-0 table-wrapper table-responsive"><!-- podemos agregar la clase => table-responsive-->
+    <table class="table user-table table-hover align-items-center mb-5"> <!--id="datatable"-->
+        <thead>
+            <tr >
+                <th class="border-bottom"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
+                <th class="border-bottom">ID</th>
+                <th class="border-bottom">Nombre</th>						
+                <th class="border-bottom">Fecha de Registro</th>
+                <th class="border-bottom">Tipo de Persona</th>
+                <th class="border-bottom">Estatus</th>
+                <th class="border-bottom">Acción</th>
+                <th class="border-bottom"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inq in inquilinos %}
+            <tr>
+                <td>
+                    <div class="form-check dashboard-check">
+                        <input class="form-check-input" type="checkbox" value="" id="userCheck1">
+                    </div>
+                </td>
+                <td><span class="fw-normal ">{{inq.id}}</span></td>
+                <td>
+                    <a href="/detalles_inquilino/{{inq.id}}" class="d-flex align-items-center">
+                        <div class="d-block">
+                            <span class="fw-bold">{{inq.nombre}} {{inq.apellido}} {{inq.apellido1}}</span>
+                            <div class="small text-gray">{{inq.email}}</div>
+                        </div>
+                    </a>
+                </td>
+                <td><span class="fw-normal">{{inq.created}}</span></td>                        
+                <td>
+                    <span class="fw-normal">{{inq.p_fom}}</span>
+                </td>
+                <td><span class="fw-normal text-success">Active</span></td>
+                <td>
+                    <div class="btn-group dropstart">
+                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        
+                        <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                            <a class="dropdown-item d-flex align-items-center" href="/editar_inq/{{inq.id}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" title="Editar" data-bs-toggle="tooltip" fill="currentColor" fill-rule="evenodd"  class="icon icon-xs bi bi-pencil ms-1" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                  </svg>&nbsp;Editar
+                            </a>
+
+                            <a class="dropdown-item d-flex align-items-center" onClick="alert0({{inq.id}})">
+                                <svg class="icon icon-xs text-danger ms-1" title="Eliminar" data-bs-toggle="tooltip" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                                &nbsp;Borrar
+                            </a>                             
+                        </div>   
+                    </div>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   
+</div>
+
+<div class="modal fade" id="archivos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" style="height:15px" id="exampleModalLabel">Archivos Inquilino</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href='/inquilinos/';" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="background:linear-gradient(0deg, #231942ff, #5e548eff, #9f86c0ff, #be95c4ff, #e0b1cbff);">
+            <body>
+                <div>
+                      <form class="formchido mt-4 " method="POST" enctype="multipart/form-data">
+                          <h2 class="h5 mb-3 mt-4">Por Favor Adjunte Sus Documentos Escaneados.</h2>
+                          <div class="row">
+                              <hr class="hr" />
+                            <div class="col border-end border-2">
+                                Nota: <strong><p>Todos los archivos deben de esta en formato .PDF </p></strong>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label>Inquilino: </label>
+                                <input id="inquilino" name="inquilino"  type="text" style="display:none"  readonly>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="inquilino_nombre" type="text" value="{{ arrendador.nombre_notario_ac}}"  readonly>
+                            </div> 
+                        </div> 
+                        <hr class="hr" />
+                          <div class="mb-3">
+                              <label for="url_domicilio">Comprobante Domicilio.</label>
+                              <input class="form-control" id="Comp_dom" name="Comp_dom" accept="application/pdf" type="file" title="No mayor a 3 meses." data-bs-toggle="tooltip" data-bs-placement="top" >
+                          </div>
+                          <div class="mb-3">
+                              <label for="url_ine" class="form-label">Identificación Oficial Vigente (Pasaporte/INE/Cédula Profesional)</label>
+                              <input class="form-control"  id="Ine" name="Ine" accept="application/pdf" type="file" placeholder="URL">
+                          </div>
+                          <div class="mb-3">
+                              <label for="url_situacion_fiscal" class="form-label">Constancia de Situación Fiscal</label>
+                              <input class="form-control"  id="Rfc" name="Rfc" accept="application/pdf" type="file" placeholder="URL">
+                          </div>
+    
+                            <div class="mb-3" id="div-ingresos">
+                                <label for="url_situacion_fiscal" class="form-label">Comprobante De Ingreso (Recibos de nomina o Estados de cuenta)</label>
+                                <input class="form-control"  id="Ingresos" accept="application/pdf" name="Ingresos" type="file" placeholder="URL">
+                            </div>
+                            <div class="mb-3" id="div-crl">
+                                <label for="url_situacion_fiscal" class="form-label">Carta De Recomendacion Laboral</label>
+                                <input class="form-control"  id="Recomendacion_laboral" name="Recomendacion_laboral" accept="application/pdf" type="file" placeholder="URL">
+                            </div>
+                            <p>Nota. En caso que le soliciten subir un documento en especial, hagalo en este espacio</p>
+                            <div class="mb-3" id="div-extras">
+                                <label for="url_situacion_fiscal" class="form-label">Documentos Extra</label>
+                                <input class="form-control"  id="Extras" name="Extras" accept="application/pdf" type="file" placeholder="URL">
+                            </div>
+                         
+                          {% csrf_token %}
+                          <button type="submit" id="finalizar"  class="btn btn-primary">Subir Archivos</button>
+                      </form>
+                 
+                  </div>
+              </body>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    * {
+        font-family: "Roboto";
+    }
+    body.swal2-shown > [aria-hidden="true"] {
+        transition: 0.1s filter;
+        filter: blur(10px);
+      }
+    body {
+        background-color: #F5F5F5;
+    }
+
+    .formchido {
+        background-color: #FFFFFF;
+        padding: 25px;
+    }
+
+    table {
+        width: 100%; 
+        text-align: center;
+        margin-top: 25px;
+        padding: 25px;
+        background-color: #FFFFFF;
+    }
+
+    table tr td {
+        padding-top: 15px;            
+    }
+    
+      
+</style>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    $(function () {
+        $("form").keypress(function (e) {
+            var key;
+            if (window.event)
+                key = window.event.keyCode; //IE
+            else
+                key = e.which; //firefox     
+            return (key != 13);
+        });
+    });
+
+    $(document).ready(function() {
+       
+       $('#archivos').modal({ keyboard: false,backdrop: false })
+       
+       $('#archivos').modal('show');
+      
+
+    });
+
+const server = 'http://192.168.2.24:8001'
+const configin = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Token ${localStorage.getItem('token')}`
+    },
+  };
+
+
+const btnSubmit = document.getElementById("finalizar")
+btnSubmit.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    var formData = new FormData();
+    var fileInputElement1 = document.getElementById("Comp_dom")
+    var fileInputElement2 = document.getElementById("Ine")
+    var fileInputElement3 = document.getElementById("Rfc")
+    
+    var ingreso = document.getElementById("Ingresos")
+    var extras = document.getElementById("Extras")
+    var rec_lab = document.getElementById("Recomendacion_laboral")
+
+    console.log("ingreso",ingreso.files[0])
+    console.log("extras",extras.files[0])
+    console.log("Recomendacion_laboral",rec_lab.files[0])
+
+    formData.append("Comp_dom", fileInputElement1.files[0]);
+    formData.append("Ine", fileInputElement2.files[0]);
+    formData.append("Rfc", fileInputElement3.files[0]);
+    formData.append("Ingresos", ingreso.files[0]);
+    formData.append("Extras", extras.files[0]);
+    formData.append("Recomendacion_laboral", rec_lab.files[0]);
+    formData.append("inquilino", document.getElementById("inquilino").value );
+    console.log(formData)
+    enviar_datos(formData)
+})
+
+async function enviar_datos(formulario){
+    const response = await axios.post(`${server}/documentos_reg/`,formulario,configin)
+    console.log("response",response)
+    Swal.fire({
+        icon: 'success',
+        title: 'Archivos Subidos!!',
+        text: 'Tus Documentos han sido subidos de manera correcta',
+    })
+    
+    setTimeout(() => {
+        window.location.href = `/inquilinos/`
+    }, "2000");
+    
+}
+
+
+function obtenerInquilino(){
+    var datos = JSON.parse( localStorage.getItem('data_inquilino'))
+    console.log(datos)
+    document.getElementById("inquilino").value = `${datos.id}`
+    document.getElementById("inquilino_nombre").value = `${datos.nombre} ${datos.apellido} ${datos.apellido1}`
+    // ocultar documentos para pf o para pm
+        if(datos.p_fom == "Persona Moral"){
+        document.getElementById("div-ingresos").style.display = 'none'
+        document.getElementById("div-crl").style.display = 'none'
+
+        }
+
+    } 
+
+</script>
+<script src="/static/assets/repositorios/loader.js"></script>
+<script>
+    document.getElementById("li2").onload = inicio()
+    function inicio(){
+         console.log("entro inicio")
+        auten()
+    }
+   
+</script>
+
+{% endblock javascripts %}
+

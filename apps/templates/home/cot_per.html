@@ -1,0 +1,496 @@
+{% extends "layouts/base.html" %}
+{% csrf_token %}
+{% block title %} Cotizador personalizado {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/estilos.css" rel="stylesheet"/>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<form method='POST' action="#" class="mt-4">
+
+    <div class="row">
+        <div style="background-color:white" class="">
+            <label for="cotizar" class="h1 mb-4"> Cotizador Personalizado </label>
+        </div>   
+
+        <div class="card card-body border-0 shadow mb-4">
+            <label for="cotizar" class="h5 mb-4"> Numero de inmueble</label>
+            
+            <div style="Display:inline-block" class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">1</label>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">2</label>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">3</label>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">4</label>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">5</label>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">6</label>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">7</label>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">8</label>
+                </div>
+            </div>
+        </div> 
+
+        <div class="card card-body border-0 shadow mb-4">
+            <label for="cotizar" class="h5 mb-4"> Asistencia Juridica </label>
+            <div style="Display:inline-block" class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">Si</label>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">No</label>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="card card-body border-0 shadow mb-4">
+            <label for="cotizar" class="h5 mb-4"> Acción Legal </label>
+            <div style="Display:inline-block" class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">Si</label>
+                &nbsp;&nbsp;&nbsp;
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">No</label>
+                </div>
+            </div>
+        </div> 
+        
+  <!-- Segundo modo -->
+        <section class="card card-body border-0 shadow mb-4">
+            <div class="container ">
+                <div class="row justify-content-md-center">
+                    <div class="col-12 col-lg-8">
+                        <h2 class="h1 fw-bold mb-3 ">Cotizador Personal</h2>
+                    </div>
+                    
+                    <div class="col-12 col-lg-4">
+                        <div class="github-big-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 17">
+                                    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
+                                  </svg>
+                              </svg>
+                        </div>
+                </div>
+                <div  class="row mt-5 ">
+                     {% comment %} Inicio de la carta {% endcomment %}
+                    <div style="margin-top:15px;" class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div style="margin-top:-47px" class="card shadow border-0 p-4">
+                            <!-- Header -->
+                            <div class="card-header bg-white border-0 pb-0">
+                                <span class="d-block">
+                                    <span class="h2 text-primary fw-bold align-top ">Plan Plata</span>
+                                </span>
+                            </div>
+                            <!-- End Header -->
+                            <!-- Content -->
+                            <div style="margin-bottom:26px" class="card-body">
+                                <ul class="list-group list-group-flush price-list">
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; <strong>1 &nbsp;</strong> inmueble</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; <strong>6 &nbsp;</strong> meses de cobertura</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Asesoria Juridica</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Cobertura Juridica</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Soporte Premium</li>
+                                </ul>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+
+                    {% comment %} Inicio de la carta {% endcomment %}
+                    <div style="margin-top:15px;" class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div class="card shadow border-0 p-4 py-5 mt-lg-n5">
+                            <!-- Header -->
+                            <div class="card-header bg-white border-0 pb-0">
+                                <span style="margin-top:-20px" class="d-block">
+                                    <span class="h2 text-primary fw-bold align-top">Plan Oro</span>
+                                </span>
+                            </div>
+                            <!-- End Header -->
+                            <!-- Content -->
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush price-list">
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; <strong>6 &nbsp;</strong> inmueble</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; <strong>2 &nbsp;</strong> años de cobertura</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Asesoria Juridica</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Cobertura Juridica</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Soporte Premium</li>
+                                </ul>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                    {% comment %} Inicio de la carta {% endcomment %}
+                    <div style="margin-top:15px;" class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div class="card shadow border-0 p-4 py-5 mt-lg-n5">
+                            <!-- Header -->
+                            <div class="card-header bg-white border-0 pb-0">
+                                <span style="margin-top:-20px" class="d-block">
+                                    <span class="h2 text-primary fw-bold align-top">Plan Platino</span>
+                                </span>
+                    
+                            </div>
+                            <!-- End Header -->
+                            <!-- Content -->
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush price-list">
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; <strong>10 &nbsp;</strong> inmueble</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; <strong>5 &nbsp;</strong> años de cobertura</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Asesoria Juridica</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Cobertura Juridica</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">&nbsp; Soporte Premium</li>
+                                 </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                  
+                    
+                </div>
+                <div style="margin-top:20px ;">
+                    
+                    </div>
+                    <a style="Display:none" class="btn btn-lg btn-secondary" href="">Haz click aqui</a>
+                    <p style="color:#231944; margin-left:1792px; text-align:left;" class="lead mb-4">*Costos no incluyen IVA</p>
+                    <p style="color:#231942; margin-left:1677px; margin-top:-30px;" class="lead mb-4">**El pago de la poliza es anual</p>
+                    <p style="color:#231942; margin-left:1250px; margin-top:-30px; " class="lead mb-4">***En costros mayores a 25,000 consultar con asesor</p>
+            </div>
+        </section>
+
+
+        <div style="background-color:white" >
+            <label class="titulo"> Cotizador Personalizado </label>
+        </div>  
+
+{% comment %} aqui empieza el de 4 columnas {% endcomment %}
+<div class="container">
+    <div class="row">
+
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Inmuebles</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Selecciona una opción </option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">3</option>
+               </select>
+               
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+        
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Renta</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <ul class="list-group list-group-flush price-list">
+                        <div style="Display:inline-block" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">Si</label>
+                            &nbsp;&nbsp;&nbsp;
+                            <div style="Display:inline-block" class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">No</label>
+                            </div>
+                        </div>   
+    </div>
+            </div>
+        </div>
+        <!-- End Content -->
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Soporte premium</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <ul class="list-group list-group-flush price-list">
+                        <div style="Display:inline-block" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">Si</label>
+                            &nbsp;&nbsp;&nbsp;
+                            <div style="Display:inline-block" class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">No</label>
+                            </div>
+                        </div>   
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+      <div style="margin-top:15px; Display:inline-block" class="col-3">
+        <div class="card shadow border-2 ">
+            <!-- Header -->
+            <div class="card-header bg-white border-5 pb-0">
+                <span style="margin-top:-20px" class="d-block">
+                    <span class="h2 text-primary fw-bold align-top">Años de cobertura</span>
+                </span>
+            </div>
+            <!-- End Header -->
+            <!-- Content -->
+            <div class="card-body">
+                <div style="Display:inline-block width" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">1</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">2</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">3</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">4</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">5</label>
+                    </div>
+                </div>   
+            </div>
+            <!-- End Content -->
+        </div> 
+    </div>
+    </div>
+  </div>
+</div>
+{% comment %} aqui acaba el 4 columnas {% endcomment %}
+
+{% comment %} aqui empieza el de 4 columnas {% endcomment %}
+<div class="container">
+    <div class="row">
+
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Asesoria Juridica</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">Si</label>
+                        &nbsp;&nbsp;&nbsp;
+                        <div style="Display:inline-block" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">No</label>
+                        </div>
+                    </div>   
+
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+        
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Tiempo cobertura</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Selecciona una opción</option>
+                        <option value="1">1 año</option>
+                        <option value="2">2 años</option>
+                        <option value="3">3 años</option>
+                        <option value="4">4 años</option>
+                        <option value="5">5 años</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">ETC 2</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <ul class="list-group list-group-flush price-list">
+                        <div style="Display:inline-block" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">Si</label>
+                            &nbsp;&nbsp;&nbsp;
+                            <div style="Display:inline-block" class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">No</label>
+                            </div>
+                        </div>   
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+      <div style="margin-top:15px; Display:inline-block" class="col-3">
+        <div class="card shadow border-2 ">
+            <!-- Header -->
+            <div class="card-header bg-white border-5 pb-0">
+                <span style="margin-top:-20px" class="d-block">
+                    <span class="h2 text-primary fw-bold align-top">ETC 3</span>
+                </span>
+            </div>
+            <!-- End Header -->
+            <!-- Content -->
+            <div class="card-body">
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">1</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">2</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">3</label>
+                        &nbsp;
+                    </div>
+                </div>   
+
+            </div>
+            <!-- End Content -->
+        </div> 
+    </div>
+
+    </div>
+  </div>
+</div>
+{% comment %} aqui acaba el 4 columnas {% endcomment %}
+    <!-- Segundo modo -->
+    <section class="card card-body border-0 shadow mb-4">
+        <div class="container ">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-lg-8">
+                    <h2 class="h1 fw-bold mb-3 ">Cotizador Personal</h2>
+                </div>
+                
+                <div class="col-12 col-lg-4">
+                    <div class="github-big-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 17">
+                                <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
+                              </svg>
+                          </svg>
+                    </div>
+            </div>
+            <div class="row">
+
+                <div  class="col-6 ">
+                    Selencciona tu paquete
+                       <select class="form-select" aria-label="Default select example">
+                           <option selected>Selecciona tu Plan</option>
+                           <option value="1">Plata</option>
+                           <option value="2">Oro</option>
+                           <option value="3">Platino</option>
+                         </select>
+                   </div>
+                   <div  class="col-6">
+                       Selencciona tu inmueble
+                          <select class="form-select shadow border-1" aria-label="Default selece">
+                              <option selected>Selecciona tu Inmueble</option>
+                              <option value="1">Inmueble 1</option>
+                              <option value="2">Inmueble 2</option>
+                              <option value="3">Inmueble 3</option>
+                            </select>
+                   </div>
+            </div>
+            
+            <div style="margin-top:20px ;">
+                
+                </div>
+                <a style="Display:none" class="btn btn-lg btn-secondary" href="">Haz click aqui</a>
+                <p style="color:#231944; margin-left:1792px; text-align:left;" class="lead mb-4">*Costos no incluyen IVA</p>
+                <p style="color:#231942; margin-left:1677px; margin-top:-30px;" class="lead mb-4">**El pago de la poliza es anual</p>
+                <p style="color:#231942; margin-left:1250px; margin-top:-30px; " class="lead mb-4">***En costros mayores a 25,000 consultar con asesor</p>
+        </div>
+    </section>
+
+</div>
+    
+
+    
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+

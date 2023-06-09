@@ -1,0 +1,747 @@
+{% extends "layouts/base-presentation.html" %}
+
+{% block title %} Bienvenido a Arrendify {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main>
+        <!-- Hero -->
+        <section class="section-header overflow-hidden pt-7 pt-lg-8 pb-9 pb-lg-12 bg-primary text-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="bootstrap-big-icon d-none d-lg-block">
+                            <img src="https://arrendify.com/wp-content/uploads/2021/02/logo-arrendafy.png" alt="arr" width="900" height="622" class="d-block my-1" viewBox="0 0 118 94" role="img"><title>Bootstrap</title><path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path></img>
+                            {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="700" height="622" class="d-block my-1" viewBox="0 0 118 94" role="img"><title>Bootstrap</title><path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path></svg> {% endcomment %}
+                        </div>
+                        {% comment %} <h1 class="fw-bolder">Arrendify!!<span class="pixel-pro-badge fw-bolder text-gray-800"></span></h1> {% endcomment %}
+
+                        <h2 class="lead fw-normal text-muted mb-5">
+                            <img src="https://arrendify.com/wp-content/uploads/2021/02/logo-arrendafy.png"
+                            alt="Law" width="450" height="160 px">
+                        </h2>
+                        <!-- Button Modal -->
+                        <div class="d-flex justify-content-center mb-5">
+                            <a href="/dashboard.html" class="btn btn-secondary d-inline-flex align-items-center me-4">
+                                <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11 4a1 1 0 10-2 0v4a1 1 0 102 0V7zm-3 1a1 1 0 10-2 0v3a1 1 0 102 0V8zM8 9a1 1 0 00-2 0v2a1 1 0 102 0V9z" clip-rule="evenodd"></path></svg>
+                                Iniciar Dashboard
+                            </a>
+                        </div>
+         
+                    </div>
+                </div>
+            </div>
+            <figure class="position-absolute bottom-0 left-0 w-100 d-none d-md-block mb-n2"><svg class="home-pattern" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4"><path d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path></svg></figure>       
+        </section>
+       
+        <div class="section pt-0">
+            <div class="container mt-n10 mt-lg-n12 z-2">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <img src="https://thumbs.dreamstime.com/b/bonita-bah%C3%ADa-con-casas-coloridas-en-portofino-liguria-italia-159759737.jpg" alt="Mockup presentation" width="1200px" height="400 border=1px">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="section section-lg bg-soft pt-0">
+            <div class="container">
+                <div class="row justify-content-center mb-5 mb-lg-6">
+                    <div class="col-6 col-md-3 text-center mb-4">
+                        <div class="icon icon-shape bg-white shadow-lg rounded mb-4">
+                            <svg class="icon icon-md text-secondary bi bi-person-check" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                              </svg>
+                        </div>
+                        <h3 class="fw-bolder">1000+</h3>
+                        <p class="text-gray">Clientes satisfechos</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center mb-4">
+                        <div class="icon icon-shape bg-white shadow-lg rounded mb-4">
+                            <svg class="icon icon-md text-secondary bi bi-stack-overflow" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.412 14.572V10.29h1.428V16H1v-5.71h1.428v4.282h9.984z"/>
+                                <path d="M3.857 13.145h7.137v-1.428H3.857v1.428zM10.254 0 9.108.852l4.26 5.727 1.146-.852L10.254 0zm-3.54 3.377 5.484 4.567.913-1.097L7.627 2.28l-.914 1.097zM4.922 6.55l6.47 3.013.603-1.294-6.47-3.013-.603 1.294zm-.925 3.344 6.985 1.469.294-1.398-6.985-1.468-.294 1.397z"/>
+                              </svg>
+                        </div>
+                        <h3 class="fw-bolder">1200+</h3>
+                        <p class="text-gray">Polizas Concluidas</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <div class="icon icon-shape bg-white shadow-lg rounded mb-4">
+                            <svg class="icon icon-md text-secondary bi bi-stars" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
+                              </svg>
+                        </div>
+                        <h3 class="fw-bolder">Trato Premium</h3>
+                        <p class="text-gray">Contamos con gente especializada en el area</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <div class="icon icon-shape bg-white shadow-lg rounded mb-4">
+                            <svg class="icon icon-md text-secondary bi bi-house-lock" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="house-lock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M7.293 1.5a1 1 0 0 1 1.414 0L11 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l2.354 2.353a.5.5 0 0 1-.708.708L8 2.207l-5 5V13.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 2 13.5V8.207l-.646.647a.5.5 0 1 1-.708-.708L7.293 1.5Z"/>
+                                <path d="M10 13a1 1 0 0 1 1-1v-1a2 2 0 0 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z"/>
+                              </svg>
+                        </div>
+                        <h3 class="fw-bolder">Garantia</h3>
+                        <p class="text-gray">Satisfacción</p>
+                        <p class="text-gray">Seguridad</p>
+                    </div>
+                </div>
+                <div class="row justify-content-between align-items-center mb-5 mb-lg-7">
+                    <div class="col-lg-5 mb-5 mb-lg-0">
+                        <h2 class="h1">¿Casa Sola? </h2>
+                        <p class="mb-4 lead fw-bold">¿Vecinos molestos?</p>
+                        <p class="mb-4">Esta vivienda está separada del resto por medio de amplio un muro  al rededor, por lo que se puede decir que no comparte pared con nadie.</p>
+                        <p class="mb-4">Puesdes rentarla!!! solo contactanos.</p>
+                        {% comment %} <a href="{% url 'tiempo' %}" target="_blank" class="btn btn-secondary d-inline-flex align-items-center me-3">
+                         <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        </a> {% endcomment %}
+                        
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="https://i.pinimg.com/736x/c3/1e/93/c31e93b8f76adfb807aa2cfa53c8f33d--collage.jpg" alt="Kanban Preview">
+                    </div>
+                </div>
+                <div class="row justify-content-between align-items-center mb-5 mb-lg-7">
+                    <div class="col-lg-5 order-lg-2 mb-5 mb-lg-0">
+                        <h2 class="h1">Estudios</h2>
+                        <p class="mb-4 lead fw-bold">Te gusta la musica</p>
+                        <p class="mb-4">Nostro te ayudamos a conseguir un lugar para que puedas grabar ese demo que siempre soñaste</p>
+                        {% comment %} <a href="/map.html" target="_blank" class="btn btn-secondary d-inline-flex align-items-center me-3">
+                            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clip-rule="evenodd"></path></svg>
+                            Demo
+                        </a> {% endcomment %}
+                    </div>
+                    <div class="col-lg-6 order-lg-1">
+                        <img src="https://cdn-3.expansion.mx/dims4/default/6500239/2147483647/strip/true/crop/920x477+0+0/resize/1200x622!/format/webp/quality/90/?url=https%3A%2F%2Fcherry-brightspot.s3.amazonaws.com%2F19%2F81%2F525d26e04b57a28957cb2a1f74b9%2Fconsola.jpg" alt="MapBox Leaflet.js Custom Integration Mockup">
+                    </div>
+                </div>
+                <div class="row justify-content-between align-items-center mb-5 mb-lg-7">
+                    <div class="col-lg-5 mb-5 mb-lg-0">
+                        <h2 class="h1">Edificios</h2>
+                        <p class="mb-4 lead fw-bold">Buscas una oficina</p>
+                        <p class="mb-4">Nosotro te la conseguimos echale un vistazo a estos edificios.</p>
+                        {% comment %} <a href="/calendar.html" target="_blank" class="btn btn-secondary d-inline-flex align-items-center me-3">
+                            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                            Demo
+                        </a>                         {% endcomment %}
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="https://cdn.pixabay.com/photo/2018/02/27/06/30/skyscrapers-3184798__340.jpg" alt="Calendar Preview">
+                    </div>
+                </div>
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-lg-5 order-lg-2 mb-5 mb-lg-0">
+                        <h2 class="h1">Departamentos</h2>
+                        <p class="mb-4 lead fw-bold">Un apartamento es aquella vivienda plurifamiliar que, generalmente, cuenta con un solo dormitorio. Por tanto, se trata de una vivienda de pequeñas dimensiones y que consta de cocina, cuarto de baño y salón. No obstante, su tamaño puede variar y, en algunos casos, disponer de una segunda habitación.</p>
+                        <p class="mb-4"></p>
+                    </div>
+                    <div class="col-lg-6 order-lg-1">
+                        <img src="https://img10.naventcdn.com/avisos/18/00/53/55/97/00/720x532/144271181.jpg" alt="Front pages overview">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% comment %} <section class="section section-sm pt-0">
+            <div class="container">
+                <div class="row justify-content-center mb-5 mb-lg-6">
+                    <div class="col-12 text-center">
+                        <h2 class="h1 px-lg-5">21 hand-crafted pages</h2>
+                        <p class="lead px-lg-10">Every page from Volt has been carefully built to provide all the necessary pages your startup will require</p>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <div class="col-6 mb-5">
+                        <a href="dashboard.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/overview.jpg" alt="Dashboard page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Overview <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/dashboard-traffic-sources.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/traffic-sources.jpg" alt="Traffic Sources page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Traffic Sources <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/dashboard-app-analysis.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/app-analysis.jpg" alt="App Analysis page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">App Analysis <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/kanban.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/kanban.jpg" alt="Kanban page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Kanban Board <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/users.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/users-list.jpg" alt="Users page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Users List <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/transactions.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/transactions.jpg" alt="Transactions page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Transactions <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/tasks.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/tasks.jpg" alt="Tasks page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Tasks <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/settings.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/settings.jpg" alt="Settings page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Settings <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/messages.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/messages.jpg" alt="Messages page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Messages <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/single-message.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/single-message.jpg" alt="Chat page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Chat <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/calendar.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/calendar.jpg" alt="Calendar page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Calendar <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-billing.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/billing.jpg" alt="Billing page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Billing <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-invoice.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/invoice.jpg" alt="Invoice page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Invoice <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-pricing.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/pricing.jpg" alt="Pricing page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Pricing <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-sign-in.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/sign-in.jpg" alt="Sign In page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Sign In <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-sign-up.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/sign-up.jpg" alt="Sign Up page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Sign Up <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-lock.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/lock.jpg" alt="Lock page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Sign Up <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-forgot-password.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/forgot-password.jpg" alt="Forgot password preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Forgot password <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-reset-password.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/reset-password.jpg" alt="Reset password preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">Reset password <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-404.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/404.jpg" alt="404 error preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">404 <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="/page-500.html" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/500.jpg" alt="500 error preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center d-inline-flex align-items-center text-white">500 <svg class="icon icon-xs ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg></h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section> {% endcomment %}
+
+        <section class="section section-lg bg-gray-800 text-white">
+            <div class="container">
+                <div class="row justify-content-center mb-5 mb-lg-6">
+                    <div class="col-12 text-center">
+                        <h2 class="h1 px-lg-5">Inmuebles Maravillosos.</h2>
+                        <p class="lead px-lg-8">Con nosotros puedes encontrar:</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+
+                                
+                                <svg class="icon icon-md mb-3 bi bi-car-front" aria-hidden="true" fill="#231942" focusable="false" data-prefix="fab" data-icon="bootstrap" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                        <path d="M4 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm10 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2H6ZM4.862 4.276 3.906 6.19a.51.51 0 0 0 .497.731c.91-.073 2.35-.17 3.597-.17 1.247 0 2.688.097 3.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 10.691 4H5.309a.5.5 0 0 0-.447.276Z"/>
+                                        <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679c.033.161.049.325.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.807.807 0 0 0 .381-.404l.792-1.848ZM4.82 3a1.5 1.5 0 0 0-1.379.91l-.792 1.847a1.8 1.8 0 0 1-.853.904.807.807 0 0 0-.43.564L1.03 8.904a1.5 1.5 0 0 0-.03.294v.413c0 .796.62 1.448 1.408 1.484 1.555.07 3.786.155 5.592.155 1.806 0 4.037-.084 5.592-.155A1.479 1.479 0 0 0 15 9.611v-.413c0-.099-.01-.197-.03-.294l-.335-1.68a.807.807 0 0 0-.43-.563 1.807 1.807 0 0 1-.853-.904l-.792-1.848A1.5 1.5 0 0 0 11.18 3H4.82Z"/>
+                                      </svg>
+                                    <h5 class="fw-bold text-primary">Casas</h5>
+                                <p class="mb-0 text-gray-600">Built with the most popular CSS Framework</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3 bi bi-hdd-stack-fill" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="dep" role="img" xmlns="http://www.w3.org/2000/svg" fill="#231942" viewBox="0 0 16 16">
+                                    <path d="M2 9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zM2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
+                                  </svg>
+                                <h5 class="fw-bold text-primary">Departamentos</h5>
+                                <p class="mb-0 text-gray-600">Variables and mixins to empower development</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                                <h5 class="fw-bold text-primary">Cuartos</h5>
+                                <p class="mb-0 text-gray-600">All pages and components are 100% responsive</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3 bi bi-bank" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="mansion" role="img"  xmlns="http://www.w3.org/2000/svg" fill="blue" class="" viewBox="0 0 16 16">
+                                    <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89L8 0ZM3.777 3h8.447L8 1 3.777 3ZM2 6v7h1V6H2Zm2 0v7h2.5V6H4Zm3.5 0v7h1V6h-1Zm2 0v7H12V6H9.5ZM13 6v7h1V6h-1Zm2-1V4H1v1h14Zm-.39 9H1.39l-.25 1h13.72l-.25-1Z"/></svg>
+                                <h5 class="fw-bold text-primary">Mansiones</h5>
+                                <p class="mb-0 text-gray-600">Muchas habitaciones, increibles lujos.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3 bi bi-buildings" fill="#b5179e" viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd">
+                                    <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022ZM6 8.694 1 10.36V15h5V8.694ZM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15Z"/>
+                                    <path d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z"/>
+                                  </svg>
+                                <h5 class="fw-bold text-primary">Vivienda unifamiliar aislada</h5>
+                                <p class="mb-0 text-gray-600">Conocida también como vivienda independiente, se trata de una construcción que no tiene contacto directo con ninguna otra edificación. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                               <svg class="icon icon-md mb-3 bi bi-bricks" fill="#c93c20" viewBox="0 0 20 20"  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 16 16">
+                                    <path d="M0 .5A.5.5 0 0 1 .5 0h15a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H14v2h1.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5H2v-2H.5a.5.5 0 0 1-.5-.5v-3A.5.5 0 0 1 .5 6H2V4H.5a.5.5 0 0 1-.5-.5v-3zM3 4v2h4.5V4H3zm5.5 0v2H13V4H8.5zM3 10v2h4.5v-2H3zm5.5 0v2H13v-2H8.5zM1 1v2h3.5V1H1zm4.5 0v2h5V1h-5zm6 0v2H15V1h-3.5zM1 7v2h3.5V7H1zm4.5 0v2h5V7h-5zm6 0v2H15V7h-3.5zM1 13v2h3.5v-2H1zm4.5 0v2h5v-2h-5zm6 0v2H15v-2h-3.5z"/>
+                                  </svg>
+                                <h5 class="fw-bold text-primary">Vivienda unifamiliar pareada</h5>
+                                <p class="mb-0 text-gray-600">Esta vivienda está separada del resto por medio de un muro medianero, por lo que se puede decir que solo comparte pared.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3 bi bi-alexa" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="alexa" role="img" xmlns="http://www.w3.org/2000/svg" fill="#2ec4b6" viewBox="0 0 16 16">
+                                    <path d="M7.996 0A7.998 7.998 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.602 5.602 0 0 1 2.4 7.865 5.579 5.579 0 0 1 8.054 2.4a5.599 5.599 0 0 1 5.535 5.81l-.002.046a6.116 6.116 0 0 1-.012.192l-.005.061a4.85 4.85 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 7.998 7.998 0 0 0 7.996.001Z"/>
+                                  </svg><h5 class="fw-bold text-primary">Vivienda unifamiliar adosada</h5>
+                                <p class="mb-0 text-gray-600">Esta en contacto con otras viviendas tanto a la derecha como a la izquierda asi que comparte paredes con las casas situadas a ambos lados.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                               <svg class="icon icon-md mb-3 bi bi-building" aria-hidden="true"  fill="gray" focusable="false" data-prefix="fab" data-icon="html5" role="img"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                    <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                                    <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z"/>
+                                  </svg>
+                                <h5 class="fw-bold text-primary">Apartamento</h5>
+                                <p class="mb-0 text-gray-600">vivienda plurifamiliar de pequeñas dimensiones y que consta de cocina, cuarto de baño y salón generalmente,generalmente cuenta con un 1 o 2 dormitorios.  </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3 bi bi-boombox-fill" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="js-square" role="img"  xmlns="http://www.w3.org/2000/svg" fill="#081c15" viewBox="0 0 16 16">
+                                    <path d="M14 0a.5.5 0 0 1 .5.5V2h.5a1 1 0 0 1 1 1v2H0V3a1 1 0 0 1 1-1h12.5V.5A.5.5 0 0 1 14 0ZM2 3.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0Zm2 0a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0Zm7.5.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm1.5-.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0ZM9.5 3h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1ZM6 10.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm-1.5.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm7 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm.5-1.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                                    <path d="M0 6h16v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V6Zm2 4.5a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0Zm7 0a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0Z"/>
+                                  </svg>
+                                <h5 class="fw-bold text-primary">Estudio</h5>
+                                <p class="mb-0 text-gray-600">es una vivienda de tamaño reducido muy similar al apartamento, ya que consta de un solo dormitorio, baño, cocina y salón.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3 bi bi-film" fill="#e29578" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
+                                  </svg>
+                                <h5 class="fw-bold text-primary">Duplex</h5>
+                                <p class="mb-0 text-gray-600">es un tipo de casa compuesto por dos viviendas que se hallan en un mismo edificio pero que presentan accesos independientes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3 bi bi-collection-fill" fill="black"  viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z"/>
+                                  </svg>
+                                <h5 class="fw-bold text-primary">Áticos</h5>
+                                <p class="mb-0 text-gray-600">es un tipo de vivienda, ya sea un estudio, un apartamento o un piso convencional, que se encuentra en la última planta de un edificio. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card bg-white shadow-soft text-primary rounded mb-4">
+                            <div class="px-3 px-lg-4 py-5 text-center">
+                                <svg class="icon icon-md mb-3 bi bi-circle-fill" stroke="black" fill="yellow" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="8" cy="8" r="8"/>
+                                  </svg>
+                                  <svg class="icon icon-md mb-3 bi bi-sun-fill" stroke="black" fill="yellow" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                                </svg>
+                                <h5 class="fw-bold text-primary">Bajos con jardín</h5>
+                                <p class="mb-0 text-gray-600">Esta vivienda plurifamiliar se halla en la primera planta de un edificio y cuenta con un jardín de uso privado que podrás disfrutar al aire libre. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% comment %} <section class="section section-lg line-bottom-soft">
+            <div class="container">
+                <div class="row justify-content-center mb-5 mb-lg-6">
+                    <div class="col-12 text-center">
+                        <h2 class="h1 px-lg-5">What's inside?</h2>
+                        <p class="lead px-lg-8">We have carefully crafted the perfect folder structure to ensure that finding the files you're looking for are easily reachable and well organized.</p>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-center">
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="d-none d-lg-block mt-5">
+                            <h4>You need only HTML, CSS and Javascript?</h4>
+                            <p class="lead mb-4">Don't worry, we got you covered. We have a folder called <code class="text-danger">html&css</code> which includes only the basic HTML5, CSS3 and Javascript technologies.</p>
+                            <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/getting-started/file-structure/" target="_blank" class="btn btn-secondary d-inline-flex align-items-center">
+                                <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                                Docs 3
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 order-lg-first d-flex justify-content-center">
+                        <ul class="d-block fmw-100 list-unstyled folder-structure">
+                            <li data-bs-toggle="tooltip" data-bs-placement="left" title="Main folder that you will be working with">
+                                <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                src
+                            </li>
+                            <li>
+                                <ul class="list-unstyled ps-4">
+                                    <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="CSS, Images, Fonts and Javascript">
+                                        <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                        assets
+                                    </li>
+                                    <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="HTML templates">
+                                        <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                        pages
+                                    </li>
+                                    <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Partials are HTML snippets that are included in multiple pages, such as the menu or footer">
+                                        <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                        partials
+                                    </li>
+                                    <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Sass source files">
+                                        <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                        scss
+                                    </li>
+                                    <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="The page you're looking at right now. Call it inception.">
+                                        <svg class="icon icon-sm me-2 text-warning" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="html5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M0 32l34.9 395.8L191.5 480l157.6-52.2L384 32H0zm308.2 127.9H124.4l4.1 49.4h175.6l-13.6 148.4-97.9 27v.3h-1.1l-98.7-27.3-6-75.8h47.7L138 320l53.5 14.5 53.7-14.5 6-62.2H84.3L71.5 112.2h241.1l-4.4 47.7z"></path></svg>
+                                        index.html
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Rocket with only HTML, CSS and Javascript">
+                                <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                html&css
+                            </li>
+                            <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Temporary folder that is created when serving files with BrowserSync">
+                                <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                .temp
+                            </li>
+                            <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Minified version of the project">
+                                <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                dist
+                            </li>
+                            <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Project dependencies from package.json">
+                                <svg class="icon icon-sm me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path></svg>
+                                node_modules
+                            </li>
+                            <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Development workflow commands. We have them well documented.">
+                                <svg class="icon icon-sm me-2 text-warning" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="js-square" class="svg-inline--fa fa-js-square fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM243.8 381.4c0 43.6-25.6 63.5-62.9 63.5-33.7 0-53.2-17.4-63.2-38.5l34.3-20.7c6.6 11.7 12.6 21.6 27.1 21.6 13.8 0 22.6-5.4 22.6-26.5V237.7h42.1v143.7zm99.6 63.5c-39.1 0-64.4-18.6-76.7-43l34.3-19.8c9 14.7 20.8 25.6 41.5 25.6 17.4 0 28.6-8.7 28.6-20.8 0-14.4-11.4-19.5-30.7-28l-10.5-4.5c-30.4-12.9-50.5-29.2-50.5-63.5 0-31.6 24.1-55.6 61.6-55.6 26.8 0 46 9.3 59.8 33.7L368 290c-7.2-12.9-15-18-27.1-18-12.3 0-20.1 7.8-20.1 18 0 12.6 7.8 17.7 25.9 25.6l10.5 4.5c35.8 15.3 55.9 31 55.9 66.2 0 37.8-29.8 58.6-69.7 58.6z"></path></svg>
+                                gulpfile.js
+                            </li>
+                            <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Project details and dependencies.">
+                                <svg class="icon icon-sm me-2 text-success" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-code" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M384 121.941V128H256V0h6.059c6.365 0 12.47 2.529 16.971 7.029l97.941 97.941A24.005 24.005 0 0 1 384 121.941zM248 160c-13.2 0-24-10.8-24-24V0H24C10.745 0 0 10.745 0 24v464c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V160H248zM123.206 400.505a5.4 5.4 0 0 1-7.633.246l-64.866-60.812a5.4 5.4 0 0 1 0-7.879l64.866-60.812a5.4 5.4 0 0 1 7.633.246l19.579 20.885a5.4 5.4 0 0 1-.372 7.747L101.65 336l40.763 35.874a5.4 5.4 0 0 1 .372 7.747l-19.579 20.884zm51.295 50.479l-27.453-7.97a5.402 5.402 0 0 1-3.681-6.692l61.44-211.626a5.402 5.402 0 0 1 6.692-3.681l27.452 7.97a5.4 5.4 0 0 1 3.68 6.692l-61.44 211.626a5.397 5.397 0 0 1-6.69 3.681zm160.792-111.045l-64.866 60.812a5.4 5.4 0 0 1-7.633-.246l-19.58-20.885a5.4 5.4 0 0 1 .372-7.747L284.35 336l-40.763-35.874a5.4 5.4 0 0 1-.372-7.747l19.58-20.885a5.4 5.4 0 0 1 7.633-.246l64.866 60.812a5.4 5.4 0 0 1-.001 7.879z"></path></svg>
+                                package.json
+                            </li>
+                            <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="No project can miss a README :)">
+                                <svg class="icon icon-sm me-2 text-success" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-code" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M384 121.941V128H256V0h6.059c6.365 0 12.47 2.529 16.971 7.029l97.941 97.941A24.005 24.005 0 0 1 384 121.941zM248 160c-13.2 0-24-10.8-24-24V0H24C10.745 0 0 10.745 0 24v464c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V160H248zM123.206 400.505a5.4 5.4 0 0 1-7.633.246l-64.866-60.812a5.4 5.4 0 0 1 0-7.879l64.866-60.812a5.4 5.4 0 0 1 7.633.246l19.579 20.885a5.4 5.4 0 0 1-.372 7.747L101.65 336l40.763 35.874a5.4 5.4 0 0 1 .372 7.747l-19.579 20.884zm51.295 50.479l-27.453-7.97a5.402 5.402 0 0 1-3.681-6.692l61.44-211.626a5.402 5.402 0 0 1 6.692-3.681l27.452 7.97a5.4 5.4 0 0 1 3.68 6.692l-61.44 211.626a5.397 5.397 0 0 1-6.69 3.681zm160.792-111.045l-64.866 60.812a5.4 5.4 0 0 1-7.633-.246l-19.58-20.885a5.4 5.4 0 0 1 .372-7.747L284.35 336l-40.763-35.874a5.4 5.4 0 0 1-.372-7.747l19.58-20.885a5.4 5.4 0 0 1 7.633-.246l64.866 60.812a5.4 5.4 0 0 1-.001 7.879z"></path></svg>                               
+                                README.md
+                            </li>
+                            <li class="d-flex align-items-center mb-1" data-bs-toggle="tooltip" data-bs-placement="left" title="This file ensures that generated files and folder are ignored by Git. (eg. node_modules)">
+                                <svg class="icon icon-sm me-2 text-success" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-code" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M384 121.941V128H256V0h6.059c6.365 0 12.47 2.529 16.971 7.029l97.941 97.941A24.005 24.005 0 0 1 384 121.941zM248 160c-13.2 0-24-10.8-24-24V0H24C10.745 0 0 10.745 0 24v464c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V160H248zM123.206 400.505a5.4 5.4 0 0 1-7.633.246l-64.866-60.812a5.4 5.4 0 0 1 0-7.879l64.866-60.812a5.4 5.4 0 0 1 7.633.246l19.579 20.885a5.4 5.4 0 0 1-.372 7.747L101.65 336l40.763 35.874a5.4 5.4 0 0 1 .372 7.747l-19.579 20.884zm51.295 50.479l-27.453-7.97a5.402 5.402 0 0 1-3.681-6.692l61.44-211.626a5.402 5.402 0 0 1 6.692-3.681l27.452 7.97a5.4 5.4 0 0 1 3.68 6.692l-61.44 211.626a5.397 5.397 0 0 1-6.69 3.681zm160.792-111.045l-64.866 60.812a5.4 5.4 0 0 1-7.633-.246l-19.58-20.885a5.4 5.4 0 0 1 .372-7.747L284.35 336l-40.763-35.874a5.4 5.4 0 0 1-.372-7.747l19.58-20.885a5.4 5.4 0 0 1 7.633-.246l64.866 60.812a5.4 5.4 0 0 1-.001 7.879z"></path></svg>
+                                .gitignore
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 mt-5 d-lg-none">
+                        <h5>You need only HTML, CSS and Javascript?</h5>
+                        <p>Don't worry, we got you covered. We have a folder called <code class="text-danger">html&css</code> which includes only the basic HTML5, CSS3 and Javascript technologies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>  area de ejemplo de que hay adentro{% endcomment %}
+
+        {% comment %} <section class="section section-lg bg-gray-800">
+            <div class="container">
+                <div class="row justify-content-center text-center text-white mb-5">
+                    <div class="col-12">
+                        <h2 class="h1 fw-light mb-3">Less <span class="fw-bold">work</span>, more <span class="fw-bold">flow</span>.</h2>
+                        <p class="lead px-lg-8">
+                            Boost productivity with BrowserSync. Sass changes are reflected instantly and pages scroll and refresh on devices as you work.
+                        </p>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-6">
+                    <div class="col-md-10 col-xl-9">
+                        <div class="position-relative">
+                            <div class="rounded bg-white p-4 text-dark mb-2">
+                                <div class="mb-3">
+                                    <div class="fw-bold">&gt; $ npm install</div>
+                                    <div class="text-gray">Everything’s installed!</div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="fw-bold">&gt; $ gulp</div>
+                                    <div class="text-gray">SCSS watching</div>
+                                    <div class="text-gray">LiveReload started</div>
+                                    <div class="text-gray">Opening localhost:3000</div>
+                                </div>
+                                <div>
+                                    <div class="fw-bold">&gt; $ that's it?</div>
+                                    <div class="text-gray">It's that simple!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-white text-center">Looks unfamiliar? Don’t worry! Our <a class="text-white text-decoration-underline fw-bolder" href="https://themesberg.com/docs/rocket/getting-started/overview/" target="_blank">documentation</a> has got you covered.</p>
+                    </div>
+                </div>
+            </div>
+        </section> area de ejemplo de con cuadro blanco central {% endcomment %}
+
+        <section style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(35,25,66,1) 35%, rgba(255,255,255,1) 100%); margin-bottom:-30px;" class="section section-lg bg-white">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-12 col-lg-8">
+                        <h2 style="color:white" class="h1 fw-bold mb-3 ">Nuestros Planes</h2>
+                        <input type="text" style="width: 300px; height: 35px; padding-left: 20px; padding-right: 20px; margin-top:-15px;" maxlength="8" class="rounded-pill" alt="..." id="val1" onkeyup="sumar()"  placeholder=" ¿Valor $ de tu renta?">
+                        <p style="color:white;" class="lead mb-4">¿Le gustaria comprar alguno de nuestro planes? checalos a continuación.</p>  
+                        
+                    </div>
+                    
+                    <div class="col-12 col-lg-4">
+                        <div class="github-big-icon">
+                            {% comment %} <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                            <path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>    {% endcomment %}
+                            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-amd" viewBox="0 0 16 18">
+                                <path d="m.334 0 4.358 4.359h7.15v7.15l4.358 4.358V0H.334ZM.2 9.72l4.487-4.488v6.281h6.28L6.48 16H.2V9.72Z"/>
+                              </svg>
+                        </div>
+                </div>
+                <div  class="row mt-5 ">
+                     {% comment %} Inicio de la carta {% endcomment %}
+                    <div style="margin-top:15px;" class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div style="margin-top:-47px" class="card shadow border-0 p-4">
+                            <!-- Header -->
+                            <div class="card-header bg-white border-0 pb-0">
+                                <span class="d-block">
+                                    <span class="h2 text-primary fw-bold align-top ">Plan Plata</span>
+                                </span>
+                                <body>
+                                    <div style="Display:inline-block">
+                                    <span class="h3 text-primary fw-bold align-top">$</span>
+                                    <h1 style="Display:inline-block"> <span id="Display"> </span></h1>
+                                    </div>
+                                  </body>
+                            </div>
+                            <!-- End Header -->
+                            <!-- Content -->
+                            <div style="margin-bottom:26px" class="card-body">
+                                <ul class="list-group list-group-flush price-list">
+                                    <li class="list-group-item border-0 ps-0"><strong>1</strong> inmueble</li>
+                                    <li class="list-group-item border-0 ps-0"><strong>6 </strong> meses de cobertura</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Asesoria legal</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Cobertura Juridica</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-danger me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-danger me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-danger me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0 pb-0"><svg class="icon icon-xs text-danger me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg> Soporte Premium </li>
+                                </ul>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+
+                    {% comment %} Inicio de la carta {% endcomment %}
+                    <div style="margin-top:15px;" class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div class="card shadow border-0 p-4 py-5 mt-lg-n5">
+                            <!-- Header -->
+                            <div class="card-header bg-white border-0 pb-0">
+                                <span style="margin-top:-20px" class="d-block">
+                                    <span class="h2 text-primary fw-bold align-top">Plan Oro</span>
+                                </span>
+                                <body>
+                                    <div style="Display:inline-block">
+                                    <span class="h3 text-primary fw-bold align-top">$</span>
+                                    <h1 style="Display:inline-block"> <span  id="Display2"> </span></h1>
+                                    {% comment %} <span class="h5 text-primary fw-bold align-top">°°</span> {% endcomment %}
+                                    </div>
+                                  </body>
+                            </div>
+                            <!-- End Header -->
+                            <!-- Content -->
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush price-list">
+                                    <li class="list-group-item bg-white border-0 ps-0"><strong>6</strong> inmuebles</li>
+                                    <li class="list-group-item bg-white border-0 ps-0"><strong>2</strong> años de cobertura</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Asesoria legal</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-danger me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-danger me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 border-0 ps-0 pb-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Soporte Premium </li>
+                                </ul>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                    {% comment %} Inicio de la carta {% endcomment %}
+                    <div style="margin-top:15px;" class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0">
+                        <div class="card shadow border-0 p-4 py-5 mt-lg-n5">
+                            <!-- Header -->
+                            <div class="card-header bg-white border-0 pb-0">
+                                <span style="margin-top:-20px" class="d-block">
+                                    <span class="h2 text-primary fw-bold align-top">Plan Platino</span>
+                                </span>
+                                <body>
+                                    <div style="Display:inline-block">
+                                        <span class="h3 text-primary fw-bold align-content-top">$</span>
+                                            <h1 style="Display:inline-block"> <span id ="Display3"> </span></h1>
+                                    </div>
+                                </body>
+                            </div>
+                            <!-- End Header -->
+                            <!-- Content -->
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush price-list">
+                                    <li class="list-group-item bg-white border-0 ps-0"><strong>10</strong> inmuebles</li>
+                                    <li class="list-group-item bg-white border-0 ps-0"><strong>5</strong> años de cobertura</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Asesoria legal</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Cobertura Juridica</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 ps-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> ETC 1</li>
+                                    <li class="list-group-item d-flex align-items-center border-0 border-0 ps-0 pb-0"><svg class="icon icon-xs text-success me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Soporte Premium </li></ul>
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                  
+                    
+                </div>
+                <div style="margin-top:20px ;">
+                    <h2 style="color:white" class="h4 fw-bold mb-3">¿Le gustaria un plan personalizado?</h2> 
+                    </div>
+                    <a class="btn btn-lg btn-secondary" href="/cot_per.html">Haz click aqui</a>
+                    <p style="color:#231944; margin-left:1792px; text-align:left;" class="lead mb-4">*Costos no incluyen IVA</p>
+                    <p style="color:#231942; margin-left:1677px; margin-top:-30px;" class="lead mb-4">**El pago de la poliza es anual</p>
+                    <p style="color:#231942; margin-left:1250px; margin-top:-30px; " class="lead mb-4">***En costros mayores a 25,000 consultar con asesor</p>
+            </div>
+        </section>
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+{% comment %} <script src="/static/assets/js/cotizador.js"></script> {% endcomment %}
+<script src="http://static.jsbin.com/js/render/edit.js?4.1.8"></script>
+
+{% endblock javascripts %}

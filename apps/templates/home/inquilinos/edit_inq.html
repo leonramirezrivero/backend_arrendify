@@ -1,0 +1,1209 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Inquilinos Registrados {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/ms.css" rel="stylesheet"/>
+<link type="text/css" href="@@path/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+<body onload="fomOnchange()">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4" style="background-color:#edede9;">
+    <div class="d-block mb-4 mb-md-0" style="margin-left:10px">
+        <h1 class="h1">Inquilinos</h>
+        <p class="mb-0">Listado de inquilinos</p>
+    </div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="/MSRegistro.html" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2">
+            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            Nuevo Inquilino
+        </a>
+    </div>
+  </div>
+
+</div>
+<div class="table-settings mt-2 mb-4">
+  <div class="row justify-content-between align-items-center">
+      <div class="col-9 col-lg-8 d-md-flex">
+          <div class="input-group me-2 me-lg-3 fmxw-300">
+              <span class="input-group-text">
+                  <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                  </svg>
+              </span>
+              <input type="text" class="form-control" placeholder="Buscar por Nombre">
+            </div>
+            <select class="form-select fmxw-200 d-none d-md-inline" aria-label="Message select example 2">
+                <option selected>Todos</option>
+              <option value="1">Persona Moral</option>
+              <option value="2">Persona Física</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="card card-body shadow border-0 table-wrapper table-responsive"><!-- podemos agregar la clase => table-responsive-->
+    <table class="table user-table table-hover align-items-center mb-5"> <!--id="datatable"-->
+        <thead>
+            <tr >
+                <th class="border-bottom"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
+                <th class="border-bottom">ID</th>
+                <th class="border-bottom">Nombre</th>						
+                <th class="border-bottom">Fecha de Registro</th>
+                <th class="border-bottom">Tipo de Persona</th>
+                <th class="border-bottom">Estatus</th>
+                <th class="border-bottom">Acción</th>
+                <th class="border-bottom"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inq in inquilinos %}
+            <tr>
+                <td>
+                    <div class="form-check dashboard-check">
+                        <input class="form-check-input" type="checkbox" value="" id="userCheck1">
+                    </div>
+                </td>
+                <td><span class="fw-normal ">{{inq.id}}</span></td>
+                <td>
+                    <a href="/detalles_inquilino/{{inq.id}}" class="d-flex align-items-center">
+                        <div class="d-block">
+                            <span class="fw-bold">{{inq.nombre}} {{inq.apellido}} {{inq.apellido1}}</span>
+                            <div class="small text-gray">{{inq.email}}</div>
+                        </div>
+                    </a>
+                </td>
+                <td><span class="fw-normal">{{inq.created}}</span></td>                        
+                <td>
+                    <span class="fw-normal">{{inq.p_fom}}</span>
+                </td>
+                <td><span class="fw-normal text-success">Active</span></td>
+                <td>
+                    <div class="btn-group dropstart">
+                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        
+                        <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                            <a class="dropdown-item d-flex align-items-center" href="/editar_inq/{{inq.id}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" title="Editar" data-bs-toggle="tooltip" fill="currentColor" fill-rule="evenodd"  class="icon icon-xs bi bi-pencil ms-1" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                  </svg>&nbsp;Editar
+                            </a>
+
+                            <a class="dropdown-item d-flex align-items-center" onClick="alert0({{inq.id}})">
+                                <svg class="icon icon-xs text-danger ms-1" title="Eliminar" data-bs-toggle="tooltip" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                                &nbsp;Borrar
+                            </a>                             
+                        </div>   
+                    </div>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+<!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+<div id="Modal Registro">
+    <p id="carga_faltantes" style="display:none;">
+    <p id="cargar_tabla" style="display:none;">
+    <div class="modal fade" id="edit_inq" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" style="height:15px" id="exampleModalLabel">Actualizar Información De Inquilino</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href='/inquilinos/';" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+    <div class="container">
+        <div class="card" id="">
+            <form id="edit" class="form" method="POST">
+                {% csrf_token %}
+                <div class="left-side">
+                    <div class="left-heading">
+                        <h3>Actualiza La Información Necesaria</h3>
+                    </div>
+                    <div class="steps-content" style="margin-bottom:-50px;">
+                        <h3>Paso <span class="step-number">1</span></h3>
+                    
+                    </div>
+                    <ul class="progress-bar" style="background:none;">
+                        <li class="active">Información Personal</li>
+                        <li>Domicilio</li>
+                        <li>Empleo/Acta</li>
+                        <li>Domicilio del Empleo</li>
+                        <li>Arrendatario Anterior</li>
+                        <li>Referencias</li>
+                        <li>Inquilinos</li>
+                        <li>Final</li>
+                    
+                    </ul>
+                </div>
+                <div class="right-side">
+                    <div id="step1" class="main active">
+                        <small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg></small>
+                        <div class="text">
+                            <h2>Datos Personales</h2>
+                        </div>
+                        <div class="input-div">
+                            <select class="form-select" id="p_fom" onChange="fomOnchange()" name="p_fom" aria-label="Default select example">
+                                <option selected>{{inquilino.p_fom}}</option>
+                                <option value="Persona Fisica">Persona Fisica</option>
+                                <option value="Persona Moral">Persona Moral</option>
+                            </select>
+                        </div>
+                        <hr class="hr" />
+                        <div id="FM" style="display:none;">
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text" name="nombre" id="nombre" value="{{inquilino.nombre}}" oninput="prueba2(this)">
+                                    <span>Nombre(s)</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input type="text" name="apellido" id="apellido" value="{{inquilino.apellido}}">
+                                    <span>Apellido Paterno</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input type="text" name="apellido1" id="apellido1" value="{{inquilino.apellido1}}">
+                                    <span>Apellido Materno</span>
+                                </div>
+                            </div>
+                            
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text" id="rfc" name="rfc" maxlength="13" style="text-transform:uppercase" oninput="prueba2(this)" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{inquilino.rfc}}">
+                                    <span>RFC</span>
+                                </div>
+                                <div class="input-div">
+                                    {% comment %} <span>Estado Civil</span> {% endcomment %}
+                                    <select class="form-select" id="estado_civil" onChange="mostrarOnChange()" placeholder="estado_civil" name="estado_civil" aria-label="Default select example">
+                                        <option value="{{inquilino.estado_civil}}" selected>{{inquilino.estado_civil}}</option>
+                                        <option value="Soltero">Soltero(a)</option>
+                                        <option value="Casado">Casado(a)</option>
+                                        <option value="Viudo">Viudo(a)</option>
+                                        <option value="Bienes Mancomunados">Bienes Mancomunados</option>
+                                        <option value="Bienes Separados">Bienes Separados</option>
+                                        <option value="Union Libre">Union Libre</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="row" id="datcon" style="Display:none;" >
+                                <hr class="hr" />
+                                <div class="input-text">
+                                    <div class="input-div">
+                                        <input type="text" id="n_conyuge" name="n_conyuge" value="{{inquilino.n_conyuge}}">
+                                        <span>Nombre(s) Cónyuge</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input type="text" id="a_conyuge" name="a_conyuge" value="{{inquilino.a_conyuge}}">
+                                        <span>Apellido Paterno Cónyuge</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input type="text" id="a1_conyuge" name="a1_conyuge" value="{{inquilino.a1_conyuge}}">
+                                        <span>Apellido Materno Conyuge</span>
+                                    </div>
+                                </div>
+                                <hr class="hr" />
+                            </div>       
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input class="form-control" name="numeroTel" id="numeroTel" type="tel" maxlength="10" value="{{inquilino.numeroTel}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                    <span>Numero Telefonico Fijo</span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" name="numeroTel1" id="numeroTel1" type="tel" maxlength="10" value="{{inquilino.numeroTel1}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                    <span>Celular</span>
+                                </div>
+                                <div class="input-div">
+                                    <input type="text" id="email" name="email" type="email" placeholder="name@domain.com" oninput="prueba2(this)" value="{{inquilino.email}}" require>
+                                    <span>E-mail</span>
+                                </div>
+                            </div>                          
+                            <div class="buttons mt-3">
+                                <input class="btn btn-primary next_button" type="button" id="next1" onClick="" value="Siguiente" >
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step2" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                                <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                            </svg>
+                        </small>
+                        <div class="text">
+                            <h2>Datos Domiciliarios</h2>
+                            <p>Por favor introduce tus datos Domiciliarios.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="calle" name="calle" value="{{inquilino.calle}}">
+                                <span>Calle</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="num_ext" name="num_ext" value="{{inquilino.num_ext}}">
+                                <span>Número Ext. </span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="num_int" name="num_int" value="{{inquilino.num_int}}">
+                                <span>Número Int. </span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text"id="colonia" name="colonia" value="{{inquilino.colonia}}">
+                                <span>Colonia</span>
+                            </div>
+                          
+                            <div class="input-div"> 
+                                <input class="form-control" id="codigopostal" name="codigopostal" type="tel" maxlength="5" value="{{inquilino.codigopostal}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                <span>Código Postal</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="municipio_alcaldia" name="municipio_alcaldia" value="{{inquilino.municipio_alcaldia}}">
+                                <span>Municipio/Alcaldia</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <div class="input-div"> 
+                                    <input type="text" id="estado" name="estado" value="{{inquilino.estado}}">
+                                    <span>Estado/Ciudad</span>
+                                </div>
+                            </div>
+                            <div class="input-div">
+                                <input id="referencias" name="referencias" type="text" value="{{inquilino.referencias}}">
+                                <span>Referencias</span>
+                            </div>
+                        
+                        </div>
+                    
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="" value="Siguiente">
+                        </div>
+                    </div>
+                    
+                    <div id="step3" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+                            </svg>
+                        </small>
+                        <div class="text">
+                            <h2 id="tdde">Datos De Empleo</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                        </div>
+                    <div id="dde" style="display:none">
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="profesion" name="profesion" value="{{inquilino.profesion}}">
+                                <span>Profesión u Ocupación</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input class="form-control" type="number" id="antiguedad" name="antiguedad" title="Especifique en Años" data-bs-toggle="tooltip" data-bs-placement="bottom" value="{{inquilino.antiguedad}}">
+                                <span>Antiguedad</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="puesto" name="puesto" value="{{inquilino.puesto}}">
+                                <span>Puesto</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="tel_empleo" name="tel_empleo" value="{{inquilino.tel_empleo}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                <span>Número Teléfono Empresarial</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="ingreso_men" name="ingreso_men" value="{{inquilino.ingreso_men}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                <span>Ingreso Mensual</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="nombre_empresa" name="nombre_empresa" value="{{inquilino.nombre_empresa}}">
+                                <span>Empresa Donde Labora</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="email" id="email_empresarial" name="email_empresarial" value="{{inquilino.email_empresarial}}">
+                                <span>Email Empresarial</span>
+                            </div>
+                            <div class="input-div" >
+                                <input class="form-control" type="tel" maxlength="10" id="cel_empleo" name="cel_empleo" value="{{inquilino.cel_empleo}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                <span>Cel</span>
+                            </div>
+                        </div>
+                        <hr class="hr" />
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="jefe" name="jefe" value="{{inquilino.jefe}}">
+                                <span>Jefe Inmediato</span>
+                            </div>
+                            <div class="input-div">
+                                <input type="text" id="puesto_jefe" name="puesto_jefe" value="{{inquilino.puesto_jefe}}">
+                                <span>Puesto</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text"id="pagina_web" name="pagina_web" value="{{inquilino.pagina_web}}" >
+                                <span>Página Web</span>
+                            </div>
+                            <div class="input-div">
+                                <input type="text" id="giro" name="giro" value="{{inquilino.giro}}">
+                                <span>Giro</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" id="tel_jefe" name="tel_jefe" type="tel" maxlength="10" value="{{inquilino.tel_jefe}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                <span>Teléfono Jefe</span>
+                            </div>
+                            <div class="input-div">
+                                <input type="text" id="email_jefe" name="email_jefe" value="{{inquilino.email_jefe}}">
+                                <span>Email Jefe</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="act_con" style="Display:none">
+
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text" id="empresa_constituida" name="empresa_constituida" value="{{inquilino.empresa_constituida}}">
+                                <span>Nombre Empresa Constituida</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input class="form-control" type="number" id="escritura_numero_ac" name="escritura_numero_ac" value="{{inquilino.escritura_numero_ac}}">
+                                <span>Escritura Número</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input class="form-control" id="fecha_ac" name="fecha_ac" type="date">  
+                                <span>Fecha</span>
+                            </div>
+                            <div class="input-div">
+                                <input type="text" id="nombre_notario_ac" name="nombre_notario_ac" value="{{inquilino.nombre_notario_ac}}">
+                                <span>Nombre de Notario</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-text">
+                               <div class="input-div">
+                                <label>CDMX o Edo. Méx</label>
+                            <select class="form-select" id="coe" name="coe" aria-label="Default select example">
+                                <option selected>{{inquilino.coe}}</option>
+                                <option value="CDMX">CDMX</option>
+                                <option value="Estado de México">Estado de México</option>
+                            </select>
+                        </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input class="form-control" type="number" id="folio_mercantil" name="folio_mercantil" value="{{inquilino.folio_mercantil}}">
+                                <span>Folio Mercantil</span>
+                            </div>
+                        </div>
+                    </div> 
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="" value="Siguiente">
+                        </div>
+                    </div>
+                    
+                    <div id="step4" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-building-fill-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.493 4.493 0 0 0 12.5 8a4.493 4.493 0 0 0-3.59 1.787A.498.498 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.476 4.476 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1V1Zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                            </svg>
+                        </small>
+                        <div class="text" id="dir_emp2">
+                            <h2>Direccion Empleo</h2>
+                            <p>Por favor introduce los datos Domiciliarios de tu empleo.</p>
+                        </div>
+                        <div id="dir_emp" style="Display:none">
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text" id="calle_empleo" name="calle_empleo" value="{{inquilino.calle_empleo}}">
+                                    <span>Calle</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="num_ext_empleo" name="num_ext_empleo" type="number" value="{{inquilino.num_ext_empleo}}">
+                                    <span>Número Ext.</span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" id="num_int_empleo" name="num_int_empleo" type="number" value="{{inquilino.num_ext_empleo}}" >
+                                    <span>Número Int.</span>
+                                </div>
+                                
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input type="text" id="colonia_empleo" name="colonia_empleo" value="{{inquilino.colonia_empleo}}">
+                                    <span>Colonia</span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" type="tel" id="codigo_postal_empleo" name="codigo_postal_empleo" maxlength="5" value="{{inquilino.codigo_postal_empleo}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);"  >
+                                    <span>Código Postal</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input type="text" id="municipio_empleo" name="municipio_empleo" value="{{inquilino.municipio_empleo}}" >
+                                    <span>Municipio/Alcaldia</span>
+                                </div>
+                            </div>
+                            <div class="input-text">
+                              <div class="input-div">
+                                    <input id="ciudad_empleo" name="ciudad_empleo" type="text" value="{{inquilino.ciudad_empleo}}" >
+                                    <span>Estado/Ciudad</span>
+                                </div>                              
+                             </div>
+                            <div class="buttons button_space">
+                                <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                                <input class="btn btn-primary next_button" type="button" onClick="" value="Siguiente">
+                            </div>
+                        </div>
+
+                        <div id="dir_pm" style="Display:none">
+                            <div class="input-text">
+                                <div class="text">
+                                    <p> Procesando informacion</p>
+                                    <h2>Porfavor Dale click en Siguiente</h2>
+                                    <h2>Para continuar a REFERENCIAS DE ARRENDAMIENTO ANTERIOR</h2>
+                                    <p></p>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="buttons button_space">
+                                <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                                <input class="btn btn-primary next_button" type="button" onClick="" value="Siguiente">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% comment %} referencias del Arrendatario {% endcomment %}
+                    <div id="step5" class="main">
+                        <small>
+                            <img src="/static/assets/img/icons/aa.png" style="width:25px; height:25px;" alt="icon">
+                        </small>
+                        <div class="text">
+                            <h2>Arrendatario Anterior</h2>
+                        </div>
+
+                        <div class="row mt-4">
+                            <label >¿Haz rentado antes?</label>
+                            <div class="input-div">
+                            <select class="form-select" name="rentado_antes" onChange="aa()" id="rentado_antes" aria-label="Default select example">
+                                <option selected>{{inquilino.rentado_antes}}</option>
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+
+                            </div>
+                            <div id="arren" style="display:none; margin-top:-10px;">
+                                <hr class="hr" />
+                                <div class="input-text">
+                                    <div class="input-div">
+                                        <input type="text" id="nombre_aa" name="nombre_aa" oninput="prueba2(this)">
+                                        <span>Nombre Completo</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input class="form-control" id="monto_renta_aa" name="monto_renta_aa" type="number" oninput="prueba2(this)" >
+                                        <span>Monto De Renta</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input class="form-control" id="telefono_aa" name="telefono_aa" type="tel" maxlength="10" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);"  >
+                                        <span>Teléfono</span>
+                                    </div>
+                                </div>
+                                <div class="input-text">
+                                    <div class="input-div">
+                                        <input id="motivo_cambio" name="motivo_cambio" type="text" maxlength="100" oninput="prueba2(this)" equiered>
+                                        <span>Motivo Del Cambio</span>
+                                    </div>
+                                    <div class="input-div" style="position: relative; bottom: 23px;">
+                                        <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">¿Compartias La Renta?</label>
+                                       <select class="form-select" id="floatingSelect" name="renta_compartida" onChange="roomie()" aria-label="Floating label select example">
+                                           <option selected></option>
+                                           <option value="Si">Si</option>
+                                           <option value="No">No</option>
+                                         </select>
+                                    </div>
+                                    <div class="input-div" id="nrc" style="display:none">
+                                        <input id="no_renta_compartida" name="no_renta_compartida" type="text" maxlength="100" oninput="prueba2(this)" equiered>
+                                        <span>¿Entre cuantas Personas?</span>
+                                    </div>
+                               
+                                </div>
+                                <div class="input-text"style="margin-top:-15px;">
+                                    <div class="input-div">
+                                        <h2 class="h5 mb-0">Domicilio Inmueble Arrendado</h2>
+                                        <div id="dir_dia" >
+                                            <div class="input-text">
+                                                <div class="input-div">
+                                                    <input type="text" id="calle_dia" name="calle_dia" oninput="prueba2(this)" >
+                                                    <span>Calle</span>
+                                                </div>
+                                                <div class="input-div"> 
+                                                    <input class="form-control" id="num_ext_dia" name="num_ext_dia" type="number" oninput="prueba2(this)" >
+                                                    <span>Número Ext.</span>
+                                                </div>
+                                                <div class="input-div">
+                                                    <input class="form-control" id="num_int_dia" name="num_int_dia" type="number" oninput="prueba2(this)" >
+                                                    <span>Número Int.</span>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="input-text">
+                                                <div class="input-div"> 
+                                                    <input type="text" id="colonia_dia" name="colonia_dia" oninput="prueba2(this)" >
+                                                    <span>Colonia</span>
+                                                </div>
+                                                <div class="input-div">
+                                                    <input class="form-control" type="tel" id="codigo_postal_dia" name="codigo_postal_dia" maxlength="10" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);"  equiered>
+                                                    <span>Código Postal</span>
+                                                </div>
+                                                <div class="input-div"> 
+                                                    <input type="text" id="municipio_dia" name="municipio_dia" >
+                                                    <span>Municipio/Alcaldia</span>
+                                                </div>
+                                            </div>
+                                            <div class="input-text" style="margin-bottom:-5px;">
+                                                <div class="input-div">
+                                                    <input id="ciudad_dia" name="ciudad_dia" type="text" oninput="prueba2(this)" >
+                                                    <span>Estado/Ciudad</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                    </div>
+                    <div id="but_arren" style="display:none;" class="buttons button_space">
+                        <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                        <input class="btn btn-primary next_button" type="button" onClick="" value="Siguiente">
+                    </div>
+                    </div>
+
+                    <div id="step6" class="main">
+                        <small>
+                            <img src="/static/assets/img/icons/ref.png" style="width:25px; height:25px;" alt="icon">
+                        </small>
+                        <div class="text">
+                            <h2>Referencias Personales</h2>
+                            <p>Por favor introduce tus referencias personales.</p>
+                        </div>
+                        <h3>Referencia 1</h3>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="n_ref1" name="n_ref1" value="{{inquilino.n_ref1}}" oninput="prueba2(this)">
+                                <span>Nombre</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="p_ref1" name="p_ref1" value="{{inquilino.p_ref1}}" oninput="prueba2(this)">
+                                <span>Perentesco</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input class="form-control" id="tel_ref1" name="tel_ref1" type="tel" maxlength="10" value="{{inquilino.tel_ref1}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                <span>Teléfono</span>
+                            </div>
+                        </div>
+                        <hr class="hr" />
+                        <h3>Referencia 2</h3>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="n_ref2" name="n_ref2" value="{{inquilino.n_ref2}}" oninput="prueba2(this)">
+                                <span>Nombre</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="p_ref2" name="p_ref2" value="{{inquilino.p_ref2}}" oninput="prueba2(this)">
+                                <span>Perentesco</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input class="form-control" id="tel_ref2" name="tel_ref2" type="tel" maxlength="10" value="{{inquilino.tel_ref2}}" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                <span>Teléfono</span>
+                            </div>
+                        </div>
+                        <hr class="hr" />
+                        <h3>Referencia 3</h3>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="n_ref3" name="n_ref3" value="{{inquilino.n_ref3}}" oninput="prueba2(this)">
+                                <span>Nombre</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="p_ref3" name="p_ref3" value="{{inquilino.p_ref3}}" oninput="prueba2(this)">
+                                <span>Perentesco</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input class="form-control" id="tel_ref3" name="tel_ref3" type="tel" maxlength="10" value="{{inquilino.tel_ref3}}"oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '') ; prueba2(this);" >
+                                <span>Teléfono</span>
+                            </div>
+                        </div>
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="" value="Siguiente">
+                        </div>
+                    </div>
+                    
+                    <div id="step7" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+                            </svg>
+                        </small>
+                        <div class="text">
+                            <h2>Inquilinos</h2>
+                            <p>Por favor introduce los datos de las Personas que ocuparan el inmueble.</p>
+                        </div>
+                        <div class="row">
+                            <div class="mb-2">
+                                <select class="btn btn-primary" id="sel_inquilinos" name="no_inquilinos" onChange="javascript:inqonChange();prueba2(this);" aria-label="Default select example" >
+                                    <option value="{{inquilino.no_inquilinos}}" selected> {{inquilino.no_inquilinos}} </option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select> 
+                        </div> 
+                            <div class="input-text" id="inq_1" style="margin-bottom:-10px;">
+                                <div class="input-div">
+                                    <label for="n_inquilino1">Nombre</label>
+                                    <input class="form-control" id="n_inquilino1" name="n_inquilino1" type="text" oninput="prueba2(this)" placeholder="Nombre Completo" value="{{inquilino.n_inquilino1}}" >
+                                </div>
+                            
+                                <div class="input-div">
+                                    <label for="p_inquilino1">Parentesco</label>
+                                    <input class="form-control" id="p_inquilino1" name="p_inquilino1" type="text" oninput="prueba2(this)" placeholder="Parentesco" value="{{inquilino.p_inquilino1}}">
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="input-text"id="inq_2" style="Display:none; margin-bottom:-10px;">
+                            <div class="input-div">
+                                <label for="n_inquilino2">Nombre</label>
+                                <input class="form-control" id="n_inquilino2" name="n_inquilino2" type="text" oninput="prueba2(this)" placeholder="Nombre Completo" value="{{inquilino.n_inquilino2}}">
+                            </div>
+                            <div class="input-div">
+                                <label for="p_inquilino2">Parentesco</label>
+                                <input class="form-control" id="p_inquilino2" name="p_inquilino2" type="text" oninput="prueba2(this)" placeholder="Parentesco" value="{{inquilino.p_inquilino2}}">
+                            </div>
+                        </div>
+                        
+                        <div class="input-text " id="inq_3" style="Display:none; margin-bottom:-10px;">
+                            <div class="input-div">
+                                <label for="n_inquilino3">Nombre</label>
+                                <input class="form-control" id="n_inquilino3" name="n_inquilino3" type="text" oninput="prueba2(this)" placeholder="Nombre Completo" value="{{inquilino.n_inquilino3}}">
+                            </div>
+                        
+                            <div class="input-div">
+                                <label for="p_inquilino3">Parentesco</label>
+                                <input class="form-control" id="p_inquilino3" name="p_inquilino3" type="text" oninput="prueba2(this)" placeholder="Parentesco" value="{{inquilino.p_inquilino3}}">
+                            </div>
+                        </div> 
+                        <div class="input-text" id="inq_4" style="Display:none; margin-bottom:-10px;">
+                            <div class="input-div">
+                                <label for="n_inquilino4">Nombre</label>
+                                <input class="form-control" id="n_inquilino4" name="n_inquilino4" type="text" oninput="prueba2(this)" placeholder="Nombre Completo" value="{{inquilino.n_inquilino4}}">
+                            </div>
+                        
+                            <div class="input-div">
+                                <label for="p_inquilino4">Parentesco</label>
+                                <input class="form-control" id="p_inquilino4" name="p_inquilino4" type="text" oninput="prueba2(this)" placeholder="Parentesco" value="{{inquilino.p_inquilino4}}">
+                            </div>
+                        </div> 
+                    
+                        <div class="input-text " id="inq_5" style="Display:none; margin-bottom:-10px;">
+                            <div class="input-div">
+                                <label for="n_inquilino5">Nombre</label>
+                                <input class="form-control" id="n_inquilino5" name="n_inquilino5" type="text" oninput="prueba2(this)" placeholder="Nombre Completo" value="{{inquilino.n_inquilino5}}">
+                            </div>
+                        
+                            <div class="input-div">
+                                <label for="p_inquilino5">Parentesco</label>
+                                <input class="form-control" id="p_inquilino5" name="p_inquilino5" type="text" oninput="prueba2(this)" placeholder="Parentesco" value="{{inquilino.p_inquilino5}}">
+                            </div>
+                        </div>
+                        <hr class="hr" />
+                        <div class="buttons button_space mt-4">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <button class="submit_button next_button" id="finalizar1" onClick="recopilar()">Actualizar</button>
+                        </div>
+                    </div>
+
+                    <div id="final_step" class="main">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        
+                        <div class="text congrats">
+                            <h2>¡Listo!</h2>
+                            <p>Gracias Sr./Sra. <span class="shown_name"></span>  {{ request.user.first_name }} su información se ha actualizado y se ah enviado con éxito para futuras referencias.</p>
+                            <img src="https://pa1.narvii.com/6845/a6249d87c9b0863cfb83c1557ad39a51cf248c46_hq.gif"></img>
+                        </div>
+                    </div>
+
+                </div>
+</div>
+<!-- End of Modal -->
+        </form>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+
+{% block javascripts %}
+<script src="/static/assets/js/ms_arr.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    $(function () {
+        $("form").keypress(function (e) {
+            var key;
+            if (window.event)
+                key = window.event.keyCode; //IE
+            else
+                key = e.which; //firefox     
+            return (key != 13);
+        });
+    });
+</script>
+<script>    
+    $(document).ready(function() {
+       
+       $('#edit_inq').modal({ keyboard: false,backdrop: false })
+       
+       $('#edit_inq').modal('show');
+      
+
+    });
+    
+  </script>
+<script>
+
+ // variables globales    
+const arr ={};
+
+document.getElementById("edit_inq").onload = fecha()
+document.getElementById("carga_faltantes").onload = faltantes()
+document.getElementById("estado_civil").onload = mostrarOnChange()
+
+function faltantes()
+{
+    tel = document.getElementById("numeroTel");
+    
+    n2 = document.getElementById("n_inquilino2");
+    n3 = document.getElementById("n_inquilino3");
+    n4 = document.getElementById("n_inquilino4");
+    n5 = document.getElementById("n_inquilino5");
+    p2 = document.getElementById("p_inquilino2");
+    p3 = document.getElementById("p_inquilino3");
+    p4 = document.getElementById("p_inquilino4");
+    p5 = document.getElementById("p_inquilino5");
+    
+   
+    if(tel.value == "None"){
+        console.log("Faltantes");
+        tel.value="";
+    }
+    if(n2.value == "None"){
+        n2.value="";
+        p2.value="";
+    }
+    if(n3.value == "None"){
+        n3.value="";
+        p3.value="";
+    }
+    if(n4.value == "None"){
+        n4.value="";
+        p4.value="";
+    }
+    if(n5.value == "None"){
+        n5.value="";
+        p5.value="";
+    }
+    
+}
+
+function fecha(){
+    console.log("FECHAS")
+    meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+    let fecha = '{{ inquilino.fecha_ac}}';
+    console.log(fecha)
+    let arrayFecha = fecha.split(" ");
+    console.log(arrayFecha)
+    let nuevo=[];
+    arrayFecha[0] =( arrayFecha[0]<10) ? '0' +  arrayFecha[0]:  arrayFecha[0];
+    nuevo.push(arrayFecha[0]);
+    console.log(arrayFecha[0])
+    let posicion = meses.findIndex((element) => element == arrayFecha[2])+1;
+    console.log(arrayFecha[0])
+    
+    let posicionString = (posicion<10) ? '0' + posicion: posicion;
+    nuevo.push(posicionString);
+    nuevo.push(arrayFecha[4]);
+    console.log('fechas nuevo', nuevo.reverse().join('-'))
+    var camfecha = document.getElementById("fecha_ac");
+    console.log("valor viejo de camfecha",camfecha)
+    camfecha.value = nuevo.join('-')
+    console.log(camfecha.value)
+
+}    
+
+
+function fomOnchange()  {
+
+    sel = document.getElementById("p_fom");
+    dde = document.getElementById("dde");
+    ac = document.getElementById("act_con");
+    txt_de = document.getElementById("tdde");
+    dir_emp = document.getElementById("dir_emp");
+    dir_emp2 = document.getElementById("dir_emp2");
+    dir_pm = document.getElementById("dir_pm");
+    
+    email = document.getElementById("email_empresarial");
+    cpe = document.getElementById("codigo_postal_empleo");
+        console.log("sel.value",sel.value)
+        switch (sel.value)
+        {
+            case "Persona Fisica":
+
+            $( "#FM" ).fadeOut( "fast" );
+            console.log("persona fisica")
+            txt_de.textContent = "Datos De Empleo"
+            dde.style.display='';
+            dir_emp.style.display='';
+            ac.style.display='none';
+            dir_pm.style.display='none';
+            $( "#FM" ).fadeIn( "fast" );
+
+            var des = ac.getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+            }
+            var des2 = dir_pm.getElementsByTagName('*');
+            for (var node2 of des2) {
+                node2.disabled = true;
+            }
+            break;
+            
+            case "Persona Moral":
+            $( "#FM" ).fadeOut( "fast" );
+            console.log("persona moral")
+            console.log(email.value)
+            //cpe.value="00000"
+            console.log(cpe.value)
+            txt_de.textContent = "Acta Constitutiva"
+            ac.style.display='';
+            dir_emp2.style.display='none';
+            dir_pm.style.display='';
+            dde.style.display='none';
+            
+            dir_emp.style.display='none';
+
+            var des = dde.getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                node.value=0;
+            }
+            var des2 = dir_emp.getElementsByTagName('*');
+            for (var node2 of des2) {
+                node2.disabled = true;
+                node2.value=0;
+            }
+            console.log(des);
+            console.log(node);
+            console.log(des2);
+            console.log(node2);
+                    
+
+            $( "#FM" ).fadeIn( "fast" );
+            break;
+
+        }
+    }
+
+
+function mostrarOnChange() {
+     console.log("hola casado")
+             sel = document.getElementById("estado_civil");
+             divC = document.getElementById("datcon");
+             console.log("soy el sel de casado",sel.value);
+             if (sel.value=="Casado") {
+                 console.log("soy el sel de casado",sel);
+                  divC.style.display = '';
+             }
+             else {
+                  divC.style.display='none';
+       
+             }
+       
+            }
+
+
+const server = 'http://192.168.2.14:8000'
+const configin = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+  };
+var datos ={} ;
+    document.getElementById("cargar_tabla").onload = plantar()
+    
+    console.log("en onload",datos)
+    
+function prueba2(val){
+        console.log("clave",val.name,"valor",val.value)
+        datos[""+val.name]= '' +val.value
+        console.log(datos.nombre)
+        console.log("datos prueba2",datos)
+        arr2 = val.name;
+        let k2 = document.getElementById(arr2);
+        k2.style.borderColor="green"
+        k2.classList.remove('warning')
+        console.log(arr)
+    
+    }    
+    function recopilar()
+    {
+    // Obtener y Guardar el valor del input en localStorage
+    console.log("estoy en guardar",JSON.stringify(arr))
+    localStorage.setItem('datos', JSON.stringify(arr));
+    }
+
+const btnSubmit = document.getElementById("finalizar1")
+btnSubmit.addEventListener("click", function (event) {
+    event.preventDefault();
+    console.log("Editar jojojo")
+    
+    enviar_datos(datos)
+    setTimeout(() => {
+        window.location.href = '/inquilinos/'
+    }, "3000");
+   
+})
+
+async function enviar_datos(formulario){
+    const response = await axios.post(`${server}/v1/editar_inquilino/`,formulario,configin)
+    console.log("response",response)
+ 
+}
+    
+function plantar()
+{
+    datos = JSON.parse( localStorage.getItem('data_inquilino'))
+    console.log(localStorage)
+    console.log("soy datos",datos)
+    console.log(datos.id)
+    var full = document.getElementById("nombre_full")
+    var conyu = document.getElementById("n_conyuge")
+    var k1 = Object.getOwnPropertyNames(datos);
+    console.log("soy k1",k1)
+    // datos generales
+    
+    if (conyu.value == "null null null"){
+        conyu.value = "Sin Conyugue";
+            }
+ 
+    for(let i= 1; i< 82;i++)
+    {
+        let k2 = document.getElementsByName(k1[i]);
+        console.log("yo soy k2",k2)
+        k2[0].value =  datos[k1[i]];
+        console.log("soy k2",k2[0]);
+    }
+
+    console.log("rentado_antes")
+
+    var renta = document.getElementById("rentado_antes");
+    var arre = document.getElementById("arren");
+    var bot = document.getElementById("but_arren");
+
+
+    //   console.log(radio.value)
+
+        if(renta.value=="Si") {
+            arre.style.display='';
+            bot.style.display='';
+            
+        }
+        
+        if(renta.value=="No") {
+            arre.style.display='none';
+            bot.style.display='';
+            bot.style.marginTop='20px';
+            var des = arre.getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                
+            }
+    }  
+
+    let sel = document.getElementById("floatingSelect")
+    console.log(sel.value)
+    if (sel.value=="Si"){
+        console.log("hola")
+       document.getElementById("nrc").style.display="";
+    }
+    else{
+       document.getElementById("nrc").style.display="none";
+    }
+
+    console.log("hola casado")
+    sel = document.getElementById("estado_civil");
+    divC = document.getElementById("datcon");
+    console.log("soy el sel de casado",sel.value);
+    if (sel.value=="Casado") {
+        console.log("soy el sel de casado",sel);
+         divC.style.display = '';
+    }
+    else {
+         divC.style.display='none';
+
+    }
+    //localStorage.removeItem('data_inquilino')
+    //console.log("limpio",localStorage)
+}
+
+
+function inqonChange()
+{
+    console.log("inqilinos en el onChange")
+  
+    var ni =   document.getElementById("sel_inquilinos");
+    var inq1 = document.getElementById("inq_1");
+    var inq2 = document.getElementById("inq_2");
+    var inq3 = document.getElementById("inq_3");
+    var inq4 = document.getElementById("inq_4");
+    var inq5 = document.getElementById("inq_5");
+   
+    
+    if (ni.value=="1") 
+    {
+         console.log(ni.value);
+         inq1.style.display = '';
+    }
+    else {
+         inq1.style.display = 'none';
+
+    }
+    
+    if (ni.value=="2") 
+    {
+         console.log(ni.value);
+         inq1.style.display = '';
+         inq2.style.display = '';
+    }
+    else {
+         inq2.style.display = 'none';
+
+    }
+    
+    if (ni.value=="3") 
+    {
+         console.log(ni.value);
+         inq1.style.display = '';
+         inq2.style.display = '';
+         inq3.style.display = '';
+    }
+    else {
+         inq3.style.display = 'none';
+
+    }
+    
+    if (ni.value=="4") 
+    {
+         console.log(ni.value);
+         inq1.style.display = '';
+         inq2.style.display = '';
+         inq3.style.display = '';
+         inq4.style.display = '';
+    }
+    else {
+         inq4.style.display = 'none';
+
+    }
+    if (ni.value=="5") 
+    {
+         console.log(ni.value);
+         inq1.style.display = '';
+         inq2.style.display = '';
+         inq3.style.display = '';
+         inq4.style.display = '';
+         inq5.style.display = '';
+    }
+    else {
+         inq5.style.display = 'none';
+
+    }
+}
+</script>
+<script>
+    
+    function alert1(){
+        const swalWithBootstrapButtons = Swal.mixin({customClass: {
+            confirmButton: 'btn btn-success ms-3',
+            cancelButton: 'btn btn-danger me-3'
+        },
+        buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Guardar Datos',
+            text: "¿Estas seguro de que quieres continuar?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, guardar',
+            cancelButtonText: '!No, cancelar¡',
+            reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire(
+            '¡Guardado con éxito!',
+            'Tus datos han sido guardados correctamente',
+            'success'
+        )} else if (
+        /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ){
+        swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'Ésta acción ha sido cancelada',
+            'error'
+        )
+    }
+})}
+
+</script>
+
+{% comment %} <script src="@@path/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script> {% endcomment %}
+{% comment %} <script src="/static/assets/js/ocultadorespf.js"></script>
+{% comment %} <script src="/static/assets/js/validacionpf.js"></script> {% endcomment %}
+{% endblock javascripts %}
+

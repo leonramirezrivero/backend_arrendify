@@ -1,0 +1,326 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Detalles Arrendador {{arrendador.nombre}} {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/nav.css" rel="stylesheet"/>
+{% endblock stylesheets %}
+
+{% block content %}
+{% comment %} Cargar el js para mostrar el fiador/obligado de forma dinamica {% endcomment %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+    <div>
+        <a href="/inquilinos/"><button type="button" class="btn btn-secondary " ><svg class="icon icon-xs" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" clip-rule="evenodd"></path></svg>Regresar  
+        </button>
+        </a>
+    </div>
+</div>
+<div class="d-block">
+    <div class="row" id="cargar_tabla">
+        <div class="col-12 col-xl">
+            <div class="card card-body border-0 shadow mb-4">
+                <h2 class="h5 mb-2" id="nombre_full" name="id"></h2>
+                <hr class="hr" />
+
+                
+                <nav class="borde border-0">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button class="nav-link active" id="nav-datos_g" data-bs-toggle="tab" data-bs-target="#datos_g" type="button" role="tab" aria-controls="datos_g" aria-selected="true">Datos Generales</button>
+                      <button class="nav-link" id="nav-datos_d" data-bs-toggle="tab" data-bs-target="#datos_d" type="button" role="tab" aria-controls="nav-profil" aria-selected="false">Datos Domiciliarios</button>
+    
+                      <button class="nav-link" id="nav-empleo1" name="nav_empleo" data-bs-toggle="tab" data-bs-target="#nav-empleo" type="button" role="tab" aria-controls="nav-empleo" aria-selected="false" >Datos De Empleo</button>
+                      <button class="nav-link" id="nav-jefe1" name="nav_jefe" data-bs-toggle="tab" data-bs-target="#nav-jefe" type="button" role="tab" aria-controls="nav-jefe" aria-selected="false" >Datos De Jefe</button>
+                      <button class="nav-link" id="nav-ac1" name="nav_ac1" data-bs-toggle="tab" data-bs-target="#nav-acta" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Acta Constitutiva</button>
+                      <button class="nav-link" id="nav-aa" name="nav_aa" data-bs-toggle="tab" data-bs-target="#nav-arrendario_anterior" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Arrendador Ant.</button>
+                      <button class="nav-link" id="nav-ref" name="nav_ref" data-bs-toggle="tab" data-bs-target="#nav-referencias" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Referencia</button>
+                      <button class="nav-link" id="nav-inq" name="nav_inq" data-bs-toggle="tab" data-bs-target="#nav-inquilinos" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Inquilinos</button>
+                    </div>
+                </nav>
+               
+
+
+
+                <div class="tab-content" id="nav-tabContent">
+
+                    <div class="tab-pane fade show active" id="datos_g" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                        <h2 class="h5 mb-2 mt-2">Datos Generales</h2>
+                        <hr class="hr" />    
+                        <div class="row" >
+                            <div class="col-md-3 mb-3">
+                                <label>Número Telefonico Fijo: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" name="numeroTel" id="numeroTel"  type="text" value="" readonly>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label>Número Telefonico Movil: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" name="numeroTel1" id="numeroTel1"  type="text" value="" readonly>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label>RFC: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" name="rfc" id="rfc"   type="text" value=""  readonly>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label>Email: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1"  name="email" id="email"  type="text" value=""  readonly>
+                            </div>
+                      
+                        </div>        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Estado Civil: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" name="" id="estado_civil" value=""  readonly>
+                            </div>  
+                            {% comment %} {% if datos.n_conyugue %} {% endcomment %}
+                            <div class="col-md-6 mb-3" id="conyu">
+                                <label>Cónyuge: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" name="n_conyuge" id="n_conyuge" type="text"  readonly>
+                            </div>     
+                            {% comment %} {% endif %} {% endcomment %}
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="tab-pane fade" id="datos_d" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                            <h2 class="h5 mb-2 mt-2">Datos Domiciliarios</h2>
+                        <hr class="hr" />
+                        <div class="col-md-6 mb-3">
+                            <label for="direccon">Domicilio: </label>
+                            <input class="form-control-plaintext card shadow border-1 ps-1" id="full_dom" type="text" value="" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="municipio_alcaldia">Referencias: </label>
+                            <input class="form-control-plaintext card shadow border-1 ps-1" name="referencia" id="referencia" type="text" value="{{ arrendador.referencias }}" readonly>
+                        </div> 
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-empleo" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0" >
+                        <div id="datos_empleo" class="row">
+                            <h2 class="h5 mb-2">Datos De Empleo</h2>
+                            <hr class="hr" />
+                            <div class="col-md-3 mb-1">                                
+                                <label for="Profesión u Ocupación">Profesión u Ocupación:  </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="profesion" name="profesion" type="text" value="{{ inquilino.profesion }}" readonly>
+                            </div>
+                            <div class="col-md-3 mb-1">                                
+                                <label for="antiguedad">Antiguedad: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="antiguedad" name="antiguedad" type="text" value="{{ inquilino.antiguedad }} años" readonly>
+                                                                                           
+                            </div>
+                            <div class="col-md-3 mb-1">                                    
+                                <label for="puesto">Puesto: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="puesto" name="puesto" type="text" value="{{ inquilino.puesto }}" readonly>
+                                       
+                            </div>
+                            <div class="col-md-3 mb-1">                                
+                                <label for="Telefono">Número Teléfono Empresarial: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="tel_empleo" name="tel_empleo" type="text" value="{{ inquilino.tel_empleo}}" readonly>                                            
+                            </div>
+                            <div class="col-md-3 mb-3">                                
+                                <label for="Ingreso Mensual">Ingreso Mensual: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="ingreso_men" name="ingreso_men" type="text" value="$ {{ inquilino.ingreso_men}}" readonly>                           
+                            </div>
+                            <div class="col-md-3 mb-3">                                
+                                <label for="Empresa Donde Labora">Empresa Donde Labora: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="nombre_empresa" name="nombre_empresa" type="text" value="{{ inquilino.nombre_empresa }}" readonly>
+                            </div>
+                            <div class="col-md-3 mb-3"> 
+                                <label>Email Empresarial</label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="email_empresarial" name="email_empresarial" type="email" value="{{ inquilino.email_empresarial }}" readonly>
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="numerocel_empresa">Celular: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="cel_empleo" name="cel_empleo" type="text" value="{{ inquilino.cel_empleo }}" readonly>                                  
+                            </div>
+                        </div>
+                        <h2 class="h5 mb-2 mt-2">Domicilio Empleo</h2>
+                            <hr class="hr" />
+                            <div class="col-md-6 mb-2">
+                                <label for="direccon">Domicilio: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="full_dom_em" name="" type="text" value="" readonly>
+                            </div>      
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-jefe" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                        <div class="row">
+                            <h2 class="h5 mb-2">Datos Jefe </h2>
+                            <hr class="hr" />
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="jefe">Jefe Inmediato: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="jefe" name="jefe" type="text" value="{{ inquilino.jefe }}" readonly>                                  
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="puesto">Puesto: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="puesto_jefe" name="puesto_jefe" type="text" value="{{ inquilino.puesto_jefe }}" readonly>                                    
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="pagina_web">Página Web </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="pagina_web" name="pagina_web" type="text" value="{{ inquilino.pagina_web }}" readonly>                                 
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="giro">Giro</label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="giro" name="giro" type="text" value="{{ inquilino.giro }}" readonly>                                
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="tel_rep">Teléfono Jefe</label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="tel_jefe" name="tel_jefe" type="text" value="{{ inquilino.tel_jefe}}" readonly>                                 
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="email_e">Email Jefe</label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" id="email_jefe" name="email_jefe" type="text" value="{{ inquilino.email_jefe}}" readonly>                                   
+                            </div>
+                            
+                        </div>  
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-acta" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                        <div id="acta_con" class="row">
+                            <h2 class="h5 mb-2 mt-2">Acta Constitutiva</h2>
+                            <hr class="hr" />
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label>Empresa Constituida: </label>
+                                    <input class="form-control-plaintext card shadow border-1 ps-1" id="empresa_constituida" name="empresa_constituida" type="text" value="{{ arrendador.empresa_constituida}}"  readonly>
+                                </div>  
+                                <div class="col-md-4 mb-3">
+                                    <label>Escritura Número: </label>
+                                    <input class="form-control-plaintext card shadow border-1 ps-1" id="escritura_numero_ac" name="escritura_numero_ac" type="text" value="{{ arrendador.escritura_numero_ac}}" readonly>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Fecha: </label>
+                                    <input class="form-control-plaintext card shadow border-1 ps-1" id="fecha_ac" name="fecha_ac" type="text" value="{{ arrendador.fecha_ac}}" readonly>
+                                </div>      
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label>Nombre Notario: </label>
+                                    <input class="form-control-plaintext card shadow border-1 ps-1" id="nombre_notario_ac" name="nombre_notario_ac"  type="text" value="{{ arrendador.nombre_notario_ac}}"  readonly>
+                                </div>  
+                                <div class="col-md-4 mb-3">
+                                    <label>Edo Méx o CDMX: </label>
+                                    <input class="form-control-plaintext card shadow border-1 ps-1" id="coe" name="coe" type="text" value="{{ arrendador.coe}}" readonly>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Folio Mercantil: </label>
+                                    <input class="form-control-plaintext card shadow border-1 ps-1" id="folio_mercantil" name="folio_mercantil" type="text" value="{{ arrendador.folio_mercantil}}" readonly>
+                                </div>      
+                            </div>
+                        </div>  
+                    </div>
+
+
+                    <div class="tab-pane fade" id="nav-arrendario_anterior" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                        <h2 class="h5 mb-2 mt-2">Arrentario Anterior</h2>
+                            <hr class="hr" />
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">                                    
+                                        <label for="cNombre Actual Arrendador">Nombre del Actual Arrendador: </label>
+                                        <input type="text" id="nombre_aa" name="nombre_aa" class="form-control-plaintext card shadow border-1 ps-1" value="{{inquilino.nombre_aa}}" readonly>                               
+                                    </div>
+                                    <div class="col-md-4 mb-3">                                    
+                                        <label for="rent1">Monto De Renta: </label>
+                                        <input type="text" id="monto_renta_aa" name="monto_renta_aa" class="form-control-plaintext card shadow border-1 ps-1" value="$ {{inquilino.monto_renta_aa}}" readonly>                                  
+                                    </div>
+                                    <div class="col-md-4 mb-3">                                    
+                                        <label for="TEL1">Teléfono: </label>
+                                        <input type="text" id="telefono_aa" name="telefono_aa" class="form-control-plaintext card shadow border-1 ps-1" value="{{inquilino.telefono_aa}}" readonly>                             
+                                    </div>
+                                    <div class="col-md-4 mb-3">                                    
+                                        <label for="mdc">Motivo Del Cambio: </label>
+                                        <input type="text" id="motivo_cambio" name="motivo_cambio" class="form-control-plaintext card shadow border-1 ps-1" value="{{inquilino.motivo_cambio}}" readonly>                                
+                                    </div> 
+                                    <div class="col-md-8 mb-3">
+                                        <label for="dia">Domicilio del Inmueble Arrendado: </label>
+                                        <input type="text" id="full_dom_arrendador" name="" class="form-control-plaintext card shadow border-1 ps-1" value="{{ inquilino.calle_dia}} {{ inquilino.num_ext_dia}} int.{{ inquilino.num_int_dia}} Col. {{ inquilino.colonia_dia}} {{ inquilino.codigo_postal_dia}} {{ inquilino.ciudad_dia}}" disabled>
+                                    </div>
+                                </div>
+                                <div class= "row">
+                                    <div class="col-md-6 mb-3">                                    
+                                        <label for="TEL1">¿Renta Compartida?</label>
+                                        <input type="text" id="renta_compartida" name="renta_compartida" class="form-control-plaintext card shadow border-1 ps-1" value="{{inquilino.telefono_aa}}" readonly>                             
+                                    </div>
+                                    <div class="col-md-6 mb-3">                                    
+                                        <label for="mdc">¿Con Cuantos?</label>
+                                        <input type="text" id="no_renta_compartida" name="no_renta_compartida" class="form-control-plaintext card shadow border-1 ps-1" value="{{inquilino.motivo_cambio}}" readonly>                                
+                                    </div> 
+                                <div>
+                            </div>
+                            </div>
+                            </div>
+                        </div> 
+                    </div> 
+
+                    <div class="tab-pane fade" id="nav-referencias" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                        <h2 class="h5 mb-2 mt-2">Arrentario Anterior</h2>
+                            <hr class="hr" />
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <div class="col-md-12 mb-3">
+                                    <label for="n-p-a">Referencia 1:  </label>
+                                    <input type="text" id="ref1" class="form-control-plaintext card shadow border-1 ps-1" value=" Nombre: {{inquilino.n_ref1}} Parentesco: {{inquilino.p_ref1}} Telefono: {{inquilino.tel_ref1}}"disabled>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="d-c-a">Referencia 2: {{inquilino.n_ref2}}</label>
+                                    <input type="text" id="ref2" class="form-control-plaintext card shadow border-1 ps-1" value=" Parentesco: {{inquilino.p_ref2}} Telefono: {{inquilino.tel_ref2}}"disabled>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="ubicacion">Referencia 3: {{inquilino.n_ref3}}</label>
+                                    <input type="text" id="ref3" class="form-control-plaintext card shadow border-1 ps-1" value=" Parentesco: {{inquilino.p_ref3}} Telefono: {{inquilino.tel_ref3}}"disabled>
+                                </div>                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-inquilinos" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                        <h2 class="h5 mb-2 mt-2">Inquilinos</h2>
+                        <hr class="hr" />
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <div class="col-md-12 mb-3" id="inq1">
+                                    <label for="n-p-a">Inquilino 1</label>
+                                    <input type="text" id="poi1" class="form-control-plaintext card shadow border-1 ps-1" value="" readonly>
+                                </div>
+                                <div class="col-md-12 mb-3" id="inq2">
+                                    <label for="d-c-a">Inquilino 2</label>
+                                    <input type="text"  id="poi2" class="form-control-plaintext card shadow border-1 ps-1" value="{{inquilino.n_inquilino2}}" readonly>
+                                </div>                
+                                <div class="col-md-12 mb-3" id="inq3">
+                                    <label for="ubicacion">Inquilino 3</label>
+                                    <input type="text"  id="poi3" class="form-control-plaintext card shadow border-1 ps-1" value="{{inquilino.n_inquilino3}}" readonly>
+                                </div>
+                              
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="col-md-12 mb-3" id="inq4">
+                                    <label for="n-p-a">Inquilino 4</label>
+                                    <input type="text"  id="poi4" class="form-control-plaintext card shadow border-1 ps-1" value="{{inquilino.n_inquilino4}}"readonly>
+                                </div>
+                                <div class="col-md-12 mb-3" id="inq5">
+                                    <label for="d-c-a"> Inquilino 5</label>
+                                    <input type="text"class="form-control-plaintext card shadow border-1 ps-1"  id="poi5" value="{{inquilino.n_inquilino5}}" readonly>
+                                </div>                
+                            </div>
+                        </div>
+                    </div>
+                 <hr class="hr" />
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+     
+
+{% comment %} onkeyup="sumar() o onload=mostrar()" {% endcomment %}
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/static/assets/repositorios/detail_inq.js"></script> 
+
+{% endblock javascripts %}

@@ -1,0 +1,292 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Detalles {{inquilino.nombre}} {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+{% comment %} Cargar el js para mostrar el fiador/obligado de forma dinamica {% endcomment %}
+<body onload="mostrar()">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+    <div>
+        <a href="/inquilinos/"><button type="button" class="btn btn-secondary " ><svg class="icon icon-xs" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" clip-rule="evenodd"></path></svg>Regresar  
+        </button>
+        </a>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-12 col-xl">
+        <div class="card card-body border-0 shadow mb-4">
+            <h2 class="h5 mb-3">{{inquilino.nombre}} {{inquilino.apellido}} {{inquilino.apellido1}}</h2> <input id="fom" class="d-none"  type="text" value="{{ inquilino.p_fom}}"   readonly>
+            <hr class="hr" />
+            <div class="row">
+                <div class="row" >
+                    <div class="col-md-3 mb-3">
+                        <label>Número Telefonico Fijo: </label>
+                        <input class="form-control-plaintext card shadow border-1 ps-1"  type="text" value="{{ inquilino.numeroTel}}"   readonly>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label>Número Telefonico Movil: </label>
+                        <input class="form-control-plaintext card shadow border-1 ps-1"  type="text" value="{{ inquilino.numeroTel1}}"  readonly>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label>RFC: </label>
+                        <input class="form-control-plaintext card shadow border-1 ps-1"   type="text" value="{{ inquilino.rfc }}"  readonly>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label>Email: </label>
+                        <input class="form-control-plaintext card shadow border-1 ps-1"   type="text" value="{{ inquilino.email }}"  readonly>
+                    </div>
+              
+                </div>      
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Estado Civil: </label>
+                        <input class="form-control-plaintext card shadow border-1 ps-1"   type="text" value="{{ inquilino.estado_civil }}"  readonly>
+                    </div>  
+                    <div class="col-md-6 mb-3" id="conyu">
+                        <label>Cónyuge: </label>
+                        <input class="form-control-plaintext card shadow border-1 ps-1"id="conyu_v"  type="text" value="{{ inquilino.n_conyuge }} {{ inquilino.a_conyuge }} {{ inquilino.a1_conyuge }}" readonly>
+                    </div>      
+                </div>     
+                
+                <h2 class="h5 mb-2 mt-2">Datos Domiciliarios</h2>
+                <hr class="hr" />
+                <div class="col-md-6 mb-1">
+                    <label for="direccon">Domicilio: </label>
+                    <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.calle }} {{ inquilino.num_ext }} int. {{ inquilino.num_int }} Col. {{ inquilino.colonia }} {{ inquilino.codigopostal }} {{ inquilino.municipio_alcaldia }}  {{ inquilino.estado }}  " readonly>
+                </div>
+                <div class="col-md-6 mb-1">
+                    <label for="municipio_alcaldia">Referencias: </label>
+                    <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.referencias }}" readonly>
+                </div> 
+                
+                <div id="datos_empleo" class="row" style="display:none;">
+                            <h2 class="h5 mb-2 mt-4">Datos De Empleo</h2>
+                            <hr class="hr" />
+                            <div class="col-md-3 mb-1">                                
+                                <label for="Profesión u Ocupación">Profesión u Ocupación:  </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.profesion }}" readonly>
+                            </div>
+                            <div class="col-md-3 mb-1">                                
+                                <label for="antiguedad">Antiguedad: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.antiguedad }} años" readonly>
+                                                                                           
+                            </div>
+                            <div class="col-md-3 mb-1">                                    
+                                <label for="puesto">Puesto: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.puesto }}" readonly>
+                                       
+                            </div>
+                            <div class="col-md-3 mb-1">                                
+                                <label for="Telefono">Número Teléfono Empresarial: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.tel_empleo}}" readonly>                                            
+                            </div>
+                            <div class="col-md-3 mb-3">                                
+                                <label for="Ingreso Mensual">Ingreso Mensual: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="$ {{ inquilino.ingreso_men}}" readonly>                           
+                            </div>
+                            <div class="col-md-3 mb-3">                                
+                                <label for="Empresa Donde Labora">Empresa Donde Labora: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.nombre_empresa }}" readonly>
+                            </div>
+                            <div class="col-md-3 mb-3"> 
+                                <label>Email Empresarial</label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="email" value="{{ inquilino.email_empresarial }}" readonly>
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="numerocel_empresa">Celular: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.cel_empleo }}" readonly>                                  
+                            </div>
+
+                           
+                            <h2 class="h5 mb-2 mt-2">Datos Jefe </h2>
+                            <hr class="hr" />
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="jefe">Jefe Inmediato: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.jefe }}" readonly>                                  
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="puesto">Puesto: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.puesto_jefe }}" readonly>                                    
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="pagina_web">Página Web </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.pagina_web }}" readonly>                                 
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="giro">Giro</label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.giro }}" readonly>                                
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="tel_rep">Teléfono Jefe</label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.tel_jefe}}" readonly>                                 
+                            </div>
+                            <div class="col-md-3 mb-4">                                    
+                                <label for="email_e">Email Jefe</label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.email_jefe}}" readonly>                                   
+                            </div>
+                            <h2 class="h5 mb-2 mt-2">Domicilio Empleo</h2>
+                            <hr class="hr" />
+                            <div class="col-md-6 mb-2">
+                                <label for="direccon">Domicilio: </label>
+                                <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.calle_empleo}} {{ inquilino.num_ext_empleo}} int.{{ inquilino.num_int_empleo}} Col. {{ inquilino.colonia_empleo}} {{ inquilino.codigo_postal_empleo}} {{ inquilino.ciudad_empleo}}  " readonly>
+                            </div>      
+                </div>      
+                
+                
+                            <div id="acta_con" class="row"style="display:none;">
+                                <h2 class="h5 mb-2 mt-2">Acta Constitutiva</h2>
+                                <hr class="hr" />
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Empresa Constituida: </label>
+                                        <input class="form-control-plaintext card shadow border-1 ps-1"  type="text" value="{{ inquilino.empresa_constituida}}"  readonly>
+                                    </div>  
+                                    <div class="col-md-4 mb-3">
+                                        <label>Escritura Número: </label>
+                                        <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.escritura_numero_ac}}" readonly>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Fecha: </label>
+                                        <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.fecha_ac}}" readonly>
+                                    </div>      
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Nombre Notario: </label>
+                                        <input class="form-control-plaintext card shadow border-1 ps-1"  type="text" value="{{ inquilino.nombre_notario_ac}}"  readonly>
+                                    </div>  
+                                    <div class="col-md-4 mb-3">
+                                        <label>Edo Méx o CDMX: </label>
+                                        <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.coe}}" readonly>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>Folio Mercantil: </label>
+                                        <input class="form-control-plaintext card shadow border-1 ps-1" type="text" value="{{ inquilino.folio_mercantil}}" readonly>
+                                    </div>      
+                                </div>
+                            </div>
+                        
+
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <h2 class="h5 mb-2">Referencia del Arrendatario Anterior</h2>
+                                    <hr class="hr" />
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                  <h2 class="h5 mb-2">Referencias Personales</h2>
+                                  <hr class="hr" />
+                                </div>
+                            </div> 
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">                                    
+                                            <label for="cNombre Actual Arrendador">Nombre del Actual Arrendador: </label>
+                                            <input type="text" id="d-c-a" class="form-control" value="{{inquilino.nombre_aa}}" disabled>                               
+                                        </div>
+                                        <div class="col-md-6 mb-3">                                    
+                                            <label for="rent1">Monto De Renta: </label>
+                                            <input type="text" id="d-c-a" class="form-control" value="$ {{inquilino.monto_renta_aa}}" disabled>                                  
+                                        </div>
+                                        <div class="col-md-6 mb-3">                                    
+                                            <label for="TEL1">Teléfono: </label>
+                                            <input type="text" id="d-c-a" class="form-control" value="{{inquilino.telefono_aa}}" disabled>                             
+                                        </div>
+                                        <div class="col-md-6 mb-3">                                    
+                                            <label for="mdc">Motivo Del Cambio: </label>
+                                            <input type="text" id="d-c-a" class="form-control" value="{{inquilino.motivo_cambio}}" disabled>                                
+                                        </div> 
+                            </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="dia">Domicilio del Inmueble Arrendado: </label>
+                                    <input type="text" id="d-c-a" class="form-control" value="{{ inquilino.calle_dia}} {{ inquilino.num_ext_dia}} int.{{ inquilino.num_int_dia}} Col. {{ inquilino.colonia_dia}} {{ inquilino.codigo_postal_dia}} {{ inquilino.ciudad_dia}}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+                                <div class="col-md-12 mb-3">
+                                    <label for="n-p-a">Referencia 1: {{inquilino.n_ref1}}  </label>
+                                    <input type="text" id="d-c-a" class="form-control" value="Parentesco: {{inquilino.p_ref1}} Telefono: {{inquilino.tel_ref1}}"disabled>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="d-c-a">Referencia 2: {{inquilino.n_ref2}}</label>
+                                    <input type="text" id="d-c-a" class="form-control" value=" Parentesco: {{inquilino.p_ref2}} Telefono: {{inquilino.tel_ref2}}"disabled>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="ubicacion">Referencia 3: {{inquilino.n_ref3}}</label>
+                                    <input type="text" id="d-c-a" class="form-control" value=" Parentesco: {{inquilino.p_ref3}} Telefono: {{inquilino.tel_ref3}}"disabled>
+                                </div>                
+                            </div>
+                            
+                            </div>  
+
+                <h2 class="h5 mb-2 mt-2">Inquilinos</h2> 
+                <hr class="hr" />
+                <div class="col-md-6 mb-2">
+                    <div class="col-md-12 mb-3">
+                        <label for="n-p-a">{{inquilino.p_inquilino1}}</label>
+                        <input type="text" id="d-c-a" class="form-control" value="{{inquilino.n_inquilino1}}" disabled>
+                    </div>
+                    <div class="col-md-12 mb-3" id="inq2">
+                        <label for="d-c-a">{{inquilino.p_inquilino2}}</label>
+                        <input type="text"  id="poi2" class="form-control" value="{{inquilino.n_inquilino2}}" disabled>
+                    </div>                
+                    <div class="col-md-12 mb-3" id="inq3">
+                        <label for="ubicacion">{{inquilino.p_inquilino3}}</label>
+                        <input type="text"  id="poi3" class="form-control" value="{{inquilino.n_inquilino3}}" disabled>
+                    </div>
+                    {% comment %} <div class="col-md-6 mb-3 " >
+                        <input class="form-check-input" type="checkbox" id="o_venta" disabled checked>
+                        <label class="form-check-label" for="o_venta">En Renta con opción a Venta</label>
+                    </div> {% endcomment %}
+                </div>
+                <div class="col-md-6 mb-2">
+                    <div class="col-md-12 mb-3" id="inq4">
+                        <label for="n-p-a">{{inquilino.p_inquilino4}}</label>
+                        <input type="text"  id="poi4" class="form-control" value="{{inquilino.n_inquilino4}}"disabled>
+                    </div>
+                    <div class="col-md-12 mb-3" id="inq5">
+                        <label for="d-c-a"> {{inquilino.p_inquilino5}}</label>
+                        <input type="text"class="form-control"  id="poi5" value="{{inquilino.n_inquilino5}}" disabled>
+                    </div>                
+                </div>
+
+                
+                    
+             </div>
+        </div>
+    </div>
+</div>
+{% comment %} onkeyup="sumar() o onload=mostrar()" {% endcomment %}
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script src="/static/assets/js/ocultadorespf.js"></script>
+{% comment %} <script>
+    function acta() {
+       console.log("acta")
+        var trigger = document.getElementById("fom");
+        var div1 = document.getElementById("acta_con");
+        var div2 = document.getElementById("datos_empleo");
+      
+        console.log(trigger.value)
+         if(trigger.value=="Persona Fisica") {
+              div2.style.display='';
+          }
+          
+        if(trigger.value=="Persona Moral") {
+              div1.style.display='';
+          }
+         }      
+</script> {% endcomment %}
+{% endblock javascripts %}

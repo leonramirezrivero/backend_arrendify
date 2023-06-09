@@ -1,0 +1,368 @@
+{% extends "layouts/base.html" %}
+{% csrf_token %}
+{% block title %} Cotizador personalizado {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/estilos.css" rel="stylesheet"/>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<form method='POST' action="#" class="mt-4">
+
+  <!-- Segundo modo -->
+        <section style="background:gray" class="card card-body border-0 shadow mb-4">
+            <div  class="container ">
+                <div class="row justify-content-md-center">
+                    <div class="col-12 col-lg-5">
+                        
+                        <svg style=" margin-left:200px; margin-bottom:5px; padding-right:100px width:100%; height:50px; background:#231942ff " xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-coin border border-primary rounded-circle" viewBox="0 0 16 16">
+                            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"/>
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+                        </svg>
+                        <div style="padding-left:25px; padding-left:100%  width:50px; height:50px; background:#231942ff;" class=" border border-tertiary border-2 rounded-3">
+                        <h2 style=" padding-left:60px; z-index:1; color:white" class="h2 fw-bold mb-3 ">Crear cotización</h2>
+                        </div>
+                    </div>
+                    <section class="card card-body border-0 shadow mb-4 mt-4">
+                        <div class="container ">
+                            <div class="row justify-content-md-center">
+                                
+                                <div class="row">
+                                    <div class="col">
+                                        <button style="background-color:#231942ff; color:white; margin-left:270px" type="button" class="btn btn-primary btn-lg " disabled>generar cotización</button> 
+                                    </div>     
+                                    <div class="col">
+                                        <button style="background-color: #000000 ; color:white;" type="button" class="btn btn-secondary btn-lg" disabled>calculadora rapida</button>
+                                    </div>                                   
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                      <div class="col me-3 mt-4">
+                                        <input class="w-100" type="text"  maxlength="8"  alt="..."  placeholder=" Nombre de la cotización"></input>
+                                      </div>
+                                      <div class="col me-2 mt-3">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected>Inmueble a cotizar</option>
+                                            <option value="1">Opción 1</option>
+                                            <option value="2">Opción 2</option>
+                                            <option value="3">Opción 3</option>
+                                          </select>
+                                      </div>
+                                    </div>
+
+                                <div class="col-12 col-lg-4">
+                                    <div class="github-big-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 17">
+                                                <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
+                                              </svg>
+                                          </svg>
+                             </div>
+                            </div>
+                             </div>
+                    </section>
+                </section>
+
+        
+
+
+
+
+
+        <div style="background-color:white" >
+            <label class="titulo"> Cotizador Personalizado </label>
+        </div>  
+
+{% comment %} aqui empieza el de 4 columnas {% endcomment %}
+<div class="container">
+    <div class="row">
+
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Inmuebles</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Selecciona una opción </option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">3</option>
+               </select>
+               
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+        
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Renta</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <ul class="list-group list-group-flush price-list">
+                        <div style="Display:inline-block" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">Si</label>
+                            &nbsp;&nbsp;&nbsp;
+                            <div style="Display:inline-block" class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">No</label>
+                            </div>
+                        </div>   
+    </div>
+            </div>
+        </div>
+        <!-- End Content -->
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Soporte premium</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <ul class="list-group list-group-flush price-list">
+                        <div style="Display:inline-block" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">Si</label>
+                            &nbsp;&nbsp;&nbsp;
+                            <div style="Display:inline-block" class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">No</label>
+                            </div>
+                        </div>   
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+      <div style="margin-top:15px; Display:inline-block" class="col-3">
+        <div class="card shadow border-2 ">
+            <!-- Header -->
+            <div class="card-header bg-white border-5 pb-0">
+                <span style="margin-top:-20px" class="d-block">
+                    <span class="h2 text-primary fw-bold align-top">Años de cobertura</span>
+                </span>
+            </div>
+            <!-- End Header -->
+            <!-- Content -->
+            <div class="card-body">
+                <div style="Display:inline-block width" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">1</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">2</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">3</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">4</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">5</label>
+                    </div>
+                </div>   
+            </div>
+            <!-- End Content -->
+        </div> 
+    </div>
+    </div>
+  </div>
+</div>
+{% comment %} aqui acaba el 4 columnas {% endcomment %}
+
+{% comment %} aqui empieza el de 4 columnas {% endcomment %}
+<div class="container">
+    <div class="row">
+
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Asesoria Juridica</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">Si</label>
+                        &nbsp;&nbsp;&nbsp;
+                        <div style="Display:inline-block" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">No</label>
+                        </div>
+                    </div>   
+
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+        
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">Tiempo cobertura</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Selecciona una opción</option>
+                        <option value="1">1 año</option>
+                        <option value="2">2 años</option>
+                        <option value="3">3 años</option>
+                        <option value="4">4 años</option>
+                        <option value="5">5 años</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+        <div style="margin-top:15px; Display:inline-block" class="col-3">
+            <div class="card shadow border-2 ">
+                <!-- Header -->
+                <div class="card-header bg-white border-5 pb-0">
+                    <span style="margin-top:-20px" class="d-block">
+                        <span class="h2 text-primary fw-bold align-top">ETC 2</span>
+                    </span>
+                </div>
+                <!-- End Header -->
+                <!-- Content -->
+                <div class="card-body">
+                    <ul class="list-group list-group-flush price-list">
+                        <div style="Display:inline-block" class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">Si</label>
+                            &nbsp;&nbsp;&nbsp;
+                            <div style="Display:inline-block" class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">No</label>
+                            </div>
+                        </div>   
+                </div>
+            </div>
+        </div>
+        <!-- End Content -->
+      <div style="margin-top:15px; Display:inline-block" class="col-3">
+        <div class="card shadow border-2 ">
+            <!-- Header -->
+            <div class="card-header bg-white border-5 pb-0">
+                <span style="margin-top:-20px" class="d-block">
+                    <span class="h2 text-primary fw-bold align-top">ETC 3</span>
+                </span>
+            </div>
+            <!-- End Header -->
+            <!-- Content -->
+            <div class="card-body">
+                <div style="Display:inline-block" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">1</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">2</label>
+                        &nbsp;
+                    <div style="Display:inline-block" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">3</label>
+                        &nbsp;
+                    </div>
+                </div>   
+
+            </div>
+            <!-- End Content -->
+        </div> 
+    </div>
+
+    </div>
+  </div>
+</div>
+{% comment %} aqui acaba el 4 columnas {% endcomment %}
+    <!-- Segundo modo -->
+    <section class="card card-body border-0 shadow mb-4">
+        <div class="container ">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-lg-8">
+                    <h2 class="h1 fw-bold mb-3 ">Cotizador Personal</h2>
+                </div>
+                
+                <div class="col-12 col-lg-4">
+                    <div class="github-big-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 17">
+                                <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
+                              </svg>
+                          </svg>
+                    </div>
+            </div>
+            <div class="row">
+
+                <div  class="col-6 ">
+                    Selencciona tu paquete
+                       <select class="form-select" aria-label="Default select example">
+                           <option selected>Selecciona tu Plan</option>
+                           <option value="1">Plata</option>
+                           <option value="2">Oro</option>
+                           <option value="3">Platino</option>
+                         </select>
+                   </div>
+                   <div  class="col-6">
+                       Selencciona tu inmueble
+                          <select class="form-select shadow border-1" aria-label="Default selece">
+                              <option selected>Selecciona tu Inmueble</option>
+                              <option value="1">Inmueble 1</option>
+                              <option value="2">Inmueble 2</option>
+                              <option value="3">Inmueble 3</option>
+                            </select>
+                   </div>
+            </div>
+            
+            <div style="margin-top:20px ;">
+                
+                </div>
+                <a style="Display:none" class="btn btn-lg btn-secondary" href="">Haz click aqui</a>
+                <p style="color:#231944; margin-left:1792px; text-align:left;" class="lead mb-4">*Costos no incluyen IVA</p>
+                <p style="color:#231942; margin-left:1677px; margin-top:-30px;" class="lead mb-4">**El pago de la poliza es anual</p>
+                <p style="color:#231942; margin-left:1250px; margin-top:-30px; " class="lead mb-4">***En costros mayores a 25,000 consultar con asesor</p>
+        </div>
+    </section>
+
+</div>
+    
+
+    
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+

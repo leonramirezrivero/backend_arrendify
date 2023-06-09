@@ -1,0 +1,123 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Archivos {{persona.nombre}} {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django File Upload</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+        * {
+            font-family: "Roboto";
+        }
+
+        body {
+            background-color: #F5F5F5;
+        }
+
+        .formchido {
+            background-color: #FFFFFF;
+            padding: 25px;
+        }
+
+        table {
+            width: 100%; 
+            text-align: center;
+            margin-top: 25px;
+            padding: 25px;
+            background-color: #FFFFFF;
+        }
+
+        table tr td {
+            padding-top: 15px;            
+        }
+    </style>
+</head>
+<body>
+    <form action="{% url 'subirArch' %}" class="formchido mt-4" method="POST" enctype="multipart/form-data">
+        <h2 class="h5 mb-3 mt-4">Por favor adjunte los siguientes documentos</h2>
+        <div class="mb-3">
+            <label for="url_domicilio">Comprobante Domicilio</label>
+            <input class="form-control" id="comp_dom" name="comp_dom" type="file" placeholder="URL" >
+        </div>
+        <div class="mb-3">
+            <label for="url_ine" class="form-label">Identificación Escaneada PDF (Pasaporte/INE/Cédula Profesional)</label>
+            <input class="form-control"  id="ine" name="ine" type="file" placeholder="URL">
+        </div>
+        <div class="mb-3">
+            <label for="url_situacion_fiscal" class="form-label">Constancia de Situación Fiscal PDF </label>
+            <input class="form-control"  id="rfc" name="rfc" type="file" placeholder="URL">
+        </div>
+        {% csrf_token %}
+        <input type="submit" value="Upload">
+    </form>
+    <div>
+        <h2>Comprobante de domicilio</h2>
+    </div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>File Path</th>
+            <th>Upload Date & Time</th>
+        </tr>
+        {% for file in files %}
+            <tr>
+                <td>{{ file.id }}</td>
+                <td>static{{ file.Comp_dom.url }} <a href="static{{ file.Comp_dom.url }}">Hypervínculo</a></td>
+                <td>{{ file.dateTimeOfUpload }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div>
+        <h2>INE</h2>
+    </div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>File Path</th>
+            <th>Upload Date & Time</th>
+        </tr>
+        {% for file in files %}
+            <tr>
+                <td>{{ file.id }}</td>
+                <td>static{{ file.Ine.url }} <a href="static{{ file.Ine.url }}">Hypervínculo</a></td>
+                <td>{{ file.dateTimeOfUpload }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <h2>RFC</h2>
+    </div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>File Path</th>
+            <th>Upload Date & Time</th>
+        </tr>
+        {% for file in files %}
+            <tr>
+                <td>{{ file.id }}</td>
+                <td>static{{ file.Rfc.url }} <a href="static{{ file.Rfc.url }}">Hypervínculo</a></td>
+                <td>{{ file.dateTimeOfUpload }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

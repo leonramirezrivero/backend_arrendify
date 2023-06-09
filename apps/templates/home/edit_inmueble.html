@@ -1,0 +1,923 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Inmueble {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+<link href="/static/assets/css/ms_arr.css" rel="stylesheet"/>
+<link href="/static/assets/css/estilos.css" rel="stylesheet"/>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4" style="background-color:#edede9;">
+    <div class="d-block mb-4 mb-md-0" style="margin-left:10px">
+        <h1 class="h1">Inmueble</h1>
+        <p class="mb-0">Listado de Inmueble</p>
+    </div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2" data-bs-toggle="modal" data-bs-target="#reg_inmueble">
+            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            Nuevo Inmueble
+        </a>
+    </div>
+  </div>
+
+</div>
+<div class="table-settings mt-2 mb-4">
+  <div class="row justify-content-between align-items-center">
+      <div class="col-9 col-lg-8 d-md-flex">
+          <div class="input-group mt me-2 me-lg-3 fmxw-300">
+              <span class="input-group-text">
+                  <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                  </svg>
+              </span>
+              <input type="text" class="form-control" placeholder="Buscar por Nombre">
+            </div>
+            <select class="form-select fmxw-200 d-none d-md-inline" aria-label="Message select example 2">
+                <option selected>Estatus</option>
+                <option value="1">Renta</option>
+                <option value="2">Disponible</option>
+                <option value="3">Venta</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="card card-body shadow border-0 table-wrapper table-responsive"><!-- podemos agregar la clase => table-responsive-->
+    <table class="table user-table table-hover align-items-center mb-5"> <!--id="datatable"-->
+        <thead>
+            <tr >
+                <th class="border-bottom"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
+                <th class="border-bottom">ID</th>
+                <th class="border-bottom">Alias del Inmueble</th>
+                <th class="border-bottom">Tipo de Inmueble</th>						
+                <th class="border-bottom">Fecha de Registro</th>
+                <th class="border-bottom">Estatus</th>
+                <th class="border-bottom">Gravamen</th>
+                <th class="border-bottom">Acción</th>
+                <th class="border-bottom"></th>
+            </tr>
+        </thead>
+        <tbody style="overflow-x: hidden;">
+            {% for inmueble in inmuebles %}
+            <tr>
+                <td>
+                    <div class="form-check dashboard-check">
+                        <input class="form-check-input" type="checkbox" value="" id="userCheck1">
+                    </div>
+                </td>
+                <td><span class="fw-normal ">{{inmueble.id}}</span></td>
+                <td>
+                    <a href="/vistain/{{inmueble.id}}" class="d-flex align-items-center">
+                        <div class="d-block">
+                            <span class="fw-bold">{{inmueble.alias_inmueble}}</span>
+                            <div class="small text-gray"> Renta: ${{inmueble.renta}}</div>
+                        </div>   
+                    </a>
+                </td>
+                <td><span class="fw-normal">{{inmueble.tipo_inmueble}}</span></td>                        
+                <td>
+                    <span class="fw-normal">{{inmueble.created}}</span>
+                </td>
+                <td>
+                    <select id="status_{{inmueble.id}}"  class="form-control {{inmueble.estatus_inmueble}}" aria-label="Default select example">
+                        <option value="{{inmueble.estatus_inmueble}}" selected style="color:green; font-weight:bold;"><span >{{inmueble.estatus_inmueble}}</span></option>
+                      </select>
+                </td>
+                <td>
+                    {{inmueble.estatus_gravamen}}
+                </td>
+                <td>
+                    <div class="btn-group dropstart">
+                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        
+                        <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                            <a class="dropdown-item d-flex align-items-center" href="/editarin/{{inmueble.slug}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" title="Editar" data-bs-toggle="tooltip" fill="currentColor" fill-rule="evenodd"  class="icon icon-xs bi bi-pencil ms-1" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                  </svg>&nbsp;Editar
+                            </a>
+
+                            <a class="dropdown-item d-flex align-items-center"onClick="eliminar({{inmueble.slug}})">
+                                <svg class="icon icon-xs text-danger ms-1" title="Eliminar" data-bs-toggle="tooltip" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                                &nbsp;Borrar
+                            </a>        
+                        </div>   
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+
+
+   <!-- Modal -->
+<div id="Modal Edit Inmueble">
+    <p id="carga_plantar" style="display:none;">
+        <p id="carga_pfom" style="display:none;">
+            <p id="carga_aa" style="display:none;">
+    <div class="modal fade" id="edit_inmueble" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" style="height:15px" id="exampleModalLabel">Registro Inmueble</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href='/inmuebles/';" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+    <div class="container">
+        <div class="card">
+            {% comment %} action="{% url 'createf' %}" {% endcomment %}
+            <form id="Formu" class="form" enctype="multipart/form-data"  method="post"> 
+                {% csrf_token %}
+                <div class="left-side">
+                    <div class="left-heading">
+                        <h3>Introduce la información Solicitada</h3>
+                    </div>
+                    <div class="steps-content" style="margin-bottom:-50px;">
+                        <h3>Paso <span class="step-number">1</span></h3>
+                    
+                    </div>
+                    <ul class="progress-bar" style="background:none;">
+                        <li id="li1" class="active">Inicio</li>
+                        <li id="li2">Paso 2</li>
+                        <li id="li3">Paso 3</li>
+                        <li id="li4">Paso 4</li>
+                        <li id="li5">Paso 5</li>
+                        <li id="li6">Paso 6</li>
+                        <li id="li7">Paso 7</li>
+                    </ul>
+                </div>
+                <div class="right-side">
+                    <div id="step1" class="main active">
+                        <small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-buildings" viewBox="0 0 16 16">
+                            <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022ZM6 8.694 1 10.36V15h5V8.694ZM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15Z"/>
+                            <path d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z"/>
+                          </svg></small>
+                          <div class="text">
+                            <h2 id="dio">Datos Generales Del Inmueble</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                        </div>                       
+                        <hr class="hr" />
+                        <div id="dgdi">
+                        {% for objin in data.inmueble %}
+                            <div class="input-text">
+                            <input type="text" hidden name="slug" id="id" value="{{objin.id}}" equire>
+                            <input type="text" hidden name="slug" id="slug" value="{{objin.slug}}" equire>
+                                <div class="input-div">
+                                    {% comment %} <input type="text" name="alias_inmueble" id="alias_inmueble" {% if foo_item.name == "alias_inmueble" %}value="{{data.value}}" {% endif %} equire> {% endcomment %}
+                                    <input type="text" name="alias_inmueble" id="alias_inmueble" value="{{objin.alias_inmueble}}" equire>
+                                    <span>Alias del Inmueble</span>
+                                </div>
+                            </div>
+                            <div class="input-div" style="position: relative; bottom: 23px;">
+                                    <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">Arrendador</label>
+                                    <select class="form-select LetraSelect" id="arrendador" name="arrendador" aria-label="Floating label select example" require>
+
+                                    </select>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div" style="position: relative; bottom: 23px;">
+                                    <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">Estatus del Inmueble</label>
+                                   <select class="form-select LetraSelect" id="estatus_inmueble" name="estatus_inmueble" aria-label="Floating label select example">
+                                    <option selected>{{objin.estatus_inmueble}}</option>
+                                    <option value="Rentado">Ocupado</option>
+                                    <option value="Disponible">Disponible</option>
+                                    <option value="Reparación">Reparación</option>
+                                    </select>
+                                </div>
+                                <div class="input-div"> 
+                                    <input type="text" id="clave_catastral" name="clave_catastral" value="{{objin.clave_catastral}}" equire>
+                                    <span>Clave Catastral</span>
+                                </div>  
+                                <div class="input-div" style="position: relative; bottom: 23px;">
+                                    <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect" title="Impuesto aplicado a un inmueble o propiedad que indica que se encuentra comprometido" data-bs-toggle="tooltip" data-bs-placement="bottom" >Estatus Gravamen</label>
+                                   <select class="form-select LetraSelect" id="estatus_gravamen" name="estatus_gravamen" aria-label="Floating label select example">
+                                    <option >{{objin.estatus_gravamen}}</option>
+                                    <option value="Libre De Gravamen">Libre De Gravamen</option>
+                                    <option value="Usufructo">Usufructo</option>
+                                    <option value="Hipoteca">Hipoteca</option>
+                                    </select>
+                                </div>      
+                            </div>
+                        <div class="input-text">
+                            <div class="input-div" style="position: relative; bottom: 23px;">
+                                <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">Tipo de Inmueble</label>
+                               <select class="form-select LetraSelect" id="tipo_inmueble" name="tipo_inmueble" aria-label="Floating label select example">
+                                    <option >{{objin.tipo_inmueble}}</option>
+                                    <option value="Casa">Casa</option>
+                                    <option value="Departamento">Departamento</option>
+                                    <option value="Local">Local</option>
+                                    <option value="Oficina">Oficina</option>
+                                    <option value="Bodega">Bodega</option>
+                                    <option value="Condominios">Condominios</option>
+                                    <option value="Duplex">Duplex</option>
+                                    <option value="Edificio">Edificio</option>
+                                </select>
+                            </div> 
+                            <div class="input-div" style="position: relative; bottom: 23px;">
+                                <label class="p-0 m-0" style="font-size:10px; font-weight:bold; " for="floatingSelect">Uso Del Inmueble</label>
+                                <select class="form-select LetraSelect" id="uso_inmueble" name="uso_inmueble" aria-label="Floating label select example">
+                                    <option >{{objin.uso_inmueble}}</option>
+                                    <option value="Residencial">Residencial</option>
+                                    <option value="Comercial">Comercial</option>
+                                    <option value="Terreno baldio">Terreno Baldio</option>
+                                </select>
+                            </div>                       
+                         </div>
+                        
+                         
+                            <div class="buttons mt-3">
+                                <input class="btn btn-primary next_button" type="button" id="next1" onClick="recopilar()" value="Siguiente" >
+                            </div>
+                        </div>
+                       
+                    
+                    </div>
+                    
+                    <div id="step2" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+                            </svg>
+                        </small>
+                        
+                    <div id="renta" >
+                        <div class="text">
+                            <h2 id="tdde">Datos Financieros</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                            <hr class="hr" />
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="renta_valor" name="renta_valor"  value="{{objin.renta}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');"  equire>
+                                <span>Valor De La Renta</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="13" id="venta" name="venta" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="{{objin.venta}}" equire>
+                                <span>Valor De Venta</span>
+                            </div>
+                        </div>
+
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="valor_catastral" name="valor_catastral" value="{{objin.valor_catastral}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                <span>Valor Catastral</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="number" maxlength="13" id="cuota_mantenimiento" name="cuota_mantenimiento" value="{{objin.cuota_mantenimiento}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                <span>Cuota De Mantenimiento</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 " >                                    
+                            <label class="form-check-label" for="op_compra">En Renta con opción a Venta</label>
+                            <input class="form-check-input" type="checkbox" id="op_compra" name="op_compra" value="Si" {% if objin.op_compra == "Si" %} checked {% endif %}>
+                        </div>
+                    </div>
+
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button"  value="Siguiente">
+                        </div>
+                    </div>
+                    
+                    <div id="step3" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-building-fill-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.493 4.493 0 0 0 12.5 8a4.493 4.493 0 0 0-3.59 1.787A.498.498 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.476 4.476 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1V1Zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                            </svg>
+                        </small>
+                        <div id="ubicacion">
+                            <div class="text">
+                                <h2>Ubicación</h2>
+                                <p>Por favor introduce tus datos Domiciliarios.</p>
+                                <hr class="hr" />
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input class="form-control" type="text" id="calle" name="calle" value="{{objin.calle}}" equire>
+                                    <span>Calle</span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" type="text" id="numeroExterior" name="numeroExterior" value="{{objin.numeroExterior}}" equire>
+                                    <span>Número Ext. </span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" type="number" id="numeroInterior" name="numeroInterior" value="{{objin.numeroInterior}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>Número Int. </span>
+                                </div>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input type="text"id="colonia" name="colonia" value="{{objin.colonia}}" equire>
+                                    <span>Colonia</span>
+                                </div>
+                               
+                                <div class="input-div"> 
+                                    <input class="form-control" id="postal_code" name="postal_code" type="tel" maxlength="5" value="{{objin.postal_code}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>Código Postal</span>
+                                </div>
+                                <div class="input-div"> 
+                                        <input type="text" id="municipio_alcaldia" name="municipio_alcaldia" value="{{objin.municipio_alcaldia}}" equire>
+                                        <span>Municipio/Alcaldia</span>
+                                    </div>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                   <div class="input-div"> 
+                                    <input type="text" id="estado" name="estado" value="{{objin.estado}}" equire>
+                                    <span>Estado/Ciudad</span>
+                                </div>
+                                </div>
+                              
+                            </div>
+                            <div class="row">
+                                <h3 class="h6 mb-2">¿Entre qué calles esta?</h3>
+                                <div class="col-md-6 mb-3">
+                                    <div class="col-md-12 mb-2">
+                                        <span>Calle 1</span>
+                                        <input id="calle1" name="calle1" type="text" value="{{objin.calle1}}" req>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <span>Calle 2</span>
+                                        <input id="calle2" name="calle2" type="text" value="{{objin.calle2}}" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <span>Referencias</span>
+                                    <textarea class="form-control" id="referencias" name="referencias" rows="5">{{objin.referencias}}</textarea>
+                                </div>
+                            </div>
+                            <div class="buttons button_space">
+                                <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                                <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                            </div>
+                      
+                            
+                        </div>
+                     
+                    </div>
+                    
+                    {% comment %} referencias del Arrendatario {% endcomment %}
+                    <div id="step4" class="main">
+                        <small>
+                            <img src="/static/assets/img/icons/aa.png" style="width:25px; height:25px;" alt="icon">
+                        </small>
+
+                        <div id="caracteristicas">
+                            <div class="text">
+                                <h2>Características del Inmueble</h2>
+                                <p>Por favor introduce las caracteristicas del inmueble</p>
+                                <hr class="hr" />
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input class="form-control" id="n_baños" name="n_baños" type="number" maxlength="10" value="{{objin.n_baños}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>Baños Completos</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="n_medios_baños" name="n_medios_baños" type="number" maxlength="10" value="{{objin.n_medios_baños}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>Medios Baños</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="n_recamaras" name="n_recamaras" type="number" maxlength="10" value="{{objin.n_recamaras}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>Recamaras</span>
+                                </div>
+                            </div>
+                            <hr class="hr" />  
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input class="form-control" id="n_pisos" name="n_pisos" type="number" maxlength="10" value="{{objin.n_pisos}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>Pisos</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="estacionamiento_cajones" name="estacionamiento_cajones" type="number" value="{{objin.estacionamiento_cajones}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="10" equire>
+                                    <span>Cajones De Estacionamiento</span>
+                                </div>
+                            </div>
+                            <hr class="hr" />  
+                            <div class="input-text">
+                                <div class="input-div"> 
+                                    <input class="form-control" id="terrenoConstruido" name="terrenoConstruido" type="number" maxlength="10" value="{{objin.terrenoConstruido}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>m2 Construidos</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="terrenoTotal" name="terrenoTotal" type="number" maxlength="10" value="{{objin.terrenoTotal}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>Total m2 Terreno </span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input class="form-control" id="año_contruccion" name="año_contruccion" type="number" maxlength="10" value="{{objin.año_contruccion}}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" equire>
+                                    <span>Año De Construcción</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="recopilar()" value="Siguiente">
+                        </div>
+                    </div>
+
+                    <div id="step5" class="main">
+                        <small>
+                            <img src="/static/assets/img/icons/ref.png" style="width:25px; height:25px;" alt="icon">
+                        </small>
+                        
+                        <div class="text">
+                            <h2>Amenidades</h2>
+                            <p>Por favor haz click para marcar las amenidades con las que cuenta el inmueble</p>
+                            <hr class="hr" /> 
+                        </div>
+                        <div class="input-text">
+                            <div class="row" id="amenidades">
+                                <h2 class="h5 mb-2">Amenidades</h2>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="garage"  value="{{objin.garage}}" name="garage" {% if objin.garage == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="garaje">Garage</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="bodega"  value="{{objin.bodega}}" name="bodega" {% if objin.garage == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="garaje">Bodega</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="terraza"  value="{{objin.terraza}}" name="terraza"{% if objin.terraza == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="terraza">Terraza</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="alberca"  value="{{objin.alberca}}" name="alberca"{% if objin.alberca == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="alberca">Alberca</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="cocina"  value="{{objin.cocina}}" name="cocina"{% if objin.cocina == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="cocina">Cocina</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="amueblado"  value="{{objin.amueblado}}" name="amueblado"{% if objin.amueblado == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="amueblado">Amueblado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" value="{{objin.cuarto_lavado}}" id="cuarto_lavado"  name="cuarto_lavado"{% if objin.cuarto_lavado == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="cuarto_lavado">Cuarto de Lavado</label>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox"  value="{{objin.gym}}" id="gym"  name="gym"{% if objin.gym == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="gym">Gym</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="bar"  value="{{objin.bar}}" name="bar"{% if objin.bar == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="bar">Bar</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="restaurante_bar"  value="{{objin.restaurante_bar}}" name="restaurante_bar"{% if objin.restaurante_bar == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="restaurante_bar">Restaurante Bar</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_cine"  value="{{objin.sala_cine}}" name="sala_cine"{% if objin.sala_cine == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="sala_cine">Sala de Cine</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="salon_estudio"  value="{{objin.salon_estudio}}" name="salon_estudio"{% if objin.salon_estudio == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="salon_estudio">Cuarto de Estudios</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="area_comun"  value="{{objin.area_comun}}" name="area_comun"{% if objin.area_comun == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="area_comun">Área comun</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_juegos"  value="{{objin.sala_juegos}}" name="sala_juegos"{% if objin.sala_juegos == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="sala_juegos">Sala de Juegos</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="salon_eventos"  value="{{objin.salon_eventos}}" name="salon_eventos"{% if objin.salon_eventos == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="salon_eventos">Salón de Eventos</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="espacio_deportivo"  value="{{objin.espacio_deportivo}}" name="espacio_deportivo"{% if objin.espacio_deportivo == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="espacio_deportivo">Canchas Deportivas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="busisness_center"  value="{{objin.busisness_center}}" name="busisness_center"{% if objin.busisness_center == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="busisness_center">Busisness Center</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="roof_garden"  value="{{objin.roof_garden}}" name="roof_garden"{% if objin.roof_garden == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="roof_garden">Roof Garden</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <input class="form-check-input" type="checkbox" id="otroA" name="otroA" {% if objin.otroA == "Si" %} checked {% endif %}  value="{{objin.otroA}}" title="Especifique en la descripción del siguiente paso" data-bs-toggle="tooltip" data-bs-placement="right" >
+                                    <label class="form-check-label" for="otroA" >Otro</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="recopilar()" value="Siguiente">
+                        </div>
+                    </div>
+
+                    <div id="step6" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                              </svg>
+                        </small>
+                        <div class="text">
+                            <h2>Servicios</h2>
+                            <p>Por favor haz click para marcar lod Servicios con los que cuenta el inmueble</p>
+                            <hr class="hr" /> 
+                        </div>
+
+                        <div class="input-text">
+                            <div class="row" id="servicis">
+                                <h2 class="h5 mb-2">Servicios</h2>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="internet"  value="{{objin.internet}}" name="internet" {% if objin.internet == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="internet">Internet/Wifi</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="electricidad"  value="{{objin.electricidad}}" name="electricidad" {% if objin.electricidad == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="electricidad">Energía Eléctrica</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="agua_potable"  value="{{objin.agua_potable}}" name="agua_potable" {% if objin.agua_potable == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="agua_potable">Agua Potable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="televisionCable"  value="{{objin.televisionCable}}" name="televisionCable" {% if objin.televisionCable == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="televisionCable">Tele por Cable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="gas"  value="{{ objin.gas}}" name="gas" {% if objin.gas == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="gas">Gas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="lineaTelefonica"  value="{{objin.lineaTelefonica}}" name="lineaTelefonica" {% if objin.lineaTelefonica == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="lineaTelefonica">Línea Telefónica</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="drenaje"  value="{{objin.drenaje}}" name="drenaje" {% if objin.drenaje == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="drenaje">Drenaje</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="seguridad"  value="{{objin.seguridad}}" name="seguridad" {% if objin.seguridad == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="seguridad">Seguridad</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="camarasSeguridad"  value="{{objin.camarasSeguridad}}" name="camarasSeguridad" {% if objin.camarasSeguridad == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="camarasSeguridad">Circuito Cerrado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="area_juegos"  value="{{objin.area_juegos}}" name="area_juegos" {% if objin.area_juegos == "Si" %} checked {% endif %}>
+                                    <label class="form-check-label" for="a_juegos">Área de juegos</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <input class="form-check-input" type="checkbox" id="otroS" name="otroS"  value="{{objin.otroS}}" {% if objin.otroS == "Si" %} checked {% endif %} title="Especifique en la descripción" data-bs-toggle="tooltip" data-bs-placement="right" >
+                                    <label class="form-check-label" for="otroS" >Otro</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-md-12 mb-4">
+                            <label for="descripcion" class="h5 mb-2">Descripción</label>
+                            <textarea class="form-control" placeholder="Descripción" id="descripcion" name="descripcion" rows="4">{% if objin.descripcion == "None" %} {% else %} {{objin.descripcion}} {% endif %}</textarea>
+                        </div>
+                        {% endfor %}
+
+                       
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" onClick="recopilar()" value="Siguiente">
+                        </div>
+                    </div>
+
+
+                    <div id="step7" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                              </svg>
+                        </small>
+                        <div class="text">
+                            <h2>Fotos</h2>
+                            <p>Por favor haz click en lo check para seleccionar las imagenes que seran actualizadas</p>
+                            <hr class="hr" /> 
+                        </div>
+
+                        {% if messages %}
+                        <div class="alert alert-danger">
+                          <ul>
+                            {% for message in messages %}
+                              <li>{{ message }}</li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      {% endif %}
+                       
+                      <div class="col-md-12 mb-4">
+                        <label for="fotosInmueble" class="h5 mb-2">Fotos </label>
+                        <label for="fotosInmueble" class="h5 mb-2">actuales </label>
+                        <div class="container">
+                            <div class="row">
+                                {% comment %} {% for imagen in objin.fotos.all  %}        
+                                    <div class="col-md-4 mb-4">
+                                        {% if imagen.id == 1 %} 
+                                        <br>
+                                        {% else %}
+                                        <input type="checkbox" name="eliminar[]" value="{{ imagen.id }}" />
+                                        {% endif %}
+                                        <img src="/static{{ imagen.imagenes.url }}" class="imagen" style="width:100%;height:100%;" />
+                                    </div>                         
+                                {% endfor %} {% endcomment %}
+                                {% for objin in data.fotos %}      
+                                    <div class="col-md-4 mb-4">
+                                        {% if data.total_imagenes == 1 %} 
+                                        <br>
+                                        {% else %}
+                                        <input type="checkbox" name="{{ objin.imagenes }}" value="{{ objin.id }}" />
+                                            <p>{{ objin.id }}</p>
+                                        {% endif %}
+                                        <img src="/static{{ objin.imagenes }}" class="imagen" style="width:100%;height:100%;" />
+                                    </div>                         
+                                {% endfor %}
+                            <div>
+                        </div>
+                     </div>
+                    </div>
+                  
+                    <label for="fotosInmueble" class="h5 mb-2 mt-4">Subir nuevas fotos Fotos </label>
+                    <input class="form-control" type="file" id="imagenes" name="imagenes" multiple title="Maximo 5 Imagenes" data-bs-toggle="tooltip" data-bs-placement="bottom" />   
+                        
+                    <div class="buttons button_space mt-4">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <button class="submit_button next_button">Finalizar</button>
+                        </div>
+                    </div>
+                </div>                  
+
+                    <div class="main">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        
+                        <div class="text congrats">
+                            <h2>¡Listo!</h2>
+                            <p>Gracias Sr./Sra. <span class="shown_name"></span>  {{ request.user.first_name }} su información se ha enviado con éxito para futuras referencias.</p> <strong>Pronto nos pondremos en contacto con usted. </strong>
+                        <img style="width:350px; height:250px;" src="https://thumbs.gfycat.com/CelebratedAngryDalmatian-max-1mb.gif"></img>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+</div>
+<!-- End of Modal -->
+
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- End of Modal2 -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %} 
+<script src="/static/assets/js/ms_arr.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+
+
+<script>
+    $(function () {
+        $("form").keypress(function (e) {
+            var key;
+            if (window.event)
+                key = window.event.keyCode; //IE
+            else
+                key = e.which; //firefox     
+            return (key != 13);
+        });
+    });
+
+$(document).ready(function() {
+    
+    $('#edit_inmueble').modal({ keyboard: false,backdrop: false })
+    
+    $('#edit_inmueble').modal('show');
+    
+
+    });
+
+</script>
+
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+$(document).ready(function() {
+    $.ajax({
+        url: 'http://127.0.0.1:8000/arrendadores_campos_establecidos/',
+        type: 'GET',
+        dataType: 'json',
+        headers: {'X-CSRFToken': csrftoken},
+        success: function(data) {
+            console.log("Si llega ")
+            $.each(data, function(index, item) {
+                if (item.nombre === "")
+                    $('#arrendador').append('<option value="' + item.id + '">' + item.custom_field +'</option>');
+                else
+                    $('#arrendador').append('<option value="' + item.id + '">' + item.nombre +" "+ item.apellido + " " + item.apellido1 +'</option>');
+            });
+        }
+    });
+});
+
+
+$(document).ready(function() {
+	$('input[type="checkbox"]').change(function() {
+		if (this.checked) {
+            if( this.value === "No" || this.value === "Si")
+			    $(this).val("Si");
+		} else {
+            if( this.value === "No" || this.value === "Si")
+			    $(this).val("No");
+		}
+	});
+});
+let img_eli = {
+
+    }
+    $(document).ready(function() {
+        $('input[type="checkbox"]').change(function() {
+            if (this.checked) {
+                console.log(this.value)
+                if( this.value !== "No" && this.value !== "Si") {
+                    img_eli[this.name] = this.value;
+                    console.log(img_eli);
+                    //console.log("sd")
+                }
+            } else {
+                if( this.value !== 'No' || this.value !== 'Si' && Object.values(img_eli).includes(this.value))
+                    delete img_eli[this.name];
+                    console.log(img_eli);
+
+
+            }
+        });
+    });
+
+$(document).ready(function() {
+  $('#Formu').submit(function(e) {
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+    e.preventDefault(); // prevent the form from submitting normally
+    //let form_data = $(this).serialize(); // serialize the form data
+    console.log("Esta entrando a enviar Inmueble")    
+    console.log("Agregar")
+    //var data =  $("#Formu").serializeArray();
+    const formData = new FormData();
+    formData.append('imagenes', $('#imagenes')[0].files[0]);
+    //var imagen_inmueble = $('#imagenes').val();
+    //formData.append('alias_inmueble',$('#alias_inmueble').val().trim())
+    //formData.append('estatus_inmueble',$('#estatus_inmueble').val().trim())
+    //formData.append('clave_catastral',$('#clave_catastral').val().trim())
+    formData.append('id',$('#id').val().trim())
+formData.append('alias_inmueble',$('#alias_inmueble').val().trim())
+formData.append('estatus_inmueble',$('#estatus_inmueble').val().trim())
+formData.append('renta',$('#renta_valor').val().trim())
+formData.append('venta',$('#venta').val().trim())
+formData.append('clave_catastral',$('#clave_catastral').val().trim())
+formData.append('estatus_gravamen',$('#estatus_gravamen').val().trim())
+formData.append('valor_catastral',$('#valor_catastral').val().trim())
+formData.append('cuota_mantenimiento',$('#cuota_mantenimiento').val().trim())
+formData.append('tipo_inmueble',$('#tipo_inmueble').val().trim())
+formData.append('uso_inmueble',$('#uso_inmueble').val().trim())
+formData.append('op_compra',$('#op_compra').val().trim())
+formData.append('municipio_alcaldia',$('#municipio_alcaldia').val().trim())
+formData.append('colonia',$('#colonia').val().trim())
+formData.append('postal_code',$('#postal_code').val().trim())
+formData.append('estado',$('#estado').val().trim())
+formData.append('calle',$('#calle').val().trim())
+formData.append('numeroExterior',$('#numeroExterior').val().trim())
+formData.append('numeroInterior',$('#numeroInterior').val().trim())
+formData.append('calle1',$('#calle1').val().trim())
+formData.append('calle2',$('#calle2').val().trim())
+formData.append('referencias',$('#referencias').val().trim())
+formData.append('n_baños',$('#n_baños').val().trim())
+formData.append('n_medios_baños',$('#n_medios_baños').val().trim())
+formData.append('n_recamaras',$('#n_recamaras').val().trim())
+formData.append('n_pisos',$('#n_pisos').val().trim())
+formData.append('estacionamiento_cajones',$('#estacionamiento_cajones').val().trim())
+formData.append('terrenoConstruido',$('#terrenoConstruido').val().trim())
+formData.append('terrenoTotal',$('#terrenoTotal').val().trim())
+formData.append('año_contruccion',$('#año_contruccion').val().trim())
+formData.append('garage',$('#garage').val().trim())
+formData.append('bodega',$('#bodega').val().trim())
+formData.append('terraza',$('#terraza').val().trim())
+formData.append('alberca',$('#alberca').val().trim())
+formData.append('cocina',$('#cocina').val().trim())
+formData.append('amueblado',$('#amueblado').val().trim())
+formData.append('cuarto_lavado',$('#cuarto_lavado').val().trim())
+formData.append('gym',$('#gym').val().trim())
+formData.append('bar',$('#bar').val().trim())
+formData.append('restaurante_bar',$('#restaurante_bar').val().trim())
+formData.append('sala_cine',$('#sala_cine').val().trim())
+formData.append('salon_estudio',$('#salon_estudio').val().trim())
+formData.append('area_comun',$('#area_comun').val().trim())
+formData.append('sala_juegos',$('#sala_juegos').val().trim())
+formData.append('salon_eventos',$('#salon_eventos').val().trim())
+formData.append('espacio_deportivo',$('#espacio_deportivo').val().trim())
+formData.append('busisness_center',$('#busisness_center').val().trim())
+formData.append('roof_garden',$('#roof_garden').val().trim())
+formData.append('otroA',$('#otroA').val().trim())
+formData.append('internet',$('#internet').val().trim())
+formData.append('electricidad',$('#electricidad').val().trim())
+formData.append('agua_potable',$('#agua_potable').val().trim())
+formData.append('televisionCable',$('#televisionCable').val().trim())
+formData.append('gas',$('#gas').val().trim())
+formData.append('lineaTelefonica',$('#lineaTelefonica').val().trim())
+formData.append('drenaje',$('#drenaje').val().trim())
+formData.append('seguridad',$('#seguridad').val().trim())
+formData.append('camarasSeguridad',$('#camarasSeguridad').val().trim())
+formData.append('area_juegos',$('#area_juegos').val().trim())
+formData.append('otroS',$('#otroS').val().trim())
+formData.append('descripcion',$('#descripcion').val().trim())
+slug = document.getElementById("slug").value;
+formData.append('arrendador',$('#arrendador').val().trim())
+console.log($('#arrendador').val().trim())
+console.log(id)
+    formData.forEach(function(value, key) {
+        console.log(key + ': ' + value);
+    });
+    
+console.log("Imagenes a eliminar")
+      console.log(img_eli)
+formData.append('eliminar_imagenes',JSON.stringify(img_eli))
+      console.log("El valor de img", img_eli)
+      console.log("El valor de la renta es: ", $('#renta').val().trim())
+    $.ajax({
+        type: 'PUT',
+        url: `http://127.0.0.1:8000/inmuebles/${slug}/`,
+        //url: `http://127.0.0.1:8000/Inmuebles/`,
+        headers: {'X-CSRFToken': csrftoken},
+        mode: 'same-origin',
+        data:  formData,
+        processData: false,
+        contentType: false,
+      success: function(response) {
+        console.log(response); // handle the response from the server
+        //location.reload()
+      },
+      error: function(response) {
+        console.log(response); // handle any errors from the server
+      }
+    });
+  });
+});
+</script>
+
+
+{% endblock javascripts %}

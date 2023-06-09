@@ -1,0 +1,920 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Registro Fiador/Obligado {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/ms.css" rel="stylesheet"/>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+        <div>
+            <div class="dropdown d-none">
+                <button class="btn btn-secondary d-inline-flex align-items-center me-2 dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    Registar Nuevo Usuario
+                </button>
+                <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                    <a href="/registro-p-fisica.html" class="dropdown-item d-flex align-items-center" href="#">
+                        <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
+                        Persona Fisica
+                    </a>
+                    <a href="/registro-p-moral.html" class="dropdown-item d-flex align-items-center" href="#">
+                        <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path></svg>
+                        Persona Moral
+                    </a>           
+                </div>
+            </div>
+        </div>
+</div>
+<div class="row">
+    <h2 class="h5 mb-2" >¿Fiado u Obligado? <span style="color:red; margin-left:770px; font-size:17px">*</span><span style="font-size:12px"> Campo requerido <span></h2>
+       
+                <div class="mt-3">
+                    <input class="btn btn-success btn-block" id="confirmarBTN" onClick="validateForm(event)"  type="submit" value="Guardar"/>
+                    <!-- Button trigger modal -->
+                    <input class="btn btn-success btn-block" id="confirmarBTN" data-bs-toggle="modal" data-bs-target="#reg_fiador" value=" Ver Modal">
+                </div>
+            </form>                                                                        
+        </div>
+    </div>
+</div>
+
+  
+  <!-- Modal -->
+  
+  <div class="modal fade" id="reg_fiador" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="height:15px" id="exampleModalLabel">Registro Obligado/Fiador</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="padding:0;">
+<div class="container">
+    <div class="card">
+        <form id="FormuOF" class="form"  method="POST">
+            {% csrf_token %}
+            <div class="left-side">
+                <div class="left-heading">
+                    <h3>Introduce la información Solicitada</h3>
+                </div>
+                <div class="steps-content" style="margin-bottom:-50px;">
+                    <h3>Paso <span class="step-number">1</span></h3>
+                  
+                </div>
+                <ul class="progress-bar" style="background:none;">
+                    <li id="li1" class="active"> Inicio</li>
+                    <li id="li2">Paso 1</li>
+                    <li id="li3">Paso 2</li>
+                    <li id="li4">Paso 3</li>
+                    <li id="li5">Paso 4</li>
+                    <li id="li6">Paso 5</li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <div id="step1" class="main active">
+                    <small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                      </svg></small>
+                      <div class="row">
+                        
+                        <div class="col-md-6 mb-3">
+                            <div class="text">
+                                <h2>¿Fiador u Obligado?</h2>
+                            </div>
+                            <div class="input-div">
+                                <div>
+                                    <input class="form-check-input" type="radio" id="fiador_obligado1" name="fiador_obligado" value="Fiador Solidario"  onClick="javascript: validar(this);toggle(this);">
+                                    <label class="form-check-label" for="fiador solidario ">Fiador Solidario </label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="radio" id="fiador_obligado2" name="fiador_obligado" value="Obligado Solidario Persona Fisica" onClick="toggle(this)">
+                                    <label class="form-check-label" for="obligado_solidario_persona_fisica">Obligado Solidario Persona Fisica</label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="radio" id="fiador_obligado3" name="fiador_obligado" value="Obligado Solidario Persona Moral" onClick="toggle(this)">
+                                    <label class="form-check-label" for="obligado_solidario_persona_moral">Obligado Solidario Persona Moral</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="text">
+                                <h3 >¿Quien es el inquilino?</h3>
+                            </div>
+                            <div class="input-div">
+                                <div class="input-div" >
+                                        <select name="inquilino" id="inquilino" onChange="validar_sel()">
+                                            <option value="---------" selected>---------</option>
+                                            {% for fiador in base %}
+                                                <option value="{{ fiador.id }}">{{ fiador.nombre }} {{ fiador.apellido }} {{ fiador.apellido1 }}</option>
+                                            {% endfor %}
+                                      </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="hr" />
+{% comment %} fiador solidarios shadow border-2 p-1 {% endcomment %}     
+                    <div class="input text " id="FS" style="Display:none;">
+                        <div class="text">
+                            <h4>Datos Generales</h4>
+                            <p id="p1">Por favor introduce datos de tu Fiador solidario.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="n_fiador" name="n_fiador" title="Nombre del fiador" data-bs-toggle="tooltip" data-bs-placement="bottom"  equire>
+                                <span>Nombre</span>
+                            </div>  
+                            <div class="input-div">
+                                <input type="text" id="a_fiador" name="a_fiador"  equire>
+                                <span>Apellido Paterno</span>
+                            </div>  
+                            <div class="input-div">
+                                <input type="text" id="a2_fiador" name="a2_fiador" equire>
+                                <span>Apellido Materno</span>
+                            </div>  
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="rfc_fiador" name="rfc_fiador" minlength="0" maxlength="13" style="text-transform:uppercase" oninput="prueba2(this)" onkeyup="javascript:this.value=this.value.toUpperCase();"  equire>
+                                <span>RFC</span>
+                            </div>  
+                            <div class="input-div">
+                                <input type="text" id="p_fiador" name="p_fiador" title="Parentesco que tiene con el Arrendatario" data-bs-toggle="tooltip" data-bs-placement="bottom"  equire>
+                                <span>Parentesco</span>
+                            </div>  
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <label class="my-1 me-2" for="estado_civil">Estado Civil</label>
+                                <select class="form-select" id="estado_civil_fiador" name="estado_civil_fiador" aria-label="Default select example">
+                                    <option selected>Estado Civil</option>
+                                    <option value="Soltero">Soltero(a)</option>
+                                    <option value="Casado">Casado(a)</option>
+                                    <option value="Viudo">Viudo(a)</option>
+                                    <option value="Bienes Mancomunados">Bienes Mancomunados</option>
+                                    <option value="Bienes Separados">Bienes Separados</option>
+                                    <option value="Union Libre">Union Libre</option>
+                                </select>
+                            
+                            </div>
+                        </div>
+                        <div class="buttons mt-3">
+                            <input class="btn btn-primary next_button" id="boton_inicio" type="button" value="Siguiente" disabled>
+                        </div>
+                       
+                        
+                    </div>
+
+                    <div class="input text " id="datos_empresa_" style="Display:none;">
+                        <div class="text">
+                            <h4>Datos Empresa</h4>
+                            <p>Por favor introduce los datos de tu empresa.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="nombre_comercial" name="nombre_comercial"   equire>
+                                <span>Nombre Comercial Empresa o Razon Social</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="rfc_fiador_em" name="rfc_fiador_em" style="text-transform:uppercase" oninput="prueba2(this)" onkeyup="javascript:this.value=this.value.toUpperCase();"   equire>
+                                <span>RFC</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="ingreso_fiador_opm" name="ingreso_fiador_opm" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '');prueba2(this);" >
+                                <span>Ingreso Mensual</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="antiguedad_opm" name="antiguedad_opm" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '');prueba2(this);" >
+                                <span>Antiguedad</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="tel_opm" name="tel_opm" >
+                                <span>Tel</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="cel_opm" name="cel_opm" >
+                                <span>Cel</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="email_em_opm" name="email_em_opm"   equire>
+                                <span>Email</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="pagina_web_f" name="pagina_web_f"   equire>
+                                <span>Página Web</span>
+                            </div>
+                        </div>
+                 
+                        <div class="buttons button_space">
+                            <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                            
+                        </div>
+                        
+                    </div>
+                   
+                   
+                  </div>
+                </div>
+                {% comment %} domiclios {% endcomment %}
+                <div class="main" id="step2">
+                    <small>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                          </svg>
+                    </small>
+                    <div id="datos_dom_pf" style="Display:none;">
+                        <div class="text">
+                            <h2>Datos Domiciliarios</h2>
+                            <p>Por favor introduce los datos domiciliacios de tu Fiador/Obligado</p>
+                        </div>
+
+                        <div class="input text">
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text" id="calle_fiador" name="calle_fiador"  equire>
+                                    <span>Calle</span>
+                                 </div>
+                            <div class="input-div">
+                                <input class="form-control" type="text" id="n_ext_fiador" name="n_ext_fiador"  equire>
+                                <span>Número Ext. </span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="n_int_fiador" name="n_int_fiador" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '');prueba2(this);" equire>
+                                <span>Número Int. </span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text"id="colonia_fiador" name="colonia_fiador" >
+                                <span>Colonia</span>
+                            </div>
+                           
+                            <div class="input-div"> 
+                                <input class="form-control" id="cp_fiador" name="cp_fiador" type="tel" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '');prueba2(this);" maxlength="5" >
+                                <span>Código Postal</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="municipio_fiador" name="municipio_fiador" >
+                                <span>Municipio/Alcaldia</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text" id="estado_fiador" name="estado_fiador" >
+                                <span>Estado/Ciudad</span>
+                            </div> 
+                        </div>
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                        </div>  
+                        </div>
+                    </div>
+                    
+                 
+
+                    <div id="acpm" style="Display:none">
+                        <div class="text">
+                            <h2>Acta Constitutiva</h2>
+                                <p>Por favor introduce las referencias solicitadas.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input class="form-control" type="number" id="escritura_publica" name="escritura_publica"  equire>
+                                <span>Escritura Número</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input class="form-control" id="fecha_propiedad" name="fecha_propiedad" type="date"  equire>  
+                                <span>Fecha Propiedad</span>
+                            </div>
+                            <div class="input-div">
+                                <input type="text" id="nombre_notario" name="nombre_notario"  equire>
+                                <span>Nombre de Notario</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <div class="row">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="coe" name="coe" value="CDMX">
+                                        <label class="form-check-label" for="coe">CDMX</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="coe" name="coe" value="Estado de México">
+                                        <label class="form-check-label" for="coe">Estado de México</label>
+                                    </div>                                          
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input class="form-control" type="number" id="folio_mercantil" name="folio_mercantil"  equire>
+                            <span>Folio Mercantil</span>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons button_space">
+                        <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                        <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                    </div>  
+                    </div>
+                 </div>
+            
+                 {% comment %} Contacto {% endcomment %}
+            <div class="main" id="step3" >
+                <small>
+                    <img src="/static/assets/img/icons/aa.png" style="width:25px; height:25px;" alt="icon">
+                </small>
+                
+                <div class="input text " id="datos_contacto" style="Display:none;">
+                    <div class="text">
+                        <h2>Datos de Contacto</h2>
+                        <p>Por favor introduce los datos de contacto del fiador.</p>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input class="form-control" id="tel_fiador" name="tel_fiador" type="tel" maxlength="10" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '');prueba2(this);" equire>
+                            <span>Teléfono</span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input class="form-control" id="tel2_fiador" name="tel2_fiador" type="tel" maxlength="10" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '');prueba2(this);" equire>
+                            <span>Celular</span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input class="form-control" type="email" id="email_fiador" name="email_fiador" >
+                            <span>Email</span>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                        <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                        <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                    </div>
+                </div>
+            {% comment %} segunda parte del modal {% endcomment %}
+
+                <div id="datos_dom_empresa" style="Display:none;">
+                    <div class="text">
+                        <h4>Direccion Fiscal Empresa</h4>
+                        <p>Por favor introduce los datos domiciliacios de tu empresa</p>
+                    </div>
+                    
+
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input type="text" id="calle_em_pm" name="calle_fiadoasr"  equire>
+                            <span>Calle</span>
+                        </div>
+                        <div class="input-div">
+                            <input class="form-control" type="number" id="n_ext_em_pm" name="n_ext_em_pm"  equire>
+                            <span>Número Ext. </span>
+                        </div>
+                    <div class="input-div">
+                        <input class="form-control" type="number" id="n_int_em_pm" name="n_int_em_pm"  equire>
+                        <span>Número Int. </span>
+                    </div>
+                   
+                    </div>
+                    <div class="input-text">
+                    <div class="input-div"> 
+                        <input type="text"id="colonia_em_pm" name="colonia_em_pm" >
+                        <span>Colonia</span>
+                    </div>
+                    <div class="input-div"> 
+                        <input class="form-control" id="cp_em_pm" name="cp_em_pm" type="tel" maxlength="5" >
+                        <span>Código Postal</span>
+                    </div>
+                    <div class="input-div"> 
+                        <input type="text" id="municipio_em_pm" name="municipio_em_pm" oninput="prueba2(this)"  equire>
+                        <span>Municipio/Alcaldia</span>
+                    </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input type="text" id="estado_em_pm" name="estado_em_pm" >
+                            <span>Estado/Ciudad</span>
+                        </div>                       
+                    </div>
+                    <div class="buttons button_space">
+                    <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                    <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                    </div>
+                </div>
+      
+            </div>
+                
+                <div class="main" id="step4">
+                    <small>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                            <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+                          </svg>
+                    </small>
+                    
+                    <div class="input text " id="datos_empleo" style="Display:none;">
+                        <div class="text">
+                            <h2>Datos De Empleo</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="prof_fiador" name="prof_fiador"   equire>
+                                <span>Profesión, Ocupación u Oficio</span>
+                            </div>
+                            <div class="input-div">
+                                <input type="text" id="empresa_fiador" name="empresa_fiador" >
+                                <span>Empresa Donde Labora</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="tel_em_fiador" name="tel_em_fiador" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '');prueba2(this);" >
+                                <span>Número Teléfono Empresa</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="ingreso_men_fiador" name="ingreso_men_fiador" oninput="javascript:this.value = this.value.replace(/[^0-9]/g, '');prueba2(this);" placeholder="$" >
+                                <span>Salario Mensual</span>
+                            </div>
+                        </div>
+                        <div class="input-div">
+                            <h2 class="h5 mb-1">Recibos Nomina</h2>
+                            <div class="col-md-3 mb-3">
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="recibos" name="recibos" value="Si">
+                                    <label class="form-check-label" for="recibos">Si </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="recibos" name="recibos" value="No">
+                                    <label class="form-check-label" for="recibos">No</label>
+                                </div>                                         
+                            </div>
+                        </div>
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                        </div>
+                    </div>
+
+                    
+                    <div class="input text " id="datos_rep" style="Display:none;">
+                        <div class="text">
+                            <h4>Datos Representante Legal</h4>
+                            <p>Por favor introduce los datos de tu empresa.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="nombre_comercial" name="nombre_comercial"   equire>
+                                <span>Nombre</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="rfc_fiador_em" name="rfc_fiador_em"    equire>
+                                <span>Apellido Paterno</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="rfc_fiador_em" name="rfc_fiador_em"   equire>
+                                <span>Apellido Materno</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="cel_opm" name="cel_opm" >
+                                <span>Cel</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="email_em_opm" name="email_em_opm"   equire>
+                                <span>Email</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="pagina_web_f" name="pagina_web_f"   equire>
+                                <span>Página Web</span>
+                            </div>
+                        </div>
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="main" id="step5">
+                <small>
+                    <img src="/static/assets/img/icons/aa.png" style="width:25px; height:25px;" alt="icon">
+                </small>
+               
+                <div id="datos_escrituras" style="Display:none">
+                    <div class="text">
+                        <h2 id="ecac">Datos De Escrituras</h2>
+                            <p>Por favor introduce los datos de su escritura.</p>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input type="text" id="escritura_publica" name="escritura_publica"  equire>
+                            <span>Escritura Publica</span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input class="form-control" id="fecha_propiedad" name="fecha_propiedad" type="date"  equire>  
+                            <span>Fecha de Propiedad</span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input class="form-control" type="number" id="numero_notario" name="numero_notario"  equire>
+                            <span>Número de Notario Público</span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input type="text" id="nombre_notario" name="nombre_notario"  equire>
+                            <span>Nombre de Notario Público</span>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                    <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                    <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                </div>
+                </div>
+
+                <div id="sigpf" style="Display:none">
+                    <div class="input-text">
+                        <div class="text">
+                            <h2>Ya casi terminas!!</h2>
+                            <h3>Porfavor Dale click en Siguiente</h3>
+                            <h3>Para continuar.</h3>
+                            
+                        </div>
+                    </div>
+                    <img src="https://i.pinimg.com/originals/b6/fd/18/b6fd1893a54478eb393d13c5d1994ef7.gif" style="width:350px; height:250px; margin-top:-20px;"></img>
+                
+                    <div class="buttons button_space">
+                        <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                        <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                    </div>
+                </div>
+
+                <div class="input text " id="dom_representante" style="Display:none;">
+                    <div class="text">
+                        <h4>Domicilio Del Representante Legal</h4>
+                        <p>Por favor introduce los datos solicitados.</p>
+                    </div>
+                    <div class="input text">
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="calle_rl" name="callasae_rl"  equire>
+                                <span>Calle</span>
+                        </div>
+                        <div class="input-div">
+                            <input class="form-control" type="number" id="n_ext_rl" name="n_ext_rl"  equire>
+                            <span>Número Ext. </span>
+                        </div>
+                        <div class="input-div">
+                            <input class="form-control" type="number" id="n_int_rl" name="n_int_rl"  equire>
+                            <span>Número Int. </span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input type="text"id="colonia_rl" name="colonia_rl" >
+                            <span>Colonia</span>
+                        </div>
+                        <div class="input-div"> 
+                            <input class="form-control" id="cp_rl" name="cp_rl" type="tel" maxlength="5" >
+                            <span>Código Postal</span>
+                        </div>
+                        <div class="input-div"> 
+                            <input type="text" id="municipio_rl" name="municipio_rl" >
+                            <span>Municipio/Alcaldia</span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div"> 
+                            <input type="text" id="estado_rl" name="estado_rl" >
+                            <span>Estado/Ciudad</span>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="buttons button_space">
+                    <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                    <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                </div>
+            </div>
+            </div>
+                
+                <div class="main" id="step6">
+                    <small>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-building-fill-check" viewBox="0 0 16 16">
+                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                            <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.493 4.493 0 0 0 12.5 8a4.493 4.493 0 0 0-3.59 1.787A.498.498 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.476 4.476 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1V1Zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                          </svg>
+                    </small>
+                    <div id="final1" style="Display:none;">
+                        <div class="input-text">
+                            <div class="text">
+                                <h2>Ya casi terminas!!</h2>
+                                <h3>Porfavor Dale click en FINALIZAR</h3>
+                                <h3>Para concluir tu registro.</h3>
+                                
+                            </div>
+                        </div>
+                        <img src="https://i.pinimg.com/originals/b6/fd/18/b6fd1893a54478eb393d13c5d1994ef7.gif" style="width:350px; height:250px; margin-top:-20px;"></img>
+                    
+                        
+                    </div>
+                    
+                    
+                    <div id="referencias_empresa" style="Display:none;">
+                        <div class="text">
+                            <h2 id="ecac">Referencia De La Empresa</h2>
+                                <p>Por favor introduce la referencia solicitada.</p>
+                        </div>
+                        <span>Referencia 1</span>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text" id="empresa_constituida" name="empresa_constituida"  equire>
+                                <span>Nombre De Empresa</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="empresa_constituida" name="empresa_constituida"  equire>
+                                <span>Nombre Del Contacto</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="empresa_constituida" name="empresa_constituida"  equire>
+                                <span>Tiempo De Relación</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="cel_opm" name="cel_opm" >
+                                <span>Tel</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="email_em_opm" name="email_em_opm"   equire>
+                                <span>Email</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="cel_opm" name="cel_opm" >
+                                <span>Cel</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text" id="folio_mercantil" name="folio_mercantil"  equire>
+                                <span>Relación Comercial</span>
+                            </div>
+                        </div>
+                        <hr class="hr" />
+                        <span>Referencia 2</span>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text" id="empresa_constituida" name="empresa_constituida"  equire>
+                                <span>Nombre De Empresa</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="empresa_constituida" name="empresa_constituida"  equire>
+                                <span>Nombre Del Contacto</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="empresa_constituida" name="empresa_constituida"  equire>
+                                <span>Tiempo De Relación</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="cel_opm" name="cel_opm" >
+                                <span>Tel</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input type="text" id="email_em_opm" name="email_em_opm"   equire>
+                                <span>Email</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="tel" maxlength="10" id="cel_opm" name="cel_opm" >
+                                <span>Cel</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text" id="folio_mercantil" name="folio_mercantil"  equire>
+                                <span>Relación Comercial</span>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="buttons button_space">
+                        <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                        <button class="submit_button next_button" onClick="fin()">Finalizar</button>
+                    </div>
+                </div>
+                 <div class="main" id="step7">
+                     <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                         <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                     
+                    <div class="text congrats">
+                        <h2>¡Listo!</h2>
+                        <p>Gracias Sr./Sra. <span class="shown_name"></span>  {{ request.user.first_name }} su información se ha enviado con éxito para futuras referencias.</p> <strong>Pronto nos pondremos en contacto con usted. </strong>
+                        <img src="https://opengameart.org/sites/default/files/aaaaaaaaaaa01.gif" style="width:350px; height:250px;"></img>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+       
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script src="/static/assets/js/ms_arr.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script>
+    $(function () {
+        $("form").keypress(function (e) {
+            var key;
+            if (window.event)
+                key = window.event.keyCode; //IE
+            else
+                key = e.which; //firefox     
+            return (key != 13);
+        });
+    });
+</script>
+<script>
+
+    let selc = document.getElementById("inquilino");
+    let rad1 = document.getElementById("fiador_obligado1");
+    let rad2 = document.getElementById("fiador_obligado2");
+    let rad3 = document.getElementById("fiador_obligado3");
+                
+    let boton = document.getElementById("boton_inicio");
+
+    function validar(radio)
+    {
+        console.log("radio.id de validar",radio.id)
+        console.log("selc",selc.value)
+        console.log("rad1",rad1.id)
+        if  (selc.value != "---------" && radio.id == "fiador_obligado1" || radio.id == "fiador_obligado2" || radio.id == "fiador_obligado3" ){
+            boton.disabled = false
+            boton.style.backgroundColor="#231942ff";
+
+
+        }
+    }
+    function validar_sel()
+    {
+        console.log("selc",selc.value)
+        console.log("rad1",rad1.id)
+        if  (selc.value != "---------" && rad1.id == "fiador_obligado1" || rad2.id == "fiador_obligado2" || rad3.id == "fiador_obligado3" ){
+            boton.disabled = false
+            boton.style.backgroundColor="#231942ff";
+
+
+        }
+    }
+    
+    
+   
+
+
+
+    function toggle(radio) {
+        //fsps y ospf
+        var div1 = document.getElementById("FS");
+        var p1 = document.getElementById("p1");
+        var dat_dom = document.getElementById("datos_dom_pf");
+        var dat_contacto = document.getElementById("datos_contacto");
+        var dat_emp = document.getElementById("datos_empleo");
+        var dat_esc = document.getElementById("datos_escrituras");
+        var final1 = document.getElementById("final1");
+        var sigpf = document.getElementById("sigpf");
+        //fsps y ospf
+        var acpm = document.getElementById("acpm");
+        var dat_dom_em= document.getElementById("datos_dom_empresa");
+        var dat_rep= document.getElementById("datos_rep");
+        var dom_rep= document.getElementById("dom_representante");
+        var ref_emp= document.getElementById("referencias_empresa");
+        
+        var li1= document.getElementById("li1");
+        var li2= document.getElementById("li2");
+        var li3= document.getElementById("li3");
+        var li4= document.getElementById("li4");
+        var li5= document.getElementById("li5");
+        var li6= document.getElementById("li6");
+        
+    
+     
+
+    //   console.log(radio.value)
+         console.log(radio.id)
+         switch (radio.id)
+         {
+            case "fiador_obligado1":
+            $( "#FS" ).fadeOut( "fast" );
+            $( "#datos_empresa" ).fadeOut( "fast" );
+            p1.textContent = "Por favor introduce datos de tu Fiador Solidario";
+            dat_dom.style.display='';
+            dat_contacto.style.display='';
+            dat_emp.style.display='';
+            dat_esc.style.display='';
+            final1.style.display='';
+            li1.textContent = "Fiador Solidario PF";
+            li6.textContent = "Final";
+
+            acpm.style.display='none';
+            dat_dom_em.style.display='none';
+            dat_rep.style.display='none';
+            dom_rep.style.display='none';
+            ref_emp.style.display='none';
+
+
+            $( "#FS" ).fadeIn( "fast" );
+            break;
+            
+            case "fiador_obligado2":
+            $( "#FS" ).fadeOut( "fast" );
+            $( "#datos_empresa" ).fadeOut( "fast" );
+            p1.textContent = "Por favor introduce datos de tu Obligado Solidario Persona Fisica";
+            ecac.textContent = "Ultimo Paso";
+
+            dat_dom.style.display='';
+            dat_contacto.style.display='';
+            dat_emp.style.display='';
+            sigpf.style.display='';
+            final1.style.display='';
+
+            li1.textContent = "Obligado Solidario PF";
+            li5.textContent = "Penultimo paso";
+            li6.textContent = "Final";
+
+            acpm.style.display='none';
+            dat_dom_em.style.display='none';
+            dat_rep.style.display='none';
+            dom_rep.style.display='none';
+            ref_emp.style.display='none';
+            $( "#FS" ).fadeIn( "fast" );
+            break;
+
+            case "fiador_obligado3":
+            $( "#FS" ).fadeOut( "fast" );
+            
+            acpm.style.display='';
+            dat_dom_em.style.display='';
+            dat_rep.style.display='';
+            dom_rep.style.display='';
+            ref_emp.style.display='';
+
+            li1.textContent = "Empresa";
+            li2.textContent = "Acta Constitutiva";
+            li3.textContent = "Domiclio Fiscal Emp.";
+            li4.textContent = "Representante Legal";
+            li5.textContent = "Domicilio Rep. Legal";
+            li6.textContent = "Referencias";
+
+            dat_dom.style.display='none';
+            dat_contacto.style.display='none';
+            dat_emp.style.display='none';
+            dat_esc.style.display='none';
+            sigpf.style.display='none';
+            final1.style.display='none';
+            $( "#datos_empresa" ).fadeIn( "fast" );
+            // ocultar  sigpf.style.display=''
+            break;
+
+         }
+     }
+</script>
+
+   
+{% comment %} <script src="/static/assets/js/ocultadorespf.js"></script> {% endcomment %}
+
+{% endblock javascripts %}
+

@@ -1,0 +1,55 @@
+{% extends "layouts/base.html" %}
+{% csrf_token %}
+{% block title %} Alta Representan {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<form method='POST' action="#" class="mt-4">
+
+    <div class="row">
+        <div class="card card-body border-0 shadow mb-4">
+            <label for="identificacion" class="h5 mb-4"> Adjunta Tu Identificación Escaneada: </label>
+                <form action="/file-upload" class="dropzone rounded mb-4">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple required/>
+                    </div>
+                </form>
+        </div>    
+    </div>
+
+    <div class="row">
+        <div class="card card-body border-0 shadow mb-4">
+            <label for="cedula" class="h5 mb-4"> Adjunta Tu Cedula Profesional Escaneada: </label>
+                <form action="/file-upload" class="dropzone rounded mb-4">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple required/>
+                    </div>
+                </form>
+        </div>    
+    </div>
+
+    <div class="row">
+        <div class="card card-body border-0 shadow mb-4">
+            <label for="comprobanteDom" class="h5 mb-4"> Adjunta Tu Comprobante de Domicilio Escaneado: </label>
+                <form action="/file-upload" class="dropzone rounded mb-4">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple required/>
+                    </div>
+                </form>
+        </div>    
+    </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-gray-800">Subir archivos</button>
+            
+        </div>
+
+</form>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+

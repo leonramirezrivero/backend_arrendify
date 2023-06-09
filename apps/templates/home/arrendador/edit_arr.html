@@ -1,0 +1,1314 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Arrendador {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/ms_arr.css" rel="stylesheet"/>
+<link type="text/css" href="@@path/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+<body onload="init()"/>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4" style="background-color:#edede9;">
+    <div class="d-block mb-4 mb-md-0" style="margin-left:10px">
+        <h1 class="h1">Arrendador</h1>
+        <p class="mb-0">Listado de Arrendadores</p>
+    </div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2" data-bs-toggle="modal" data-bs-target="#edit_arr">
+            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            Nuevo Arrendador
+        </a>
+    </div>
+  </div>
+
+
+  
+</div>
+<div class="table-settings mt-2 mb-4">
+  <div class="row justify-content-between align-items-center">
+      <div class="col-9 col-lg-8 d-md-flex">
+          <div class="input-group mt me-2 me-lg-3 fmxw-300">
+              <span class="input-group-text">
+                  <svg class="icon icon-xs" x-description="Heroicon name: solid/search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                  </svg>
+              </span>
+              <input type="text" class="form-control" placeholder="Buscar por Nombre">
+            </div>
+            <select class="form-select fmxw-200 d-none d-md-inline" aria-label="Message select example 2">
+                <option selected>Todos</option>
+              <option value="1">Persona Fisica</option>
+              <option value="1">Persona Moral</option>
+              <option value="2">Inmobiliaria</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="card card-body shadow border-0 table-wrapper table-responsive"><!-- podemos agregar la clase => table-responsive-->
+    <table class="table user-table table-hover align-items-center mb-5"> <!--id="datatable"-->
+        <thead>
+            <tr >
+                <th class="border-bottom"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
+                <th class="border-bottom">ID</th>
+                <th class="border-bottom">Nombre</th>						
+                <th class="border-bottom">Fecha de Registro</th>
+                <th class="border-bottom">RF/Inmobilliaria</th>
+                <th class="border-bottom">Estatus</th>
+                <th class="border-bottom">Acción</th>
+                <th class="border-bottom"></th>
+            </tr>
+        </thead>
+        <tbody style="overflow-x: hidden;">
+            {% for inq in inquilinos %}
+            <h1>{{arr.nombre}}</h1>
+            <tr>
+                <td>
+                    <div class="form-check dashboard-check">
+                        <input class="form-check-input" type="checkbox" value="" id="userCheck1">
+                    </div>
+                </td>
+                <td><span class="fw-normal ">{{arr.id}}</span></td>
+                <td>
+                    <a href="/detalles_arr/{{arr.id}}" class="d-flex align-items-center">
+                        {% if arr.pmoi == 'Persona Fisica' or arr.pmoi == 'Persona Moral' %}
+                        <div class="d-block">
+                            <span class="fw-bold">{{arr.nombre}} {{arr.apellido}} {{arr.apellido1}}</span>
+                            <div class="small text-gray">{{arr.email}}</div>
+                        </div>
+                        {% else %}
+                        <div class="d-block">
+                            <span class="fw-bold">{{arr.n_inmobiliaria}}</span>
+                            <div class="small text-gray">{{arr.email_in}}</div>
+                        </div>
+                    {% endif %}      
+                    </a>
+                </td>
+                <td><span class="fw-normal">{{arr.created}}</span></td>                        
+                <td>
+                    <span class="fw-normal">{{arr.pmoi}}</span>
+                </td>
+                <td>
+                    <select id="status_{{arr.id}}" style="color:green; font-weight:bold;" class="form-select" onChange="cambio_status(this)" aria-label="Default select example">
+                        <option value="Activo" selected style="color:green; font-weight:bold;"><span >Activo</span></option>
+                        <option value="En espera" style="color:orange; font-weight:bold;">En espera</option>
+                        <option value="Rechazado" style="color:red; font-weight:bold;">Rechazado</option>
+                      </select>
+                </td>
+                <script>
+                   
+                </script>
+                <td>
+                    <div class="btn-group dropstart">
+                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        
+                        <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
+                            <a class="dropdown-item d-flex align-items-center" onclick="editar('{{arr.slug}}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" title="Editar" data-bs-toggle="tooltip" fill="currentColor" fill-rule="evenodd"  class="icon icon-xs bi bi-pencil ms-1" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                  </svg>&nbsp;Editar
+                            </a>
+
+                            <a class="dropdown-item d-flex align-items-center" onClick="alert0({{arr.id}})">
+                                <svg class="icon icon-xs text-danger ms-1" title="Eliminar" data-bs-toggle="tooltip" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                                &nbsp;Borrar
+                            </a>        
+                            
+                            <a class="dropdown-item d-flex align-items-center" onClick="alert0({{inq.id}})">
+                                <svg class="icon icon-xs text-danger ms-1" title="Eliminar" data-bs-toggle="tooltip" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                                &nbsp;Datos Arrendamiento
+                            </a>  
+                        </div>   
+                    </div>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+
+
+  <!-- Modal -->
+<div id="Modal Editar Arrendador">
+    <p id="carga_plantar" style="display:none;">
+        <p id="carga_depo" style="display:none;">
+            <p id="carga_fecha" style="display:none;">
+    <div class="modal fade" id="edit_arr" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" style="height:15px" id="exampleModalLabel">Editar Arrendador</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href='/arrendador/';" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+    <div class="container">
+        <div class="card">
+            <form id="Formu" class="form"> 
+                {% csrf_token %}
+                <div class="left-side">
+                    <div class="left-heading">
+                        <h3>Introduce la información Solicitada</h3>
+                    </div>
+                    <div class="steps-content" style="margin-bottom:-50px;">
+                        <h3>Paso <span class="step-number">1</span></h3>
+                    
+                    </div>
+                    <ul class="progress-bar" style="background:none;">
+                        <li id="li1" class="active">Inicio</li>
+                        <li id="li2">Paso 2</li>
+                        <li id="li3">Paso 3</li>
+                        <li id="li4">Paso 4</li>
+                        <li id="li5">Paso 5</li>
+                        <li id="li6">Paso 6</li>
+                        <li id="li7">Paso 7</li>
+                    </ul>
+                </div>
+                <div class="right-side">
+                    <div id="step1" class="main active">
+                        <small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-buildings" viewBox="0 0 16 16">
+                            <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022ZM6 8.694 1 10.36V15h5V8.694ZM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15Z"/>
+                            <path d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z"/>
+                          </svg></small>
+                          <div class="text">
+                            <h2 id="dio">Datos Inmobiliaria/Persona</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                        </div>
+                        <label>¿Regimen o Inmobiliaria?</label>
+                        <div class="input-div">
+                            <select class="form-select" id="pmoi" onChange="init()" value ="{{data_arrendador.pmoi}}"name="pmoi" aria-label="Default select example" equire>
+                                {% comment %} <option selected>{{arrendador.pmoi}}</option> {% endcomment %}
+                                {% comment %} <option value="Persona Fisica" {% if arrendador.pmoi == 'Persona Fisica' %}selected{% endif %}>Persona Fisica</option>
+                                <option value="Persona Moral" {% if arrendador.pmoi == 'Persona Moral' %}selected{% endif %}>Persona Moral</option> {% endcomment %}
+                                {% comment %} {% if arrendador.pmoi == 'Persona Moral' or arrendador.pmoi == 'Persona Fisica'%}
+                                    <option value="Persona Fisica" {% if arrendador.pmoi == 'Persona Fisica' %}selected{% endif %}>Persona Fisica</option>
+                                    <option value="Persona Moral" {% if arrendador.pmoi == 'Persona Moral' %}selected{% endif %}>Persona Moral</option>
+                                {% endif %}
+                                {% if arrendador.pmoi == 'Inmobiliaria'%}
+                                    <option value="Inmobiliaria" select>Inmobiliaria</option>
+                                {% endif %} {% endcomment %}
+                                <option selected>{{arrendador.pmoi}}</option>
+                                <option value="Persona Fisica">Persona Fisica</option>
+                                <option value="Persona Moral">Persona Moral</option>
+                            </select>
+                        </div>                        
+                        <hr class="hr" />
+                        <div id="pmo" style="Display:none;">
+                            <div class="input-text" id="div_dir_ac">
+                                <div class="input-div">
+                                    <input type="text" name="dir_ac" id="dir_ac" value="{{arrendador.dir_ac}}" oninput="prueba2(this)" equire>
+                                    <input type="text" name="slug" id="slug" value="{{arrendador.slug}}" hidden equire>
+                                    <span>Dirección Registrada en el acta constitutiva:</span>
+                                </div>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text"  oninput="prueba2(this)" name="nombre" id="nombre" value="{{arrendador.nombre}}" equire>
+                                    <span>Nombre(s)</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input type="text" name="apellido" id="apellido" value="{{arrendador.apellido}}" oninput="prueba2(this)" equire>
+                                    <span>Apellido Paterno</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input type="text" name="apellido1" id="apellido1" value="{{arrendador.apellido1}}" oninput="prueba2(this)"equire>
+                                    <span>Apellido Materno</span>
+                                </div>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text" id="rfc" name="rfc" maxlength="13" value="{{arrendador.rfc}}" style="text-transform:uppercase" oninput="prueba2(this)" onkeyup="javascript:this.value=this.value.toUpperCase();" equire>
+                                    <span>RFC</span>
+                                </div>
+                                <div class="input-div">
+                                    {% comment %} <span>Estado Civil</span> {% endcomment %}
+                                    <select class="form-select" id="estado_civil" name ="estado_civil" onChange="mostrarOnChange()" placeholder="estado_civil" name="estado_civil" oninput="prueba2(this)" aria-label="Default select example" equire>
+                                        <option selected>{{arrendador.estado_civil}}</option>
+                                        <option value="Soltero">Soltero(a)</option>
+                                        <option value="Casado">Casado(a)</option>
+                                        <option value="Viudo">Viudo(a)</option>
+                                        <option value="Bienes Mancomunados">Bienes Mancomunados</option>
+                                        <option value="Bienes Separados">Bienes Separados</option>
+                                        <option value="Union Libre">Union Libre</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="row" id="datcon" style="Display:none; margin-top:-20px;" >
+                                <div class="input-text">
+                                    <div class="input-div">
+                                        <input type="text" id="n_conyuge" name="n_conyuge" value="{{arrendador.n_conyuge}}" oninput="prueba2(this)" >
+                                        <span>Nombre(s) Cónyuge</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input type="text" id="a_conyuge" name="a_conyuge" value="{{arrendador.a_conyuge}}" oninput="prueba2(this)" >
+                                        <span>Apellido Paterno Cónyuge</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input type="text" id="a1_conyuge" name="a1_conyuge" value="{{arrendador.a1_conyuge}}" oninput="prueba2(this)">
+                                        <span>Apellido Materno Conyuge</span>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="input-text" style="margin-top:-5px;">
+                                <div class="input-div"> 
+                                    <input class="form-control" name="numeroTel" id="numeroTel" type="tel" maxlength="10" value="{{arrendador.numeroTel}}" oninput="prueba2(this)" >
+                                    <span>Numero Telefonico Fijo</span>
+                                </div>
+                                <div class="input-div">
+                                    <input type="text" id="email" name="email" type="email" placeholder="name@domain.com" value="{{arrendador.email}}" oninput="javascript: prueba2(this); validarEmail(this);" equire>
+                                    <span>E-mail</span>
+                                </div>
+                                
+                                
+                            </div>    
+                            <div id="div_tel" style="margin-top:-30px;">                             
+                                <div class="input-text" >
+                                    <div class="input-div">
+                                        <span style="font-size:10px; font-weight:bold;">Celular</span>
+                                    </div>
+                                </div>     
+                                <div>
+                                    <input class="form-control" oninput="process(event)" id="numeroTel1" type="tel" value="{{arrendador.numeroTel1}}" name="numeroTel1" placeholder="" />
+                                </div> 
+                            </div>  
+                            <div class="buttons mt-3">
+                                <input class="btn btn-primary next_button" type="button" id="next1" value="Siguiente" >
+                            </div>
+                        </div>
+                       
+                        <div id="eres_in" style="display:none;">
+                            <div class="input-div">
+                                <div class="input-div">
+                                    <span>Nombre De La Inmobiliaria</span>
+                                    <input type="text" name="n_inmobiliaria" id="n_inmobiliaria" oninput="prueba2(this)" value="{{arrendador.n_inmobiliaria}}" equire>
+                                </div>
+                            </div>
+                            <div class="input-div">
+                                <div class="input-div">
+                                    <span>Nombre Del Agente</span>
+                                    <input type="text" name="per_sol" id="per_sol" oninput="prueba2(this)" value="{{arrendador.per_sol}}" equire>
+                                </div>
+                            </div>
+                            <hr class="hr" />    
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input class="form-control" name="tel" id="tel" type="tel" maxlength="10" oninput="prueba2(this)" value="{{arrendador.tel}}" equire>
+                                    <span>Tel</span>
+                                </div>
+                                <div class="input-div">
+                                    <input type="text" id="email_in" name="email_in" type="email" placeholder="name@domain.com" value="{{arrendador.email_in}}" oninput="javascript: prueba2(this); validarEmail(this);" equire>
+                                    <span>E-mail</span>
+                                </div>
+                            </div> 
+                            <div id="div_tel" style="margin-top:-30px;">                             
+                                <div class="input-text" >
+                                    <div class="input-div">
+                                        <span style="font-size:10px; font-weight:bold;">Celular</span>
+                                    </div>
+                                </div>     
+                                <div>
+                                    <input class="form-control" oninput="process(event)" name="cel" id="cel" type="tel" value="{{arrendador.cel}}" placeholder="" />
+                                </div> 
+                            </div>  
+                            
+                            <div class="buttons mt-3">
+                                <input class="btn btn-primary next_button" type="button" id="next1"  value="Siguiente" >
+                            </div>
+                        </div>
+                                         
+                           
+                        </div>
+                    
+                    <div id="step2" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+                            </svg>
+                        </small>
+                        
+                    <div id="ddp" style="display:none;">
+                        <div class="text">
+                            <h2 id="tdde">Datos Del Propietario</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                        </div>
+                        <div class="input-div">
+                             <h2 class="h5 mb-2">Documentación De Identificación Presentada:</h2>
+                            <div class="input-div">
+                                <select class="form-select"id="doc" name="doc" aria-label="Default select example" equire>
+                                    <option hidden selected>{{arrendador.doc}}</option>
+                                    <option value="INE">Credencial para votar </option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                    <option value="Cédula Profesional">Cédula profesional</option>
+                                    <option value="Cartilla Militar">Cartilla del Servicio Militar Nacional</option>
+                                    <option value="Licencia De Condicir">Liceencia De Condicir</option>
+                                    <option value="Credencial De Residencia Temporal">Credencial De Residencia Temporal</option>
+                                    <option value="Credencial De Residencia Permanente">Credencial De Residencia Permanente</option>
+                                    <option value="Credencial Adultos Mayores">Credencial Del Instituto Nacional De las Personas Adultas Mayores</option>
+                                    <option value="Certificado de Matricula Consular">Certificado de Matricula Consular</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="n_propietario" name="n_propietario" value="{{arrendador.n_propietario}}" oninput="prueba2(this)"  equire>
+                                <span>Nombre</span>
+                            <div class="invalid-feedback">
+                                Please enter a valid name.
+                            </div>
+                            </div>
+
+                            <div class="input-div">
+                                <input type="text" maxlength="13" id="rfc_propietario" name="rfc_propietario" value="{{arrendador.rfc_propietario}}" style="text-transform:uppercase" oninput="prueba2(this)" onkeyup="javascript:this.value=this.value.toUpperCase();"  equire>
+                                <span>RFC</span>
+                            </div>
+                        </div>
+                        <div class="input-text" style="margin-top:-15px">
+                            <div class="input-div">
+                                <label>Estado Civil:</label>
+                                <select class="form-select" id="ecp"  name="ecp" aria-label="Default select example" equire>
+                                    <option selected>{{arrendador.ecp}}</option>
+                                    <option value="Soltero">Soltero(a)</option>
+                                    <option value="Casado">Casado(a)</option>
+                                    <option value="Viudo">Viudo(a)</option>
+                                    <option value="Bienes Mancomunados">Bienes Mancomunados</option>
+                                    <option value="Bienes Separados">Bienes Separados</option>
+                                    <option value="Union Libre">Union Libre</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step2-pm" style="display:none;">
+                        <div class="text">
+                            <h2>Datos Domiciliarios</h2>
+                            <p>Por favor introduce tus datos Domiciliarios.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input type="text" id="calle" name="calle" oninput="prueba2(this)" value="{{arrendador.calle}}" equire>
+                                <span>Calle</span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="num_ext" name="num_ext" oninput="prueba2(this)" value="{{arrendador.num_ext}}" equire>
+                                <span>Número Ext. </span>
+                            </div>
+                            <div class="input-div">
+                                <input class="form-control" type="number" id="num_int" name="num_int" oninput="prueba2(this)" value="{{arrendador.num_int}}" equire>
+                                <span>Número Int. </span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text"id="colonia" name="colonia" oninput="prueba2(this)" value="{{arrendador.colonia}}" equire>
+                                <span>Colonia</span>
+                            </div>
+                           
+                            <div class="input-div"> 
+                                <input class="form-control" id="codigopostal" name="codigopostal" type="tel" maxlength="5" value="{{arrendador.codigopostal}}" oninput="prueba2(this)" equire>
+                                <span>Código Postal</span>
+                            </div>
+                            <div class="input-div"> 
+                                    <input type="text" id="municipio_alcaldia" name="municipio_alcaldia" oninput="prueba2(this)" value="{{arrendador.municipio_alcaldia}}" equire>
+                                    <span>Municipio/Alcaldia</span>
+                                </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                               <div class="input-div"> 
+                                <input type="text" id="estado" name="estado" oninput="prueba2(this)" value="{{arrendador.estado}}" equire>
+                                <span>Estado/Ciudad</span>
+                            </div>
+                            </div>
+                            <div class="input-div">
+                                <input id="referencias" name="referencias" type="text" oninput="prueba2(this)" value="{{arrendador.referencias}}" equire>
+                                <span>Referencias</span>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                        </div>
+                    </div>
+                    
+                    <div id="step3" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-building-fill-check" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.493 4.493 0 0 0 12.5 8a4.493 4.493 0 0 0-3.59 1.787A.498.498 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.476 4.476 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1V1Zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                            </svg>
+                        </small>
+
+                    <div id="dom_part" style="Display:none;">
+                        <div class="text" id="dir_emp2">
+                            <h2>Domicilio Particular</h2>
+                            <p>Nota: La dirreción para notificaciones debe ser diferente a la del inmueble a ser arrendado.</p>
+                        </div>
+                        <div id="">
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input type="text" id="calle_prop" name="calle_prop" oninput="prueba2(this)" value="{{arrendador.calle_prop}}" equire>
+                                    <span>Calle</span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" type="number" id="num_ext_prop" name="num_ext_prop" value="{{arrendador.num_ext_prop}}" oninput="prueba2(this)" equire>
+                                    <span>Número Ext. </span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" type="number" id="num_int_prop" name="num_int_prop" value="{{arrendador.num_int_prop}}" oninput="prueba2(this)" equire>
+                                    <span>Número Int. </span>
+                                </div>
+                            </div>
+                            <div class="input-text">
+                                <div class="input-div">
+                                    <input id="colonia_prop" name="colonia_prop" type="text" oninput="prueba2(this)" value="{{arrendador.colonia_prop}}" equire>
+                                    <span>Colonia</span>
+                                </div>
+                                <div class="input-div">
+                                    <input class="form-control" type="tel" id="codigo_postal_prop" name="codigo_postal_prop" value="{{arrendador.codigo_postal_prop}}" maxlength="10" oninput="prueba2(this)" equire>
+                                    <span>Código Postal</span>
+                                </div>
+                                <div class="input-div"> 
+                                    <input type="text" id="municipio_prop" name="municipio_prop" oninput="prueba2(this)" value="{{arrendador.municipio_prop}}" equire>
+                                    <span>Municipio/Alcaldia</span>
+                                </div>
+                            </div>
+                            <div class="input-text">
+                               
+                             <div class="input-div">
+                                    <input id="estado_prop" name="estado_prop" type="text" oninput="prueba2(this)" value="{{arrendador.estado_prop}}" equire>
+                                    <span>Estado/Ciudad</span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div id="act_con" style="Display:none;">
+                        <div class="text">
+                            <h2 id="nomac">Acta Constitutiva</h2>
+                            <p>Por favor introduce los campos solicitados.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input type="text" id="empresa_constituida" name="empresa_constituida" value="{{arrendador.empresa_constituida}}" oninput="prueba2(this)" >
+                                <span id="nec">Nombre Empresa Constituida</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input class="form-control" type="number" id="escritura_numero_ac" name="escritura_numero_ac" value="{{arrendador.escritura_numero_ac}}" oninput="prueba2(this)" >
+                                <span>Escritura Número</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input class="form-control" id="fecha_ac" name="fecha_ac" type="date"  value="{{arrendador.fecha_act}}" oninput="prueba2(this)">  
+                                <span>Fecha</span>
+                            </div>
+                            <div class="input-div">
+                                <input type="text" id="nombre_notario_ac" name="nombre_notario_ac" value="{{arrendador.nombre_notario_ac}}" oninput="prueba2(this)" >
+                                <span>Nombre de Notario</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <label>CDMX o Edo. Méx</label>
+                                <select class="form-select" id="coe" name="coe" onChange="prueba2(this)" aria-label="Default select example">
+                                    <option selected>{{inquilino.coe}}</option>
+                                    <option value="CDMX">CDMX</option>
+                                    <option value="Estado de México">Estado de México</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div"> 
+                                <input class="form-control" type="number" id="folio_mercantil" name="folio_mercantil" value="{{arrendador.folio_mercantil}}" oninput="prueba2(this)">
+                                <span>Folio Mercantil</span>
+                            </div>
+                        </div>
+                    </div> 
+                       
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                        </div>
+                    </div>
+                    
+                    {% comment %} referencias del Arrendatario {% endcomment %}
+                    <div id="step4" class="main">
+                        <small>
+                            <img src="/static/assets/img/icons/aa.png" style="width:25px; height:25px;" alt="icon">
+                        </small>
+
+
+                        <div id="contacto" style="Display:none;">
+                            <div id ="div_contacto">
+                                <div class="text">
+                                    <h2>Contacto</h2>
+                                    <p>Por favor introduce tus datos de contacto.</p>
+                                </div>
+                                <div class="input-text">
+                                    <div class="input-div"> 
+                                        <input class="form-control" id="tel_arr" name="tel_arr" type="tel" value="{{arrendador.tel_arr}}" maxlength="10" equire>
+                                        <span>Teléfono</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input class="form-control" id="cel_arr" name="cel_arr" type="tel" value="{{arrendador.cel_arr}}" maxlength="10" equire>
+                                        <span>Celular</span>
+                                    </div>
+                                </div>
+                            
+                                <div class="input-text">
+                                    <div class="input-div">
+                                        <input class="form-control" type="email" id="email_arr" name="email_arr" value="{{arrendador.email_arr}}" oninput="javascript: prueba2(this); validarEmail(this);">
+                                        <span>Email</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text" id="renta">
+                                <h2>Renta</h2>
+                                <p>Por favor introduce tus datos de bancarios en caso de deposito.</p>
+                            </div>
+                            <hr class="hr" />  
+                            <h5>Pago De Renta </h5>
+                            <hr class="hr" />  
+                            <div class="input-text" style="margin-top:-15px">
+                                <div class="input-div">
+                                    <select class="form-select" id="tipo_pago"  name="tipo_pago" onChange="lana()" oninput="prueba2(this)" aria-label="Default select example" equire>
+                                        <option value="{{arrendador.tipo_pago}}" selected>{{arrendador.tipo_pago}}</option>
+                                        <option value="Efectivo">Efectivo</option>
+                                        <option value="Deposito">Deposito</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="depositos" style="display:none;">
+                                <p>Datos bancarios en caso de Deposito <p>
+                                <div  class="input-text">
+                                    <div class="input-div">
+                                        <input type="text" id="banco" name="banco" value="{{arrendador.banco}}" equire>
+                                        <span>Banco</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input id="titular" name="titular" type="text" value="{{arrendador.titular}}"  equire>
+                                        <span>Nombre Titular</span>
+                                    </div>
+                                </div>
+                                <div class="input-text">
+                                    <div class="input-div"> 
+                                        <input class="form-control" id="no_cuenta" name="no_cuenta" value="{{arrendador.no_cuenta}}" type="number" maxlength="10"  equire>
+                                        <span>No. Cuenta</span>
+                                    </div>
+                                    <div class="input-div"> 
+                                        <input class="form-control" id="clabe" name="clabe" type="tel" value="{{arrendador.clabe}}" maxlength="16"  equire>
+                                        <span>Clabe</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    
+                            
+                        <div class="buttons button_space">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                        </div>
+                    </div>
+
+                    <div id="step5" class="main">
+                        <small>
+                            <img src="/static/assets/img/icons/ref.png" style="width:25px; height:25px;" alt="icon">
+                        </small>
+                        
+                        <div class="text">
+                            <h2>Datos De Inicio Contrato</h2>
+                            <p>Por favor introduce los datos Solicitados.</p>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" id="fecha_solicitud" name="fecha_solicitud" value="{{arrendador.fecha_solicitud}}" type="date" oninput="prueba2(this)" equire >  
+                                <span>Fecha De Solicitud</span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <input class="form-control" id="fecha_firma" name="fecha_firma" value="{{arrendador.fecha_firma}}" type="date" oninput="prueba2(this)" equire>  
+                                <span>Fecha De Firma De Contrato</span>
+                            </div>
+                            <div class="input-div"> 
+                                <input class="form-control" type="time" id="hora_firma" name="hora_firma" value="{{arrendador.hora_firma}}" oninput="prueba2(this)" equire>
+                                <span>Hora de Firma</span>
+                            </div>
+                        </div>
+                        <hr class="hr" />  
+                        <h3>Lugar Para Firma </h3>
+                        <hr class="hr" />  
+                        <div class="input-div">
+                            <select class="form-select" id="lugar_firma" name="lugar_firma" aria-label="Default select example" oninput="prueba2(this)" equire>
+                                <option selected>{{arrendador.lugar_firma}}</option>
+                                <option  value="Propiedad A Rentar">Propiedad A Rentar</option>
+                                <option value="Oficinas Arrendify">Oficinas Arrendify</option>
+                                <option value="Firma Electronica">Firma Electronica</option>
+                                {% comment %} {% if {{arrendador.lugar_firma}} =="Propiedad A Rentar" %}
+                                    <option value="Propiedad A Rentar" selected>Propiedad A Rentar</option>
+                                    <option value="Oficinas Arrendify">Oficinas Arrendify</option>
+                                    <option value="Firma Electronica">Firma Electronica</option>
+                                {% elif {{arrendador.lugar_firma}} =="Oficinas Arrendify" %}
+                                    <option value="Propiedad A Rentar">Propiedad A Rentar</option>
+                                    <option value="Oficinas Arrendify" selected>Oficinas Arrendify</option>
+                                    <option value="Firma Electronica">Firma Electronica</option>
+                                {% elif {{arrendador.lugar_firma}} =="Firma Electronica" %}
+                                    <option value="Propiedad A Rentar">Propiedad A Rentar</option>
+                                    <option value="Oficinas Arrendify">Oficinas Arrendify</option>
+                                    <option value="Firma Electronica" selected>Firma Electronica</option>
+                                {% endif %} {% endcomment %}
+                            </select>
+                        </div>        
+                        
+                        <div class="buttons button_space mt-4">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <input class="btn btn-primary next_button" type="button" value="Siguiente">
+                        </div>
+                    </div>
+
+                    <div id="step6" class="main">
+                        <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                              </svg>
+                        </small>
+                        <div class="text">
+                            <h2>Observaciones</h2>
+                        </div>
+                        <span>Comenta tus Observaciones</span>
+                        <div class="input-text">
+                            <textarea class="form-control" id="observaciones" name="observaciones" rows="6" oninput="prueba2(this)">{{arrendador.observaciones}}</textarea>
+                        </div>
+                        <hr class="hr" />
+                        <div class="buttons button_space mt-4">
+                            <button type="button" class="btn btn-outline-dark back_button">Atras</button>
+                            <button class="submit_button next_button" id="finalizar1" onClick="recopilar()">Actualizar</button>
+                        </div>
+                    </div>
+
+                    <div class="main">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        
+                        <div class="text congrats">
+                            <h2>¡Listo!</h2>
+                            <p>Gracias Sr./Sra. <span class="shown_name"></span>  {{ request.user.first_name }} su información se ha enviado con éxito para futuras referencias.</p> <strong>Pronto nos pondremos en contacto con usted. </strong>
+                        <img style="width:350px; height:250px;" src="https://i.pinimg.com/originals/76/84/23/768423119edd31d3ef06cd2492ed389e.gif"></img>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+</div>
+<!-- End of Modal -->
+    
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Modal2 -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %} 
+<script src="/static/assets/js/ms_arr.js"></script>
+<script src="/static/assets/js/phone.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+
+<script>
+    const phoneInputField = document.querySelector("#numeroTel1");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        preferredCountries: ["mx", "co", "ar", "es" , "ca" , "us" , "cn"],
+        utilsScript:
+        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+    const celInputField = document.querySelector("#cel");
+    const celInput = window.intlTelInput(celInputField, {
+        preferredCountries: ["mx", "co", "ar", "es" , "ca" , "us" , "cn"],
+        utilsScript:
+          "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+      });
+    function process(event) {
+      event.preventDefault();
+
+      const phoneNumber = phoneInput.getNumber();
+      phoneInputField.value = phoneNumber;
+      const celNumber = celInput.getNumber();
+      celInputField.value = celNumber;
+      console.log(phoneNumber)
+      console.log(celNumber)
+      
+
+    }
+</script>
+<script>
+    $(function () {
+        $("form").keypress(function (e) {
+            var key;
+            if (window.event)
+                key = window.event.keyCode; //IE
+            else
+                key = e.which; //firefox     
+            return (key != 13);
+        });
+    });
+
+$(document).ready(function() {
+    
+    $('#edit_arr').modal({ keyboard: false,backdrop: false })
+    
+    $('#edit_arr').modal('show');
+    
+
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  
+
+ // variables globales    
+document.getElementById("estado_civil").onload = mostrarOnChange();
+document.getElementById("carga_depo").onload = lana();
+document.getElementById("carga_fecha").onload = fechas();
+//document.getElementById("renta").onload = depo();
+
+//document.getElementById("carga_aa").onload = fecha();
+const arr ={};
+
+function fechas(){
+    console.log("FECHAS")
+    meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+    let fecha = '{{ arrendador.fecha_ac}}';
+    let fecha1 = '{{ arrendador.fecha_solicitud}}';
+    let fecha2 = '{{ arrendador.fecha_firma}}';
+    
+    let arrayFecha = fecha.split(" ");
+    let arrayFecha1 = fecha1.split(" ");
+    let arrayFecha2 = fecha2.split(" ");
+    
+    console.log(arrayFecha)
+    let nuevo=[];
+    let nuevo1=[];
+    let nuevo2=[];
+    arrayFecha[0] =( arrayFecha[0]<10) ? '0' +  arrayFecha[0]:  arrayFecha[0];
+    arrayFecha1[0] =( arrayFecha1[0]<10) ? '0' +  arrayFecha1[0]:  arrayFecha1[0];
+    arrayFecha2[0] =( arrayFecha2[0]<10) ? '0' +  arrayFecha2[0]:  arrayFecha2[0];
+
+    nuevo.push(arrayFecha[0]);
+    nuevo1.push(arrayFecha1[0]);
+    nuevo2.push(arrayFecha2[0]);
+
+    let posicion = meses.findIndex((element) => element == arrayFecha[2])+1;
+    let posicion1 = meses.findIndex((element) => element == arrayFecha1[2])+1;
+    let posicion2 = meses.findIndex((element) => element == arrayFecha2[2])+1;
+  
+    
+    let posicionString = (posicion<10) ? '0' + posicion: posicion;
+    let posicionString1 = (posicion1<10) ? '0' + posicion1: posicion1;
+    let posicionString2 = (posicion2<10) ? '0' + posicion2: posicion2;
+    nuevo.push(posicionString);
+    nuevo1.push(posicionString1);
+    nuevo2.push(posicionString2);
+
+    nuevo.push(arrayFecha[4]);
+    nuevo1.push(arrayFecha1[4]);
+    nuevo2.push(arrayFecha2[4]);
+
+    console.log('fechas nuevo 1', nuevo.reverse().join('-'))
+    console.log('fechas nuevo 2', nuevo1.reverse().join('-'))
+    console.log('fechas nuevo 3', nuevo2.reverse().join('-'))
+    var camfechac = document.getElementById("fecha_ac");
+    var camfecha1 = document.getElementById("fecha_solicitud");
+    var camfecha2 = document.getElementById("fecha_firma");
+    console.log("valor viejo de camfecha",camfechac)
+    console.log("valor viejo de camfecha",camfechac.value)
+    camfechac.value = nuevo.join('-')
+    camfecha1.value = nuevo1.join('-')
+    camfecha2.value = nuevo2.join('-')
+    console.log(camfechac.value)
+    console.log(camfecha1.value)
+    console.log(camfecha2.value)
+
+}
+
+function init()  {
+    var div1 = document.getElementById("pmoi")
+        console.log(div1.value)
+        switch (div1.value)
+        {
+          case "Persona Fisica":
+          $( "#eres_in" ).fadeOut( "fast" );
+          $( "#pmo" ).fadeOut( "fast" );
+          console.log("persona fisica");
+          document.getElementById("div_dir_ac").style.display='none';
+          document.getElementById("step2-pm").style.display = "";
+          document.getElementById("act_con").style.display = "";
+          document.getElementById("contacto").style.display = "";
+          document.getElementById("renta").style.display = "";
+         
+          
+          //STEPS
+          document.getElementById("nomac").textContent = "Datos Escritura";
+          document.getElementById("nec").textContent = "Razon Social";
+          document.getElementById("dio").textContent = "Datos Persona Fisica";
+          document.getElementById("li1").textContent = "Información PF";
+          document.getElementById("li2").textContent = "Datos Domicilio";
+          document.getElementById("li3").textContent = "Acta Constitutiva";
+          document.getElementById("li4").textContent = "Pago";
+          document.getElementById("li5").textContent = "Datos Inicio";
+          document.getElementById("li6").textContent = "Observaciones";
+          document.getElementById("li7").textContent = "Final";
+
+          //OCULATACION Inmobiliaria y pf
+          document.getElementById("eres_in").style.display = "none";
+          document.getElementById("div_contacto").style.display = "none";
+          document.getElementById("ddp").style.display = "none";
+          document.getElementById("dom_part").style.display = "none";
+
+          // diables
+          var des = document.getElementById("eres_in").getElementsByTagName('*');
+          for (var node of des) {
+              node.disabled = true;
+              node.removeAttribute("equire");
+          }
+          var des = document.getElementById("ddp").getElementsByTagName('*');
+          for (var node of des) {
+              node.disabled = true;
+              node.removeAttribute("equire");
+          }
+          var des = document.getElementById("dom_part").getElementsByTagName('*');
+          for (var node of des) {
+              node.disabled = true;
+              node.removeAttribute("equire");
+          }
+          var des = document.getElementById("div_contacto").getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+            }
+            var des = document.getElementById("pmo").getElementsByTagName('*');
+            for (var node of des) {
+                node.removeAttribute("disabled");
+            }
+            var des = document.getElementById("step2-pm").getElementsByTagName('*')
+            for (var node of des) {
+                node.removeAttribute("disabled");
+            }
+            var des = document.getElementById("act_con").getElementsByTagName('*')
+            for (var node of des) {
+                node.removeAttribute("disabled");
+            }
+            
+  
+          
+          $( "#pmo" ).fadeIn( "fast" );
+          break;
+            
+          case "Persona Moral":
+            $( "#eres_in" ).fadeOut( "fast" );
+            $( "#pmo" ).fadeOut( "fast" );
+            console.log("persona moral");
+            document.getElementById("div_dir_ac").style.display='';
+            document.getElementById("step2-pm").style.display = "";
+            document.getElementById("act_con").style.display = "";
+            document.getElementById("contacto").style.display = "";
+            document.getElementById("renta").style.display = "";
+            
+            
+            //STEPS
+            document.getElementById("dio").textContent = "Datos Persona Moral";
+            document.getElementById("li1").textContent = "Información PM";
+            document.getElementById("li2").textContent = "Datos Domicilio";
+            document.getElementById("li3").textContent = "Acta Constitutiva";
+            document.getElementById("li4").textContent = "Pago";
+            document.getElementById("li5").textContent = "Datos Inicio";
+            document.getElementById("li6").textContent = "Observaciones";
+            document.getElementById("li7").textContent = "Final";
+
+            //OCULATACION Inmobiliaria y pf
+            document.getElementById("eres_in").style.display = "none";
+            document.getElementById("ddp").style.display = "none";
+            document.getElementById("dom_part").style.display = "none";
+            document.getElementById("div_contacto").style.display = "none";
+           
+            // diables
+            var des = document.getElementById("eres_in").getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                node.removeAttribute("equire");
+            }
+            var des = document.getElementById("ddp").getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                node.removeAttribute("equire");
+            }
+            var des = document.getElementById("dom_part").getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                node.removeAttribute("equire");
+            }
+            var des = document.getElementById("div_contacto").getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+            }
+            
+            var des = document.getElementById("pmo").getElementsByTagName('*')
+            for (var node of des) {
+                node.removeAttribute("disabled");
+            }
+            var des = document.getElementById("step2-pm").getElementsByTagName('*')
+            for (var node of des) {
+                node.removeAttribute("disabled");
+            }
+            var des = document.getElementById("step2-pm").getElementsByTagName('*')
+            for (var node of des) {
+                node.removeAttribute("disabled");
+            }
+            
+            $( "#pmo" ).fadeIn( "fast" );
+          break;
+          
+          case "Inmobiliaria":
+            $( "#pmo" ).fadeOut( "fast" );
+            $( "#eres_in" ).fadeOut( "fast" );
+            console.log("Inmobiliaria")
+            document.getElementById("ddp").style.display = "";
+            document.getElementById("dom_part").style.display = "";
+            document.getElementById("contacto").style.display = "";
+
+            // steps
+            document.getElementById("dio").textContent = "Datos Inmobiliaria";
+            document.getElementById("li1").textContent = "Información Inmobiliaria";
+            document.getElementById("li2").textContent = "Propietario";
+            document.getElementById("li3").textContent = "Domicilio";
+            document.getElementById("li4").textContent = "Contacto y extras";
+            document.getElementById("li5").textContent = "Datos Inicio";
+            document.getElementById("li6").textContent = "Observaciones";
+            document.getElementById("li7").textContent = "Final";
+
+            //OCULATACION PM
+            document.getElementById("pmo").style.display = "none";
+            document.getElementById("step2-pm").style.display = "none";
+            document.getElementById("act_con").style.display = "none";
+            document.getElementById("renta").style.display = "none";
+            
+            
+            /* quitar el disabled
+            var des = document.getElementById("eres_in").getElementsByTagName('*');
+            for (var node of des) {
+                node.removeAttribute("disabled");             
+            }
+    
+            var des = document.getElementById("ddp").getElementsByTagName('*');
+            for (var node of des) {
+                node.removeAttribute("disabled");
+            }
+            var des = document.getElementById("dom_part").getElementsByTagName('*');
+            for (var node of des) {
+                node.removeAttribute("disabled");
+            }
+            var des = document.getElementById("contacto").getElementsByTagName('*');
+            for (var node of des) {
+                node.removeAttribute("disabled");*/
+
+            //disables
+           
+            var des = document.getElementById("pmo").getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                node.removeAttribute("equire");
+            }
+            var des = document.getElementById("step2-pm").getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                node.removeAttribute("equire");
+            }
+    
+            var des = document.getElementById("act_con").getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                node.removeAttribute("equire");
+            }
+
+            
+            
+            $( "#eres_in" ).fadeIn( "fast" );
+          break;
+        }
+}
+
+function lana() {
+    console.log("Soy depo")
+    var tipo_pago = document.getElementById("tipo_pago");
+    var dep = document.getElementById("depositos");
+   
+//   console.log(radio.value)
+  console.log(tipo_pago.value)
+ 
+     if(tipo_pago.value=="Deposito") {
+          dep.style.display='';
+           var des = document.getElementById("depositos").getElementsByTagName('*');
+           for (var node of des) {
+              node.disabled = false;
+          }
+
+      }
+      else{
+          dep.style.display='none'
+          var des = document.getElementById("depositos").getElementsByTagName('*');
+          for (var node of des) {
+              node.disabled = true;
+              node.removeAttribute("require");
+          }
+           }
+     }
+
+
+
+function mostrarOnChange() {
+    console.log("hola")
+            sel = document.getElementById("estado_civil");
+            divC = document.getElementById("datcon");
+    
+            if (sel.value=="Casado") {
+                console.log(sel);
+                 divC.style.display = '';
+            }
+            else {
+                 divC.style.display='none';
+      
+            }
+      }
+</script>
+<script>
+$(document).ready(function() {
+  // Bind click event handler to the button with id "myButton"
+  $('#tipo_pago').on('click', function() {
+    // Code to be executed when the button is clicked
+    console.log('Button clicked!');
+    // Add your own code here to perform the desired action
+  });
+});
+
+</script>
+
+<script>
+
+{% comment %} Autenticar {% endcomment %}
+
+function valida(){
+    (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('#Formu')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+        })
+    })()
+}
+</script>
+
+<script>
+
+$( "#next1" ).on( "click", function() {
+    (function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('#step1')
+
+  // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+        })
+    })()
+
+    if (this.checkValidity() === false) {
+      // If the form is invalid, prevent the default form submission
+      console.log("Validacion")
+      event.preventDefault();
+      event.stopPropagation();
+    }
+} );
+
+const csrftoken = document.cookie.match(/csrftoken=(\w+)/)[1];
+axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+const server = 'http://127.0.0.1:8000'
+const configin = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Token ${localStorage.getItem('token')}`
+    },
+  };
+var datos ={};
+    {% comment %} document.getElementById("cargar_tabla").onload = plantar() {% endcomment %}
+document.getElementById("carga_depo").onload = plantar()
+console.log("en onload",datos)
+
+function plantar()
+{
+    datos = JSON.parse( localStorage.getItem('data_arrendador'))
+    console.log(localStorage)
+    console.log("soy datos",datos)
+    console.log(datos.id)
+    var full = document.getElementById("nombre_full")
+    var conyu = document.getElementById("n_conyuge")
+    var k1 = Object.getOwnPropertyNames(datos);
+    console.log("soy k1",k1)
+    // datos generales
+    if (conyu.value == "null null null"){
+        conyu.value = "Sin Conyugue";
+    }
+ 
+    for(let i= 1; i < 68;i++)
+    {
+        let k2 = document.getElementsByName(k1[i]);
+        let myElement = document.getElementById(k1[i]);
+        console.log(k2)
+        //let k3 = document.getElementsByName(k1[i]).value;
+        //if (typeof myObj !== 'undefined' && k[i] !== "pmoi") {
+        console.log("yo soy k2",k2)
+        //console.log(k2[0].value)
+        if (myElement !== null)
+            k2[0].value =  datos[k1[i]];
+        console.log("Dato con valor",k2[0]);
+        //}
+    }
+
+    console.log("rentado_antes")
+
+    //var renta = document.getElementById("rentado_antes");
+    var arre = document.getElementById("arren");
+    var bot = document.getElementById("but_arren");
+
+
+    //   console.log(radio.value)
+
+        /*if(renta.value=="Si") {
+            arre.style.display='';
+            bot.style.display='';
+            
+        }*/
+        
+    if(renta.value=="No") {
+        arre.style.display='none';
+        bot.style.display='';
+        bot.style.marginTop='20px';
+        var des = arre.getElementsByTagName('*');
+        for (var node of des) {
+            node.disabled = true;
+            
+        }
+    }  
+
+    /*let sel = document.getElementById("floatingSelect")
+    //console.log(sel.value)
+    if (sel.value=="Si"){
+        console.log("hola")
+       document.getElementById("nrc").style.display="";
+    }
+    else{
+       document.getElementById("nrc").style.display="none";
+    }*/
+
+    console.log("hola casado")
+    sel = document.getElementById("estado_civil");
+    divC = document.getElementById("datcon");
+    console.log("soy el sel de casado",sel.value);
+    if (sel.value=="Casado") {
+        console.log("soy el sel de casado",sel);
+         divC.style.display = '';
+    }
+    else {
+         divC.style.display='none';
+
+    }
+    //localStorage.removeItem('data_inquilino')
+    //console.log("limpio",localStorage)
+}
+
+function prueba2(val){
+        console.log("clave",val.name,"valor",val.value)
+        datos[""+val.name]= '' +val.value
+        console.log(datos.nombre)
+        console.log("datos prueba2 enviar",datos)
+        arr2 = val.name;
+        let k2 = document.getElementById(arr2);
+        k2.style.borderColor="green"
+        k2.classList.remove('warning')
+        console.log(arr)
+    
+    } 
+
+    function recopilar()
+    {
+    // Obtener y Guardar el valor del input en localStorage
+    console.log("estoy en guardar",JSON.stringify(arr))
+    localStorage.setItem('datos', JSON.stringify(arr));
+    }
+
+const btnSubmit = document.getElementById("finalizar1")
+btnSubmit.addEventListener("click", function (event) {
+    event.preventDefault();
+    console.log("Editar jojojo")
+    
+    enviar_datos(datos)
+    //setTimeout(() => {
+        //window.location.href = '/arrendador/'
+   // }, "3000");
+   
+})
+
+async function enviar_datos(formulario){
+    slug = formulario.slug
+    console.log("Esta llegando a editar")
+    console.log("datos formulario", formulario)
+    //var data = $("Formu").serializeArray();
+    //var slug = document.getElementById('slug').value
+    const response = await axios.put(`${server}/Arrendador_Api/${slug}/`,formulario,configin)
+    var form = document.getElementById("Formu");
+    form.reset();
+    console.log("response",response)
+ 
+}
+
+
+</script>
+   
+{% comment %} <script src="/static/assets/js/ocultadorespf.js"></script>
+{% comment %} <script src="/static/assets/js/validacionpf.js"></script> {% endcomment %}
+{% endblock javascripts %}

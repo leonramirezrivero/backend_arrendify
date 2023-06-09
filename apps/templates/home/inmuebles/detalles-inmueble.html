@@ -1,0 +1,561 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Vista Inmueble {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link href="/static/assets/css/nav.css" rel="stylesheet"/>
+{% comment %} {#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">#} {% endcomment %}
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+
+    <style>
+      .custom-size {
+        width: 430px;
+        height: 430px;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+    <div>
+        <a href="/inmuebles/"><button type="button" class="btn btn-secondary " ><svg class="icon icon-xs" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" clip-rule="evenodd"></path></svg>Regresar  
+        </button>
+        </a>
+    </div>
+</div>
+
+
+<div class="row" id="carga_plantar">
+    <div class="col-12 col-xl">
+        <div class="card card-body border-0 shadow mb-4">
+            <h2 class="h5 mb-3">{{verinmueble.alias_inmueble}}</h2>
+            <div class="row">
+                <div id="plantar_imagenes" class="col-md-6 card border-0 shadow mb-4 " >
+
+                
+                </div>
+                <div class="col-md-6 mb-2">
+                    <div class="col-md-12 mb-3">
+                        <label for="n-p-a">Nombre del Propietario Administrador:</label>
+                        <input type="text" id="d-c-a" class="form-control" value="{{ request.user.first_name }} {{ request.user.last_name }}" placeholder="" disabled>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="d-c-a">Arrendador:</label>
+                        <input type="text" id="arrendador_nombre" name="arrendador_nombre" class="form-control" disabled>
+                    </div>
+                    {% comment %} {% for data in data.inmueble %} {% endcomment %}
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="renta">Renta:</label>
+                            <input class="form-control" id="renta" name="renta" type="text" min="0" disabled>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="venta">Venta:</label>
+                            <input class="form-control" id="venta" name="venta" min="0" type="text" value="$ {{data.venta}}" disabled>
+                        </div>
+                        <div class="col-md-4 mb-3 " >
+                            <label for="ubicacion" style="font-size:15px">En Renta con opción a Venta:</label>
+                            <input class="form-control" type="text" id="op_compra" name="op_compra" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="ubicacion">Ubicación:</label>
+                        <input class="form-control-plaintext card shadow border-1 ps-1" type="text" style="font-size:14.5px" id="calle" name="calle" readonly>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ubicacion">Entre calles:</label>
+                            <input type="text" id="calle2" name="calle2" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-6 mb-3 " >
+                            <label for="ubicacion">Referencias:</label>
+                            <input class="form-control" type="text" value="{{data.referencias}}"  disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="datos_generales_tab" data-bs-toggle="tab" data-bs-target="#datos_generales" type="button" role="tab" aria-controls="datos_generales_tab" aria-selected="true">Datos Generales</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#caracteristicas" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Características</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#amenidades" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Amenidades</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#servicios" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" >Servicios</button>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="datos_generales" role="tabpanel" aria-labelledby="datos_generales_c" tabindex="0">
+                        <h2 class="h5 mb-2 mt-2">Datos Generales</h2>
+                        <hr class="hr" />   
+                        
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 mb-3"><!---->
+                                    <label for="estatus">Estatus del Inmueble: </label>
+                                    <input class="form-control" id="estatus_inmueble" name="estatus_inmueble" type="text" disabled>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="t_inmueble">Tipo de Inmueble:</label>
+                                    <input class="form-control" id="tipo_inmueble" name="tipo_inmueble" type="text" disabled>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="u_inmueble">Uso del Inmueble:</label>
+                                    <input class="form-control" id="uso_inmueble" name="uso_inmueble" type="text" disabled>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label for="v_inmueble">Valor Catastral:</label>
+                                    <input class="form-control" id="valor_catastral" name="valor_catastral" min="0" type="number" disabled>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label for="manteniniento">Cuota de Mantenimiento:</label>
+                                    <input class="form-control" id="cuota_mantenimiento" name="cuota_mantenimiento" type="number" min="0" disabled>
+                                </div>  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="tab-pane fade" id="caracteristicas" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                        <h2 class="h5 mb-2 mt-2">Características</h2>
+                        <hr class="hr" />  
+                        
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="b_medio">Baños Completos:</label>
+                                <input class="form-control" id="n_baños" name="n_baños" type="number" min="0" disabled>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="b_medio">Medios Baños:</label>
+                                <input class="form-control" id="n_medios_baños" name="n_medios_baños" type="number" min="0" disabled>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="recamaras">Recamaras:</label>
+                                <input class="form-control" id="n_recamaras" name="n_recamaras" type="number" min="0" disabled>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="pisos">Pisos:</label>
+                                <input class="form-control" id="pisn_pisosos" name="n_pisos" type="number" min="0" disabled>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="estacionamiento_cajones">Cajones de Estacionamiento:</label>
+                                <input class="form-control" id="estacionamiento_cajones" name="estacionamiento_cajones" type="number" min="0" disabled>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="terrenoConstruido">Construidos m2:</label>
+                                <input class="form-control" id="terrenoConstruido" name="terrenoConstruido" type="number" min="0" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="terrenoTotal">Terreno m2:</label>
+                                <input class="form-control" id="terrenoTotal" name="terrenoTotal" type="number" min="0" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="c_año">Año de Construcción:</label>
+                                <input class="form-control" id="año_contruccion" name="año_contruccion" type="number" min="0" maxlength="4" disabled>
+                            </div>
+                        </div>
+                        
+                    
+                    </div>
+
+                    <div class="tab-pane fade" id="amenidades" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                        <div class="col-md-6 mb-2 ">
+                            <div class="row">
+                                <h2 class="h5 mb-2">Amenidades</h2>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="garage" name="garage" disabled>
+                                    <label class="form-check-label" for="a_garage">Garage</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="bodega" name="bodega" disabled>
+                                    <label class="form-check-label" for="garaje">Bodega</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="terraza" name="terraza" disabled >
+                                    <label class="form-check-label" for="a_terraza">Terraza</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="alberca" disabled>
+                                    <label class="form-check-label" for="a_alberca">Alberca</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="cocina" name="cocina" disabled>
+                                    <label class="form-check-label" for="cocina">Cocina</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="amueblado" name="amueblado" disabled>
+                                    <label class="form-check-label" for="a_mueblado">Amueblado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="cuarto_lavado" name="cuarto_lavado" disabled>
+                                    <label class="form-check-label" for="a_c_lavado">Cuarto de Lavado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="gym" name="gym" disabled>
+                                    <label class="form-check-label" for="gym">Gym</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="bar" name="bar" disabled>
+                                    <label class="form-check-label" for="bar">Bar</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="restaurante_bar" name="restaurante_bar" disabled >
+                                    <label class="form-check-label" for="r_bar">Restaurante Bar</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_cine" name="sala_cine" disabled >
+                                    <label class="form-check-label" for="sala_cine">Sala de Cine</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_estudios" name="sala_estudios" disabled >
+                                    <label class="form-check-label" for="sala_estudios">Cuarto de Estudios</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="area_comun" name="area_comun" disabled>
+                                    <label class="form-check-label" for="area_comun">Área comun</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="sala_juegos" name="sala_juegos" disabled>
+                                    <label class="form-check-label" for="sala_juegos">Sala de Juegos</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="salon_eventos" name="salon_eventos" disabled >
+                                    <label class="form-check-label" for="salon_eventos">Salón de Eventos</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="espacio_deportivo" name="espacio_deportivo" disabled>
+                                    <label class="form-check-label" for="espacio_deportivo">Canchas Deportivas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="busisness_center" name="busisness_center" disabled >
+                                    <label class="form-check-label" for="busisness_center">Busisness Center</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="roof_garden" name="roof_garden" disabled>
+                                    <label class="form-check-label" for="roof_garden">Roof Garden</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <input class="form-check-input" type="checkbox" title="Especifique en la descripción" data-bs-toggle="tooltip" data-bs-placement="right"id="otroA" name="otroA" disabled>
+                                    <label class="form-check-label" for="otro" >Otro</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="servicios" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">
+                        <div class="col-md-6 mb-2 ">
+                            <div class="row">
+                                <h2 class="h5 mb-2">Servicios</h2>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="internet" name="internet" disabled>
+                                    <label class="form-check-label" for="internet">Internet/Wifi</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="electricidad" name="electricidad" disabled >
+                                    <label class="form-check-label" for="electricidad">Energía Eléctrica</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="agua_potable" name="agua_potable" disabled>
+                                    <label class="form-check-label" for="agua_potable">Agua Potable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="televisionCable" name="televisionCable" disabled>
+                                    <label class="form-check-label" for="televisionCable">Tele por Cable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="gas" name="gas" disabled >
+                                    <label class="form-check-label" for="gas">Gas</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="lineaTelefonica" name="lineaTelefonica" disabled>
+                                    <label class="form-check-label" for="lineaTelefonica">Línea Telefónica</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="drenaje" name="drenaje" disabled>
+                                    <label class="form-check-label" for="drenaje">Drenaje</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="seguridad" name="seguridad" disabled>
+                                    <label class="form-check-label" for="seguridad">Seguridad</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="c_cerrado" name="camarasSeguridad" disabled>
+                                    <label class="form-check-label" for="c_cerrado">Circuito Cerrado</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-check-input" type="checkbox" id="a_juegos" name="area_juegos" disabled>
+                                    <label class="form-check-label" for="a_juegos">Área de juegos</label>
+                                </div>
+                                <div class="col-md-4" >
+                                    <input class="form-check-input" type="checkbox" value="" id="otro" disabled>
+                                    <label class="form-check-label" for="otro" >Otro</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="descripcion" class="h5 mb-2">Descripción</label>
+                            <input class="form-control" value="{{verinmueble.descripcion}}" id="descripcion" rows="5" disabled>
+                        </div>
+                    {% comment %} {% endfor %} {% endcomment %}
+{#                    {% endfor %}#}
+                    </div>
+                  </div>               
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    function mostrar(dato) {
+        if (dato == "1") {
+          document.getElementById("FS").style.display = "block";
+          document.getElementById("OSPF").style.display = "none";
+        }
+        if (dato == "2") {
+          document.getElementById("FS").style.display = "none";
+          document.getElementById("OSPF").style.display = "block";
+        }
+      }
+      
+</script>
+<script>//Galeria
+    let nclicks = 0;
+    let adelante=document.getElementById("adel");
+    let foto=document.getElementById("foto");
+    let atras=document.getElementById("atras");
+    let imagechange=document.getElementById("cambio");
+    const galery = [
+    {url:"{{verinmueble.fotos.all.0.imagenes.url}}"},
+    {url:"{{verinmueble.fotos.all.1.imagenes.url}}"},
+    {url:"{{verinmueble.fotos.all.2.imagenes.url}}"},
+    {url:"{{verinmueble.fotos.all.3.imagenes.url}}"},
+    {url:"{{verinmueble.fotos.all.4.imagenes.url}}"}
+    ];
+    
+    const n_imag={{verinmueble.fotos.all|length}};
+
+    foto.onclick=function(){
+        console.log(nclicks)
+        nclicks = nclicks + 1;
+        
+      if(nclicks<n_imag){
+        console.log(galery[nclicks].url)
+        imagechange.src='/static'+galery[nclicks].url;
+        foto.src='/static'+galery[nclicks].url;
+      }else if (nclicks=n_imag){
+        nclicks=0
+        imagechange.src='/static'+galery[nclicks].url;
+        foto.src='/static'+galery[nclicks].url;
+        console.log(galery[nclicks].url)
+        
+      }
+      
+  }
+    adelante.onclick=function(){
+        console.log(nclicks)
+        nclicks = nclicks + 1;
+        
+      if(nclicks<n_imag){
+        console.log(galery[nclicks].url)
+        imagechange.src='/static'+galery[nclicks].url;
+        foto.src='/static'+galery[nclicks].url;
+      }else{
+        nclicks=0
+        imagechange.src='/static'+galery[nclicks].url;
+        foto.src='/static'+galery[nclicks].url;
+        console.log(galery[nclicks].url)
+        
+      }
+    }
+
+    atras.onclick=function(){
+        nclicks = nclicks - 1
+
+      console.log(nclicks)
+    if(nclicks<0){
+        nclicks=n_imag-1;
+        console.log("inicial",n_imag)
+        imagechange.src='/static'+galery[nclicks].url;
+        foto.src='/static'+galery[nclicks].url;
+        console.log(galery[nclicks].url)
+    
+      
+    }else{
+      
+      imagechange.src='/static'+galery[nclicks].url;
+      foto.src='/static'+galery[nclicks].url;
+      console.log(galery[nclicks].url)
+      
+    }
+    }
+    
+    
+</script>
+
+
+<script>
+
+document.getElementById("carga_plantar").onload  = plantar();  
+
+
+    function plantar()
+{
+    data = JSON.parse( localStorage.getItem('inmuebles'));
+    data_inmueble_storage = data.inmuebles[0];
+    const datos_inmueble_propiedades = Object.getOwnPropertyNames(data_inmueble_storage);
+    const datos_imagen_propiedades = Object.getOwnPropertyNames(data.imagen[0])
+    const datos_total_imagenes = Object.getOwnPropertyNames(data.total_imagenes)
+
+    console.log("Datos imagen",datos_imagen_propiedades )
+
+    console.log("datos nn", datos_inmueble_propiedades);
+    console.log(localStorage);
+    console.log("soy datos inmueble",data.inmuebles)
+    console.log("soy datos imagen",data.imagen)
+    console.log("soy datos cuantas imagenes",data.total_imagenes)
+
+    //console.log(datos.id)
+    var full = document.getElementById("nombre_full")
+    var conyu = document.getElementById("n_conyuge")
+    var k1 = Object.getOwnPropertyNames(data.inmuebles[0]);
+    console.log("soy k1",k1)
+    // datos generales
+    dato1 = document.getElementsByName("alias_inmueble");
+    console.log("Alias inmueble documento", dato1);
+    console.log("Soy el valor de el id", data.inmuebles[0]['id'])
+    var calle2 = data.inmuebles[0]['calle1'] + " y " + data.inmuebles[0]['calle2']
+    var nombre_arrendador = data.inmuebles[0]['arrendador_nombre'] +" "+data.inmuebles[0]['arrendador_apellido_paterno'] +" "+data.inmuebles[0]['arrendador_apellido_materno']
+    console.log("Soy el nombre del arrendador de inmueble", nombre_arrendador)
+    var ubicacion_completa = "Calle: "+ data.inmuebles[0]['calle'] +", Num ex: "+data.inmuebles[0]['numeroExterior'] +", Num in: "+data.inmuebles[0]['numeroInterior'] +", Colonia: "+data.inmuebles[0]['colonia']+" ,CP:"+data.inmuebles[0]['postal_code']+" ,Alcaldia:"+data.inmuebles[0]['municipio_alcaldia']+" ,Estado:"+data.inmuebles[0]['estado']
+    data.inmuebles[0]['calle'] = ubicacion_completa
+    data.inmuebles[0]['arrendador_nombre'] = nombre_arrendador
+    data.inmuebles[0]['calle2'] = calle2
+    for(let i= 0; i < 66; i++)
+    {
+        let k2 = document.getElementsByName(k1[i]);
+        let myElement = document.getElementById(k1[i]);
+        console.log("yo soy k2",k2)
+        console.log("Nombre del elemnto", myElement)
+            if (k2 !== null){
+                if (k2[0] !== undefined)
+                    k2[0].value = data.inmuebles[0][k1[i]];
+                //console.log(k2[0].value)
+            }
+            console.log("Dato con valor",k2[0]);
+    }
+    $(document).ready(function() {
+    $('input[type=checkbox]').each(function() {
+        var value = $(this).val();
+        if (value === 'Si') {
+            $(this).prop('checked', true);
+            $('#myCheckbox').prop('checked', true);
+        }
+    });
+});
+
+    var imagenes = Object.getOwnPropertyNames(data.imagen[0]);
+    console.log("data imagenes",imagenes)
+    console.log("Soy el valor de url img", data.imagen[0]['imagenes'])
+    var im =`<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">`;
+    for(let i = 0; i < data.total_imagenes; i++){
+        var url =  data.imagen[i]['imagenes']
+        var id = data.imagen[i]['id']
+        console.log("Soy url men",url)
+        if(i === 0)
+            im += `<div class="carousel-item active">
+                    <img src="/static${url}" class="rounded mx-auto d-block custom-size">
+                    </div>`
+        else
+            im+=`<div class="carousel-item">
+                    <img src="/static${url}" class="rounded mx-auto d-block custom-size">
+                </div>`
+    }
+
+    im += `<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+            </div>`
+
+$('#plantar_imagenes').html(im);
+
+    console.log("rentado_antes")
+
+    var renta = document.getElementById("rentado_antes");
+    var arre = document.getElementById("arren");
+    var bot = document.getElementById("but_arren");
+
+
+    //   console.log(radio.value)
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][value="Si"]');
+        checkboxes.forEach((checkbox) => {
+        checkbox.checked = true;
+    });
+
+        if(renta.value=="Si") {
+            arre.style.display='';
+            bot.style.display='';
+            
+        }
+        
+        if(renta.value=="No") {
+            arre.style.display='none';
+            bot.style.display='';
+            bot.style.marginTop='20px';
+            var des = arre.getElementsByTagName('*');
+            for (var node of des) {
+                node.disabled = true;
+                
+            }
+    }  
+
+    let sel = document.getElementById("floatingSelect")
+    console.log(sel.value)
+    if (sel.value=="Si"){
+        console.log("hola")
+       document.getElementById("nrc").style.display="";
+    }
+    else{
+       document.getElementById("nrc").style.display="none";
+    }
+
+    console.log("hola casado")
+    sel = document.getElementById("estado_civil");
+    divC = document.getElementById("datcon");
+    console.log("soy el sel de casado",sel.value);
+    if (sel.value=="Casado") {
+        console.log("soy el sel de casado",sel);
+         divC.style.display = '';
+    }
+    else {
+         divC.style.display='none';
+
+    }
+    //localStorage.removeItem('data_inquilino')
+    //console.log("limpio",localStorage)
+}
+</script>
+
+{% endblock javascripts %}
