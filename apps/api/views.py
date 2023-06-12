@@ -344,6 +344,8 @@ class ArrendadorViewSet(viewsets.ModelViewSet):
     queryset = Arrendador.objects.all()
     serializer_class = ArrendadorSerializer
 
+    
+
     def list(self, request):
         try:
             queryset = self.filter_queryset(self.get_queryset())
@@ -351,6 +353,16 @@ class ArrendadorViewSet(viewsets.ModelViewSet):
             return Response(arrendador_serializer.data ,status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+    # def list(self, request, *args, **kwargs):
+    #     queryset = self.queryset
+    #     search_param = self.request.query_params.get('search', None)
+        
+    #     if search_param:
+    #         queryset = queryset.filter(nombre__icontains=search_param)
+        
+    #     serializer = self.get_serializer(queryset, many=True)
+    #     return Response(serializer.data)
         
     def update(self, request, *args, **kwargs):
         try:
@@ -830,15 +842,15 @@ class Listar_Documentos_ViewSet(viewsets.ModelViewSet):
     queryset = Arrendador.objects.all()
     serializer_class = ArrendadorDocumentosSerializer
     # documentos_class = DocumentosArrendadorSerializer
-        
-    # def get_queryset(self):
-    #     user_session = self.request.user
-    #     if user_session.is_staff:
-    #         data_serializer = self.serializer_class(self.queryset, many=True)
-    #         return Response(data_serializer.data)
-    #     else:            
-    #         user_id = self.request.user.id
-    #         return Arrendador.objects.filter(user=user_id)
+
+    def get_queryset(self):
+        user_session = self.request.user
+        if user_session.is_staff:
+            data_serializer = self.serializer_class(self.queryset, many=True)
+            return Response(data_serializer.data)
+        else:            
+            user_id = self.request.user.id
+            return Arrendador.objects.filter(user=user_id)
 
     def retrieve(self, request, *args, **kwargs):
         print("Esta lleggando a retrieve")
@@ -1009,7 +1021,6 @@ class DocumentosFoo(viewsets.ModelViewSet):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
-
     def destroy(self, request, pk=None, *args, **kwargs):
         # try:
         documentos_fiador = self.get_object()
