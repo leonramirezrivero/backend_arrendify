@@ -58,7 +58,7 @@ class ArrendadorConCamposEstablecidosSerializer(serializers.ModelSerializer):
     custom_field = serializers.SerializerMethodField()
     class Meta:
         model = Arrendador
-        fields = ('id', 'nombre','apellido','apellido1', 'custom_field', 'arrendador_validacion')
+        fields = ('id', 'nombre','apellido','apellido1', 'custom_field', 'arrendador_validacion', 'pmoi')
     def get_custom_field(self, obj):
         if not obj.nombre:
             return obj.n_inmobiliaria
@@ -84,6 +84,7 @@ class InmueblesSerializer(serializers.ModelSerializer):
     arrendador_nombre = serializers.CharField(source='arrendador.nombre', read_only=True)
     arrendador_apellido_paterno = serializers.CharField(source='arrendador.apellido', read_only=True)
     arrendador_apellido_materno = serializers.CharField(source='arrendador.apellido1', read_only=True)
+    arrendador_rol = serializers.CharField(source='arrendador.pmoi', read_only=True)
     inmuebles = InmueblesMobiliarioSerializer(many=True, read_only=True)
     class Meta:
         model = Inmuebles
@@ -158,16 +159,78 @@ class DocumentosInquilinosSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class DocumentosInquilinoSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = DocumentosInquilino
         fields = '__all__'
-
-
-
 
 class ArrendadorPruebaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Arrendador
         fields = '__all__'
 
+# Serializer exclusivos para mandar datos a datos de arrendamiento
+class DatosArrendadorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Arrendador
+        fields = ('id', 'nombre','apellido','apellido1', 'n_inmobiliaria', 'pmoi')
 
+class DatosInmuebleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inmuebles
+        fields = ('id', 'alias_inmueble', 'municipio_alcaldia', 'colonia', 'renta', 'uso_inmueble', 'colonia', 'cuota_mantenimiento', 'calle', 'numeroExterior')
+
+class DatosInquilinoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inquilino
+        fields = ('id', 'nombre','apellido','apellido1', 'p_fom')
+
+class PaquetesSerializer(serializers.ModelSerializer):
+    nombre_arrendador = serializers.PrimaryKeyRelatedField(queryset=Arrendador.objects.all())
+    nombre_inmueble_a_ocupar = serializers.PrimaryKeyRelatedField(queryset=Inmuebles.objects.all())
+    inquilino = serializers.PrimaryKeyRelatedField(queryset=Inquilino.objects.all())
+
+    class Meta:
+        model = Paquetes
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['nombre_arrendador'] = DatosArrendadorSerializer(instance.nombre_arrendador).data
+        representation['nombre_inmueble_a_ocupar'] = DatosInmuebleSerializer(instance.nombre_inmueble_a_ocupar).data
+        representation['inquilino'] = DatosInquilinoSerializer(instance.inquilino).data
+        return representation
+
+class DatosArrendamientoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DatosArrendamiento
+        fields = '__all__'
+
+
+
+
+
+# --------------------------------------------------------------------------------------------------
+class InmueblesSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = Inmuebles
+        fields = ('id', 'alias_inmueble', 'municipio_alcaldia', 'colonia', 'renta', 'uso_inmueble', 'colonia', 'cuota_mantenimiento', 'calle', 'numeroExterior')
+
+class ArrendadorInmuebles(serializers.ModelSerializer):
+    inmuebles_set = DatosInmuebleSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Arrendador
+        fields = '__all__'
+
+
+#  ---------------------------------------------------------------------  Cotizacion ---------------------------------------------------------------------
+
+class CotizacionSerializer(serializers.ModelSerializer):
+    datos_inmueble = DatosInmuebleSerializer(read_only=True, source='inmueble')
+    datos_arrendador = DatosArrendadorSerializer(read_only=True, source='arrendador')
+    cot_inquilino = DatosInquilinoSerializer(read_only=True, source='inquilino')
+    
+    class Meta:
+        model = Cotizacion
+        fields = '__all__'

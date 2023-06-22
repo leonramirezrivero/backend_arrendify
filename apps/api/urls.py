@@ -14,7 +14,8 @@ urlpatterns = [
 
    # path('tus/<int:pk>/', views.DocumentosInquilino.as_view({'put': 'actualizar'}), name='update'),
    #path('documentos_edit/<int:pk>/', views.DocumentosInquilino.as_view({'put': 'actualizar_archivos_individual'}), name='actualizar_archivos_individual'),
-   path('actualizar_status/<str:slug>/', views.inmueblesViewSet.as_view({'put': 'actualizar_status'}), name='actualizar_status'),
+    path('actualizar_status/<str:slug>/', views.inmueblesViewSet.as_view({'put': 'actualizar_status'}), name='actualizar_status'),
+    path('listar_documentos/buscar/', Listar_Documentos_ViewSet.as_view({'get': 'buscar'}), name='buscar-documentos'),
     # path('inmuebles/datos_inmueble/<str:slug>/', InmueblesViewSet.as_view({'get': 'datos_inmueble'}), name='datos_inmueble'),
     # -*- encoding: utf-8 -*-
     

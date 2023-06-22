@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404
 
 from ..home.models import *
 from rest_framework import status
+from core.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
 from rest_framework import viewsets
 
@@ -23,12 +24,27 @@ from rest_framework.decorators import action
 from django.core.paginator import Paginator
 import json
 # Create your views here.
+import boto3
 
 import json
 import shutil
 # Para autenticacion
 import os
+from django.db.models import Q
+from rest_framework.pagination import PageNumberPagination
+from botocore.exceptions import NoCredentialsError
+from django.core.mail import EmailMessage
 
+
+
+# PDF
+# from rest_framework import viewsets
+# from weasyprint import HTML
+# from django.http import HttpResponse
+# from django.template.loader import get_template
+# import os
+
+# from weasyprint import HTML
 
 class inquilino_registro(APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
@@ -302,14 +318,6 @@ class DocumentosInquilino(viewsets.ModelViewSet):
         except Exception as e:
             return Response({'Error': 'Error al actualizar'})
     
-    # def guardar_historial(self, archivo_anterior, archivo_actual, campo_previo, user_id):
-    #     if archivo_anterior:
-    #         # Crear una nueva instancia de HistorialDocumentosArrendador
-    #         historial = HistorialDocumentosInquilinos.objects.create(
-    #             historial_documentos = self.get_object(),
-    #             previo_Ingresos = archivo_anterior if campo_previo == 'previo_Ingresos' else None,
-    #             user_id = user_id,
-    #         )
     def guardar_historial(self, archivo_anterior, archivo_actual, campo_previo):
         if archivo_actual != archivo_anterior:
             # Eliminar el archivo anterior
@@ -340,11 +348,11 @@ class ArrendadorCamposUnicosViewSet(viewsets.ModelViewSet):
         
 
 class ArrendadorViewSet(viewsets.ModelViewSet):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
     lookup_field = 'slug'
     queryset = Arrendador.objects.all()
     serializer_class = ArrendadorSerializer
 
-    
 
     def list(self, request):
         try:
@@ -354,15 +362,6 @@ class ArrendadorViewSet(viewsets.ModelViewSet):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.queryset
-    #     search_param = self.request.query_params.get('search', None)
-        
-    #     if search_param:
-    #         queryset = queryset.filter(nombre__icontains=search_param)
-        
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data)
         
     def update(self, request, *args, **kwargs):
         try:
@@ -386,7 +385,8 @@ class ArrendadorViewSet(viewsets.ModelViewSet):
                 arrendador_serializer.save()
                 print("Guardado arrendador")
                 arrendador = arrendador_serializer.instance
-
+                # Cuando se crea un arrendador ,se crea un registro en validar arrendador
+                # El cual servira para validar los documentos del arrendador
                 validacion_arrendador = ValidacionArrendador(arrendador_validacion=arrendador)
                 validacion_arrendador.user_id = request.user.id
                 validacion_arrendador.save()
@@ -443,6 +443,7 @@ class inmueblesViewSet(viewsets.ModelViewSet):
     #     # return queryset
         # return self.queryset.filter(user_id=self.request.user.id)
 
+# Descomentar-----------------------------------------------------------------------------------------------------------------------------------------*/*/**/*-*/*-/-/*-*/-/-----------/*/*/*/*/-----------
     # def get_queryset(self):
     #     user_session = self.request.user
     #     if user_session.is_staff:
@@ -469,6 +470,8 @@ class inmueblesViewSet(viewsets.ModelViewSet):
             img = request.FILES.get('imagenes', None)
             if img:
                 image_data = data.pop('imagenes')
+            else:
+                return Response({'error': 'Error , falta imagen'}, status=status.HTTP_400_BAD_REQUEST)
             print("2")
             data = request.data.copy()  # Crear una copia mutable de request.data
             if data.get('reglamento_interno') == 'undefined':
@@ -550,7 +553,14 @@ class inmueblesViewSet(viewsets.ModelViewSet):
                         print("Soy la url" ,ur)
                         imagen.delete() 
                         c = 'apps/static' + ur
-                        os.remove(c)
+                        # arrendador/documentos/Jose_Ramirez_Rivero/INE/Guiadomicilio.pdf
+                        print("Soy url -----------", ur)
+                        split_url = ur.split("inmuebles/", 1)  # Dividir la cadena en dos partes utilizando "/inmuebles/" como separador
+                        if len(split_url) > 1:
+                            new_url = "inmuebles/" + split_url[1]  # Obtener la segunda parte y reconstruir la URL
+                            print("Soy new url", new_url)
+                        eliminar_archivo_s3(new_url)
+                        # os.remove(c)
             print("Actualizar datos Inmueble")
             # id = request.data.get('id')
             data = request.data
@@ -836,42 +846,80 @@ class DocumentosArrendadorViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
-        
+
+
+class Paginacion(PageNumberPagination):
+    page_size = 10  #Numero de elementos por pagina
+    page_size_query_param = 'page_size' #Parametro para especificar el tamaño de pagina en la url
+    max_page_size = 100  #Tamaño maximo de pagina permitido
+
 class Listar_Documentos_ViewSet(viewsets.ModelViewSet):
     # authentication_classes = [TokenAuthentication, SessionAuthentication]
     queryset = Arrendador.objects.all()
     serializer_class = ArrendadorDocumentosSerializer
     # documentos_class = DocumentosArrendadorSerializer
+    # pagination_class = Paginacion
 
-    def get_queryset(self):
-        user_session = self.request.user
-        if user_session.is_staff:
-            data_serializer = self.serializer_class(self.queryset, many=True)
-            return Response(data_serializer.data)
-        else:            
-            user_id = self.request.user.id
-            return Arrendador.objects.filter(user=user_id)
+    # ---------------------------------------------------------------------------
+    @action(detail=False, methods=['get'])
+    def buscar(self, request, *args, **kwargs):
+        queryset = self.queryset
+        search_param = self.request.query_params.get('search', None)
+        user_id = self.request.user.id
+        # user_id = 2
 
+        if search_param:
+            queryset = queryset.filter(Q(nombre__icontains=search_param) & Q(user=user_id))
+            # queryset = queryset.order_by('nombre')
+        else:
+            queryset = queryset.filter(user=user_id)
+            # queryset = queryset.order_by('nombre')
+        # page = self.paginate_queryset(queryset) #Para la paginacion
+        # serializer = self.get_serializer(page, many=True) #Para la paginacion
+        # print("Soy serializer data", serializer.data)
+        # return self.get_paginated_response(serializer.data) #Para la paginacion
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    # def get_queryset(self):
+    #     user_session = self.request.user
+    #     if user_session.is_staff:
+    #         data_serializer = self.serializer_class(self.queryset, many=True)
+    #         return Response(data_serializer.data)
+    #     else:            
+    #         user_id = self.request.user.id
+    #         return Arrendador.objects.filter(user=user_id)
+        
     def retrieve(self, request, *args, **kwargs):
-        print("Esta lleggando a retrieve")
+        print("Esta llegando a retrieve")
         instance = self.get_object()
-        serializer_inquilino = self.get_serializer(instance)
-        return Response(serializer_inquilino.data)
+        serializer_arrendador = self.get_serializer(instance)
+        return Response(serializer_arrendador.data)
     
     def update(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
             # Obtener el valor de validacion_escrituras y comentarios del modelo hijo
             validacion_escrituras = request.data.get('validacion_escrituras')
+            validacion_ine = request.data.get('validacion_ine')
+            validacion_comprobante_domicilio = request.data.get('validacion_comprobante_domicilio')
+            validacion_predial = request.data.get('validacion_predial')
             comentarios = request.data.get('comentarios')
+            estatus_documentos = request.data.get('estatus_documentos')
             # Actualizar el campo estatus_arrendador en el modelo principal
-            instance.estatus_arrendador = validacion_escrituras
+            print("Soy request.data", request.data)
+            print("Estatus documentos", estatus_documentos)
+            instance.estatus_arrendador = estatus_documentos
             # Guardar la instancia actualizada del modelo principal
             instance.save()
             
             # Actualizar los campos del modelo hijo
             arrendador_validacion = instance.arrendador_validacion.first()
             arrendador_validacion.validacion_escrituras = validacion_escrituras
+            arrendador_validacion.validacion_ine = validacion_ine
+            arrendador_validacion.validacion_comprobante_domicilio = validacion_comprobante_domicilio
+            arrendador_validacion.validacion_predial = validacion_predial
             arrendador_validacion.comentarios = comentarios
             arrendador_validacion.save()
             
@@ -888,6 +936,8 @@ class Listar_Documentos_ViewSet(viewsets.ModelViewSet):
     
 
 class HistorialDocumentosArrendadorViewSet(viewsets.ModelViewSet):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = DocumentosArrendador.objects.all()
     serializer_class = DocumentosArrendadorPruebaSerializer
 
@@ -909,7 +959,9 @@ class HistorialDocumentosArrendadorViewSet(viewsets.ModelViewSet):
                     for field in ['ine', 'comp_dom', 'predial', 'escrituras_titulo']:
                         print(field)
                         if field in data and getattr(instancia_anterior, field) != serializer.validated_data.get(field): #getattr  permite obtener el valor de un atributo indicando su nombre como una cadena
-                            self.guardar_historial(getattr(instancia_anterior, field), serializer.validated_data.get(field), 'previo_' + field)
+                            # self.guardar_historial(getattr(instancia_anterior, field), serializer.validated_data.get(field), 'previo_' + field)
+                            print("Soy dato a editar", getattr(instancia_anterior, field))
+                            eliminar_archivo_s3(getattr(instancia_anterior, field))
                     serializer.save()
                     print("Se guardo")
                     return Response(serializer.data)
@@ -934,8 +986,21 @@ class HistorialDocumentosArrendadorViewSet(viewsets.ModelViewSet):
                     previo_escrituras_titulo=None,
                 )
 
-            if archivo_anterior and campo_previo != 'previo_predial':
-                os.remove(archivo_anterior.path)
+            # if archivo_anterior and campo_previo != 'previo_predial':
+            eliminar_archivo_s3(archivo_anterior.path)
+
+def eliminar_archivo_s3(file_name):
+    s3 = boto3.client(
+            's3',
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+        )
+    
+    try:
+        s3.delete_object(Bucket="arrendifystorage", Key=f"static/{str(file_name)}")
+        print("El archivo se eliminó correctamente de S3.")
+    except Exception as e:
+        print("Error al eliminar el archivo:", str(e))
 # class HistorialDocumentosInquilinoViewSet(viewsets.ModelViewSet):
 #     queryset = Inquilino.objects.all()
 #     serializer_class = DocumentosInquilinoSerializer
@@ -1127,6 +1192,7 @@ class MobiliarioCantidad(viewsets.ModelViewSet):
     serializer_class = InmueblesMobiliarioSerializer
 
     def create(self, request, *args, **kwargs):
+        print("Soy request", request.data)
         data = request.data.copy()  # Crear una copia mutable de request.data
         data['user'] = request.user.id
         
@@ -1139,12 +1205,117 @@ class MobiliarioCantidad(viewsets.ModelViewSet):
 
         return Response(mobiliario.data, status=status.HTTP_201_CREATED)
 
+class DatosArrendamiento(viewsets.ModelViewSet):
+    queryset = DatosArrendamiento.objects.all()
+    serializer_class = DatosArrendamientoSerializer
 
+    def create(self, request, *args, **kwargs):
+        try:
+            # print("Llegando a create  datos arrendamiento")
+            # print("Soy request data", request.data)
+            datos_arrendamiento = self.serializer_class(data=request.data) #Usa el serializer_class
+            print(datos_arrendamiento)
+            if datos_arrendamiento.is_valid(raise_exception=True):
+                datos_arrendamiento.save()
+                print("Guardado datos arrendamiento")
+                return Response({'fiador_obligado': datos_arrendamiento.data}, status=status.HTTP_201_CREATED)
+            else:
+                print("Error en validacion")
+                return Response({'errors': datos_arrendamiento.errors})
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
 
+class Paquetes(viewsets.ModelViewSet):
+    queryset = Paquetes.objects.all()
+    serializer_class = PaquetesSerializer
 
+    def create(self, request, *args, **kwargs):
+        try:
+            print("Llegando a create  datos arrendamiento")
+            print("Soy request data", request.data)
+            datos_arrendamiento = self.serializer_class(data=request.data) #Usa el serializer_class
+            print(datos_arrendamiento)
+            if datos_arrendamiento.is_valid(raise_exception=True):
+                datos_arrendamiento.save()
+                print("Guardado datos arrendamiento")
+                return Response({'fiador_obligado': datos_arrendamiento.data}, status=status.HTTP_201_CREATED)
+            else:
+                print("Error en validacion")
+                return Response({'errors': datos_arrendamiento.errors})
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
 
+#  ------------------------------- Pruebas ----------------------------------------------------
+class Arrendador(viewsets.ModelViewSet):
+    queryset = Arrendador.objects.all()
+    serializer_class = ArrendadorInmuebles
 
+    def list(self, request, *args, **kwargs):
+        tipo_persona = request.GET.get('tipo_persona')
+        # tipo_persona = "Persona Fisica"
+        print("Request", tipo_persona)
 
+        if tipo_persona == 'Persona Fisica':
+            queryset = self.queryset.filter(pmoi='Persona Fisica')
+        elif tipo_persona == 'Persona Moral':
+            queryset = self.queryset.filter(pmoi='Inmobiliaria')
+            print("Soy quesyset", queryset)
+        else:
+            queryset = self.queryset.exclude(pmoi ='Inmobiliaria')
+        
+        serializer = self.get_serializer(queryset, many=True)
+        print("Soy serializer", serializer.data)
+        return Response(serializer.data)
+    
+    # Esto es para cotizador ------------------------------------------- CAMBIAR
+    def enviar_pdf(self, request):
+        # Obtener el archivo PDF enviado en la solicitud
+        pdf_file = request.FILES.get('pdf_file')
+
+        # Crear el mensaje de correo electrónico
+        email = EmailMessage(
+            subject='Adjunto de PDF',
+            body='Adjunto se encuentra el PDF que has enviado.',
+            to=['destinatario@example.com'],
+        )
+
+        # Adjuntar el archivo PDF al correo electrónico
+        email.attach(pdf_file.name, pdf_file.read(), pdf_file.content_type)
+
+        # Enviar el correo electrónico
+        email.send()
+
+        return Response({'message': 'Correo electrónico enviado correctamente.'})
+    
+class Cotizacion(viewsets.ModelViewSet):
+    queryset = Cotizacion.objects.all()
+    serializer_class = CotizacionSerializer
+
+    
+
+# PDF
+class PDFGeneratorViewSet(viewsets.ViewSet):
+    def create_pdf(self, request):
+        # Lógica para generar los datos que se insertarán en la plantilla HTML
+        
+        # Carga la plantilla HTML
+        html_template = get_template('ruta/al/template.html')
+        
+        # Renderiza la plantilla con los datos
+        rendered_html = html_template.render({'data': request.data})
+        
+        # Genera el PDF utilizando WeasyPrint
+        pdf = HTML(string=rendered_html).write_pdf()
+        
+        # Devuelve el PDF como respuesta
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="archivo.pdf"'
+        response['Content-Transfer-Encoding'] = 'binary'
+        response.write(pdf)
+        
+        return response
 
 
 

@@ -28,11 +28,20 @@ router.register(r'listar_documentos', Listar_Documentos_ViewSet, basename='Prueb
 router.register(r'HistorialDocumentosArrendadorViewSet', HistorialDocumentosArrendadorViewSet, basename='HistorialDocumentosArrendadorViewSet'),
 
 # router.register(r'HistorialDocumentosInquilinoViewSet', HistorialDocumentosInquilinoViewSet, basename='HistorialDocumentosInquilinoViewSet')
-router.register(r'documentos_foo', DocumentosFoo, basename='base_foo')
+router.register(r'documentos_foo', DocumentosFoo, basename='base_foo'),
 
-router.register(r'MobiliarioCantidad', MobiliarioCantidad, basename='MobiliarioCantidad')
+router.register(r'MobiliarioCantidad', MobiliarioCantidad, basename='MobiliarioCantidad'),
+
+router.register(r'DatosArrendamiento', DatosArrendamiento, basename='DatosArrendamiento'),
+
+# Paquetes
+router.register(r'paquetes', Paquetes, basename='Paquetes'),
 
 
+router.register(r'Arrendador', Arrendador, basename='Arrendador'),
+
+
+router.register(r'Cotizacion', Cotizacion, basename='Cotizacion'),
 # router.register(r'i_a', Inmuebles_a, basename='a_a')
 
 

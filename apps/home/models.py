@@ -14,6 +14,10 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.urls import reverse
 from django.utils.text import slugify
+from datetime import datetime, timedelta
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from dateutil.relativedelta import relativedelta
 
 class Rol(models.Model):
       id = models.AutoField(primary_key=True)
@@ -390,6 +394,12 @@ class Arrendador(models.Model):
         else:
             super().save(*args, **kwargs)
 
+    def __str__(self):
+        if self.nombre:
+            return f"{self.nombre} {self.apellido} {self.apellido1}"
+        else:
+            return f"{self.n_inmobiliaria}"
+        
     class Meta:
         db_table = 'arrendador'
 
@@ -397,8 +407,11 @@ class ValidacionArrendador(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     arrendador_validacion = models.ForeignKey(Arrendador, on_delete=models.CASCADE, related_name='arrendador_validacion')
+    validacion_ine = models.CharField(max_length=30, null=True, blank=True, default='En revision')
+    validacion_comprobante_domicilio = models.CharField(max_length=30, null=True, blank=True, default='En revision')
     validacion_escrituras = models.CharField(max_length=30, null=True, blank=True, default='En revision')
-    estatus_arrendadores = models.CharField(max_length=30, null=True, blank=True, default='En espera')
+    validacion_predial = models.CharField(max_length=30, null=True, blank=True, default='En revision')
+    estatus_documentos = models.CharField(max_length=30, null=True, blank=True, default='En espera')
     comentarios = models.CharField(max_length=100, null=True, blank=True)
     class Meta:
         db_table = 'validacion_arrendador'
@@ -461,22 +474,34 @@ class DocumentosFiador(models.Model):
 
 class DocumentosArrendador(models.Model):
     def get_ine_upload_path(self, filename):
-        return f'arrendador/documentos/{self.arrendador}/INE/{filename}'
+        inq_split = str(self.arrendador)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'arrendador/documentos/{ip}/INE/{filename}'
 
     def get_dom_upload_path(self, filename):
-        return f'arrendador/documentos/{self.arrendador}/Comprobante_de_domicilio/{filename}'
-
+        inq_split = str(self.arrendador)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'arrendador/documentos/{ip}/Comprobante_de_domicilio/{filename}'
+    
     def get_rfc_upload_path(self, filename):
-        return f'arrendador/documentos/{self.arrendador}/RFC/{filename}'
+        inq_split = str(self.arrendador)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'arrendador/documentos/{ip}/RFC/{filename}'
 
-    def get_reg_upload_path(self, filename):
+    def get_reg_upload_path(self, filename): #Se deben eliminar al pasar a produccion
         return f'arrendador/documentos/{self.arrendador}/Reglamento/{filename}'
 
-    def get_mob_upload_path(self, filename):
+    def get_mob_upload_path(self, filename): #Se deben eliminar al pasar a produccion
         return f'arrendador/documentos/{self.arrendador}/Mobiliario/{filename}'
-
+    
     def get_escrituras_upload_path(self, filename):
-        return f'arrendador/documentos/{self.arrendador}/Escrituras/{filename}'
+        inq_split = str(self.arrendador)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'arrendador/documentos/{ip}/Escrituras/{filename}'
 
     
     id = models.AutoField(primary_key=True)
@@ -486,8 +511,8 @@ class DocumentosArrendador(models.Model):
     comp_dom = models.FileField(upload_to =get_dom_upload_path, null=True)
     predial = models.FileField(upload_to = get_rfc_upload_path,null=True, blank=True)
     escrituras_titulo = models.FileField(upload_to = get_escrituras_upload_path, null=True)
-    reglamento_interno = models.FileField(upload_to = get_reg_upload_path,null=True, blank=True) #Se deben eliminar
-    mobiliario = models.FileField(upload_to = get_mob_upload_path,null=True, blank=True) #Se deben eliminar
+    reglamento_interno = models.FileField(upload_to = get_reg_upload_path,null=True, blank=True) #Se deben eliminar al pasar a produccion
+    mobiliario = models.FileField(upload_to = get_mob_upload_path,null=True, blank=True) #Se deben eliminar al pasar a produccion
     dateTimeOfUpload = models.DateTimeField(auto_now = True)
     
     # historial_actualizacion = models.OneToOneField(HistorialActualizacionDocumentosArrendador, on_delete=models.SET_NULL, null=True)
@@ -496,16 +521,19 @@ class DocumentosArrendador(models.Model):
 
 
 class HistorialDocumentosArrendador(models.Model):
-    def get_dom_upload_path_pasado(self, request, filename):
-        return f'arrendador/documentos/{self.arrendador}/Historial/{filename}'
+    def get_dom_upload_path_pasado(self, filename):
+        inq_split = str(self.arrendador)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'arrendador/documentos/{ip}/Historial/{filename}'
     
     id = models.AutoField(primary_key=True)
     historial_documentos = models.ForeignKey(DocumentosArrendador, on_delete=models.CASCADE, related_name='historial_documentos_arrendador')
     user=models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    previo_ine = models.FileField(upload_to=get_dom_upload_path_pasado,null=True)
-    previo_comp_dom = models.FileField(upload_to=get_dom_upload_path_pasado, null=True)
+    previo_ine = models.FileField(upload_to=get_dom_upload_path_pasado,null=True) #Comentarlas al pasar a produccion
+    previo_comp_dom = models.FileField(upload_to=get_dom_upload_path_pasado, null=True) #Comentarlas al pasar a produccion
     previo_predial = models.FileField(upload_to=get_dom_upload_path_pasado, null=True)
-    previo_escrituras_titulo = models.FileField(upload_to=get_dom_upload_path_pasado, null=True) 
+    previo_escrituras_titulo = models.FileField(upload_to=get_dom_upload_path_pasado, null=True)  #Comentarlas al pasar a produccion
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     class Meta:
         db_table = 'historial_documentos_arrendador'
@@ -523,9 +551,17 @@ class HistorialDocumentosInquilinos(models.Model):
 
 class Inmuebles(models.Model):
     def get_mob_upload_path_mobiliario(self, filename):
-        return f'arrendador/documentos/{self.alias_inmueble}/Mobiliario/{filename}'
+        inq_split = str(self.arrendador)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'inmuebles/documentos/{ip}/Mobiliario/{filename}'
+
     def get_reg_upload_path_reglamento(self, filename):
-        return f'arrendador/documentos/{self.alias_inmueble}/Reglamento/{filename}'
+        inq_split = str(self.arrendador)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'inmuebles/documentos/{ip}/Reglamento/{filename}'
+    
     
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -609,13 +645,20 @@ class Inmuebles(models.Model):
             super().save(*args, **kwargs)
         else:
             super().save(*args, **kwargs)
+    def __str__(self):
+    # Devuelve una representación legible del objeto
+        return f"{self.alias_inmueble}"
+        
 
     class Meta:
         db_table = 'inmuebles'
 
-class InmueblesInmobiliario(models.Model):
-    def get_dom_upload_path_inmubles_mobiliario(self, request, filename):
-        return f'inquilinos/imagenes/{self.inmueble}/{filename}'
+class InmueblesInmobiliario(models.Model):    
+    def get_dom_upload_path_inmubles_mobiliario(self, filename):
+        inq_split = str(self.inmuebles.alias_inmueble)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'inmuebles/mobiliario/{ip}/Mobiliario/{filename}'
 
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -660,9 +703,11 @@ class InmueblesInmobiliario(models.Model):
         db_table = 'inmuebles_mobiliario'
 
 class ImagenInmueble(models.Model):
-    def get_img_inmueble_upload_path(self,filename):
-        return f'{self.user}/Inmuebles/{self.inmueble.alias_inmueble}/{filename}'
-    
+    def get_img_inmueble_upload_path(self, filename):
+        inq_split = str(self.inmueble.alias_inmueble)
+        ip = inq_split.replace(" ", "_")
+        print(ip)
+        return f'inmuebles/{ip}/Imagenes/{filename}'
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     imagenes = models.ImageField(upload_to=get_img_inmueble_upload_path)
     inmueble = models.ForeignKey(Inmuebles, on_delete=models.CASCADE,related_name="fotos")
@@ -694,3 +739,113 @@ class DocumentosFiador(models.Model):
     dateTimeOfUpload = models.DateTimeField(auto_now = True)
     class Meta:
         db_table = 'documentos_fiador'
+
+
+# Datos de arrendamiento
+class DatosArrendamiento(models.Model):
+    id = models.AutoField(primary_key=True)
+    # nombre_arrendador =  models.ForeignKey(Arrendador, on_delete=models.CASCADE, related_name='nombre_arrendador')
+    # nombre_inmueble_a_ocupar = models.ForeignKey(Inmuebles, on_delete=models.CASCADE, related_name='nombre_inmueble_a_ocupar')
+    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    # inquilino = models.ForeignKey(Inquilino, on_delete=models.CASCADE, related_name='inquilino')
+
+    # Datos Adicionales
+    renta = models.CharField(max_length=30, null=True, blank=True)    
+    fecha_1 = models.CharField(max_length=30, null=True, blank=True)    
+    uso_inmueble = models.CharField(max_length=30, null=True, blank=True)
+    # Mantenimiento
+    mantenimiento = models.CharField(max_length=30, null=True, blank=True)
+    deposito_garantia = models.CharField(max_length=30, null=True, blank=True)
+    lugar_firma = models.CharField(max_length=30, null=True, blank=True)
+    fecha_firma = models.DateField(null=True, blank=True)
+    hora_firma = models.TimeField(null=True, blank=True)
+    
+    fecha_inicio_contrato = models.DateField(null=True, blank=True)
+    fecha_fin_contrato = models.DateField(null=True, blank=True)
+    duracion = models.CharField(max_length=30, null=True, blank=True)
+    tiempo_contrato = models.CharField(max_length=30, null=True, blank=True)
+    observaciones = models.CharField(max_length=100, null=True, blank=True)
+    tipo_persona = models.CharField(max_length=30, null=True, blank=True)
+    fecha_firma_contrato = models.DateField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'datos_arrendamiento'
+
+
+class Paquetes(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre_paquete = models.CharField(max_length=30, null=True, blank=True)
+
+    # cotizacion =  models.ForeignKey(Cotizador, on_delete=models.CASCADE, related_name='cotizador')
+    nombre_arrendador =  models.ForeignKey(Arrendador, on_delete=models.CASCADE, related_name='nombre_arrendador')
+    nombre_inmueble_a_ocupar = models.ForeignKey(Inmuebles, on_delete=models.CASCADE, related_name='nombre_inmueble_a_ocupar')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    inquilino = models.ForeignKey(Inquilino, on_delete=models.CASCADE, related_name='inquilino')
+
+    class Meta:
+        db_table = 'paquetes'
+
+
+
+# ------------------------------------------ Posible modelo cotizador ----------------------------------------
+# Modelo Agentify
+class Agentify (models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre  = models.CharField(max_length=50, null=True, blank=True)
+    apellido_materno = models.CharField(max_length=30, null=True, blank=True)
+    apellido_paterno = models.CharField(max_length=30, null=True, blank=True)
+    correo = models.CharField(max_length=30, null=True, blank=True)
+    empresa_labora = models.CharField(max_length=30, null=True, blank=True, default='Arrendify')
+    numero_celular = models.CharField(max_length=30, null=True, blank=True)
+    # direccion = models.CharField(max_length=30, null=True, blank=True)
+    # genero = models.CharField(max_length=30, null=True, blank=True)
+    puesto = models.CharField(max_length=30, null=True, blank=True)
+    esquema_comisiones = models.CharField(max_length=30, null=True, blank=True)
+    ventas = models.CharField(max_length=30, null=True, blank=True) #Tabla ventas detallado (Por hacer)
+    # fecha_nacimiento = models.DateField(null=True)
+
+    class Meta:
+        db_table = 'agentify'
+
+# Hacer modelo agentify
+class Cotizacion(models.Model):
+    id = models.AutoField(primary_key=True)
+    inmueble = models.ForeignKey(Inmuebles, null=True, blank=True, on_delete=models.CASCADE, related_name="cotizacion_inmuebles")
+    arrendador =  models.ForeignKey(Arrendador, on_delete=models.CASCADE, null=True, blank=True, related_name='cotizacion_arrendadores')
+    inquilino = models.ForeignKey(Inquilino, on_delete=models.CASCADE, null=True, blank=True, related_name='cliente_inquilinos')
+    agentify = models.ForeignKey(Inquilino, on_delete=models.CASCADE, null=True, blank=True, related_name='agentify')
+
+    nombre_cotizacion = models.CharField(max_length=30, null=True, blank=True) # Agregar identificador en Frontend tipo_poliza + fecha + iniciales ARRENDADOR
+    cliente = models.CharField(max_length=30, null=True, blank=True) 
+    
+    monto = models.CharField(max_length=30, null=True, blank=True) 
+    monto_impuesto = models.CharField(max_length=30, null=True, blank=True,default = 16)
+    monto_total = models.CharField(max_length=50, null=True, blank=True)
+    # taza_impuesto = models.CharField(max_length=50, null=True, blank=True)
+    comision = models.CharField(max_length=50, null=True, blank=True)
+    costos_extra = models.CharField(max_length=50, null=True, blank=True)
+    observaciones = models.CharField(max_length=50, null=True, blank=True)
+    # agentify = models.CharField(max_length=50, null=True, blank=True) # Por hacer a llave foranea
+    años_cobertura = models.PositiveIntegerField(null=True, blank=True, default=1) 
+    # Nuevos campos
+    # metodo_pago = models.CharField(max_length=50, null=True, blank=True)
+    duracion_contrato = models.CharField(max_length=50, null=True, blank=True)
+    # servicios_adicionales = models.CharField(max_length=50, null=True, blank=True)
+    tipo_poliza = models.CharField(max_length=50, null=True, blank=True)
+    # estado_cotizacion = models.CharField(max_length=50, null=True, blank=True)
+    # tipo_moneda = models.CharField(max_length=50, null=True, blank=True)
+
+    fecha_cotizacion = models.DateField(auto_now_add=True)
+    fecha_vigencia = models.DateField(null=True) # Un mes mas del auto_now
+
+    class Meta:
+        db_table = 'cotizacion'
+
+@receiver(post_save, sender=Cotizacion)
+def actualizar_fecha_vigencia(sender, instance, **kwargs):
+    if not instance.fecha_vigencia and instance.fecha_cotizacion:
+        instance.fecha_vigencia = instance.fecha_cotizacion + relativedelta(months=1)
+        instance.save()
+
+
+
