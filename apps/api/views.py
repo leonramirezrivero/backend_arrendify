@@ -1296,26 +1296,26 @@ class Cotizacion(viewsets.ModelViewSet):
     
 
 # PDF
-class PDFGeneratorViewSet(viewsets.ViewSet):
-    def create_pdf(self, request):
-        # Lógica para generar los datos que se insertarán en la plantilla HTML
+# class PDFGeneratorViewSet(viewsets.ViewSet):
+#     def create_pdf(self, request):
+#         # Lógica para generar los datos que se insertarán en la plantilla HTML
         
-        # Carga la plantilla HTML
-        html_template = get_template('ruta/al/template.html')
+#         # Carga la plantilla HTML
+#         html_template = get_template('ruta/al/template.html')
         
-        # Renderiza la plantilla con los datos
-        rendered_html = html_template.render({'data': request.data})
+#         # Renderiza la plantilla con los datos
+#         rendered_html = html_template.render({'data': request.data})
         
-        # Genera el PDF utilizando WeasyPrint
-        pdf = HTML(string=rendered_html).write_pdf()
+#         # Genera el PDF utilizando WeasyPrint
+#         pdf = HTML(string=rendered_html).write_pdf()
         
-        # Devuelve el PDF como respuesta
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="archivo.pdf"'
-        response['Content-Transfer-Encoding'] = 'binary'
-        response.write(pdf)
+#         # Devuelve el PDF como respuesta
+#         response = HttpResponse(content_type='application/pdf')
+#         response['Content-Disposition'] = 'attachment; filename="archivo.pdf"'
+#         response['Content-Transfer-Encoding'] = 'binary'
+#         response.write(pdf)
         
-        return response
+#         return response
 
 
 
