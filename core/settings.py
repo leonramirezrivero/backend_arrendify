@@ -105,9 +105,6 @@ TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for template
 # ***************************   AMAZON   ****************************************
 
 
-AWS_ACCESS_KEY_ID = 'AKIAU3T4J55U4CBLOH2V'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'arrendifystorage'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_REGION_NAME = 'us-east-2'
 AWS_S3_OBJECT_PARAMETERS = {
